@@ -1,0 +1,652 @@
+/* Settings Metabox */
+#modula-settings .inside {
+	padding: 0;
+	margin: 0;
+}
+.modula-settings-container {
+	display: flex;
+}
+
+/* Settings Tabs */
+.modula-settings-container .modula-tabs {
+	background-color: #f5f5f5;
+}
+.modula-settings-container .modula-tabs .modula-tab {
+	margin: 0 20px;
+    padding: 20px 0 20px 0px;
+    color: #999;
+    cursor: pointer;
+    position: relative;
+    width: 150px;
+}
+.modula-settings-container .modula-tabs .modula-tab > i {
+	margin-right: 5px;
+}
+.modula-settings-container .modula-tabs .modula-tab:after {
+	position: absolute;
+	content: "";
+	width: 1px;
+	height: 100%;
+	background-color: transparent;
+	top: 0;
+	right: -1px;
+}
+.modula-settings-container .modula-tabs .modula-tab.active-tab:first-child {
+	border-top: 0 none;
+}
+
+.modula-settings-container .modula-tabs .modula-tab.active-tab {
+	margin: 0;
+    padding: 20px 20px 20px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    color: #444;
+}
+.modula-settings-container .modula-tabs .modula-tab.active-tab:after {
+	background-color: #fff;
+}
+
+
+/* Tab Content */
+.postbox .modula-settings-container table.form-table {
+	margin: 0;
+}
+.modula-settings-container .modula-tabs-content {
+	padding: 20px;
+	border-left: 1px solid #ddd;
+}
+.modula-tabs-content > div:not( .active-tab ) {
+	display: none;
+}
+.modula-settings-container .modula-tabs-content .tab-content-header {
+	width: 100%;
+	padding-bottom: 30px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header h2 {
+	font-size: 18px;
+    font-weight: 700;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+/* Fields */
+
+/* Toggle */
+.modula-settings-container .onoffswitch_label {
+  display: block;
+  float: left;
+  margin: 0;
+  height: 22px;
+  line-height: 22px;
+}
+
+.modula-settings-container .onoffswitch_label {
+  display: block;
+}
+
+.modula-settings-container .onoffswitch {
+  position: relative;
+  width: 52px;
+  display: block;
+  float: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin-top: 4px;
+  margin-right: 10px;
+}
+
+.modula-settings-container .onoffswitch-checkbox {
+  display: none !important;
+}
+
+.modula-settings-container .onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  height: 22px;
+  padding: 0;
+  line-height: 19px;
+  transition: background-color 0.2s ease-in;
+  -webkit-border-radius: 11px;
+  -moz-border-radius: 11px;
+  border-radius: 30px;
+  background-color: #c4c4c4;
+  -webkit-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
+  -moz-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
+  box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
+}
+.modula-settings-container .onoffswitch-label:before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    position: absolute;
+    top: 2px;
+    bottom: 0;
+    right: 32px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    transition: all 0.2s ease-in 0s;
+}
+.modula-settings-container .onoffswitch-label:after {
+    content: "OFF";
+    display: block;
+    color: #FFF;
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 6px;
+    font-size: 11px;
+    font-family: 'Arial';
+}
+
+.modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label {
+  background-color: #3caf0e;
+}
+
+.modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label,
+.modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+  border-color: #3caf0e;
+}
+
+.modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+  right: 2px;
+}
+
+.modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:after {
+  content: "ON";
+  display: block;
+  color: #FFF;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  right: 27px;
+  font-size: 11px;
+  font-family: 'Arial';
+}
+
+/* UI Slider */
+.modula-settings-container .slider-container {
+	position: relative;
+	height: 2px;
+	padding: 10px 0 10px 46px;
+	width: 25em;
+	box-sizing: border-box;
+}
+.modula-settings-container .slider-container input[type="text"] {
+    border: none;
+    text-align: center;
+    padding: 2px;
+    margin: 0;
+    font-size: 12px;
+    color: #333;
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.16);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.16);
+    width: 40px;
+    height: 22px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.modula-settings-container .slider-container .ui-slider {
+    position: relative;
+    text-align: left;
+    height: 2px;
+    border-radius: 3px;
+    border: none;
+    display: block;
+    width: 100%;
+    background: #d6d6d6;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.modula-settings-container .slider-container .ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	top: -10px;
+	cursor: default;
+	-ms-touch-action: none;
+	touch-action: none;
+	width: 18px;
+	height: 18px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+	background-color: #fff;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	border: solid 1px #d7d7d7;
+	transform: translateX(-50%);
+}
+.modula-settings-container .slider-container .ui-slider .ui-slider-range {
+	position: absolute;
+	z-index: 1;
+	font-size: 0.7em;
+	display: block;
+	border: 0;
+	background-position: 0 0;
+	background: #E04D43;
+	top: 0;
+	bottom: 0;
+}
+
+/* Hover Effects */
+.modula-effects-preview {
+	margin-top: 20px;
+}
+.modula-effects-preview .item {
+    width: 400px;
+    height: 267px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+}
+.modula-effects-preview .item img {
+    position: absolute;
+}
+.modula-effects-preview .item .figc {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+.modula-effects-preview .item .figc h2 {
+    font-size: 21px !important;
+    color: #fff;
+}
+.modula-effects-preview .item .figc p {
+    color: #fff;
+    font-size: 15px;
+    font-style: normal;
+}
+
+.modula .items .item h2 {
+	margin:0;
+}
+.modula .items .item p {
+	margin:0;
+	padding: 0;
+}	
+.modula .figc {
+	color: black;
+	text-align: center;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	padding:2em;
+}
+
+.modula .item .jtg-social a {
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	margin:0 10px 0 0;
+	width: 20px;
+	padding: 6px 4px;
+	border: 0;
+	opacity: 0;
+	transition: opacity .3s;
+}
+.modula .item:hover .jtg-social a {
+	opacity: 1;
+}
+
+/*---------------*/
+/***** pufrobo *****/
+/*---------------*/
+
+.modula .items .jtg-social {
+	opacity: 0;
+	transition: opacity 0.1s;
+	right:30px;
+	position: absolute;
+	bottom:20px;
+	text-align: right;
+	transition:all .3s;
+}
+
+.modula .items .jtg-social {
+	opacity: 1;
+}
+
+.modula .items .jtg-social a:last-of-type {
+	margin-right: 0;	
+}
+
+.modula .item.effect-pufrobo p.description {
+	margin-bottom: 2em;
+}
+
+.modula .item.effect-pufrobo .figc {
+	text-align: right;
+}
+
+.modula .item.effect-pufrobo h2,
+.modula .item.effect-pufrobo p {
+	position: absolute;
+	right: 30px;
+	left: 30px;
+	padding: 10px 0;
+}
+
+.modula .item:hover img { opacity: .8 }
+
+.modula .item { background-color:#000; }
+
+.modula .item.effect-pufrobo p {
+	bottom: 20%;  
+	line-height: 1.5;
+	-webkit-transform: translate3d(0,100%,0);
+	transform: translate3d(0,100%,0);
+	letter-spacing: 1px;
+}
+
+.modula .item.effect-pufrobo h2 {
+	/*top: 30px;*/
+	top: 10%;
+	-webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	-webkit-transform: translate3d(0,20px,0);
+	transform: translate3d(0,20px,0);
+}
+
+.modula .item.effect-pufrobo:hover h2 {
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.modula .item.effect-pufrobo h2::after {
+	position: absolute;
+	top: 80%;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: #fff;
+	content: '';
+	-webkit-transform: translate3d(0,40px,0);
+	transform: translate3d(0,40px,0);
+}
+
+.modula .item.effect-pufrobo h2::after,
+.modula .item.effect-pufrobo p {
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+.modula .item.effect-pufrobo:hover h2::after,
+.modula .item.effect-pufrobo:hover p {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/* Upsells */
+.modula-upsell {
+	background: #fcf8e3;
+    border: 1px solid #faebcc;
+    padding: 20px;
+    margin-top: 30px;
+}
+#poststuff .modula-upsell h2 {
+	margin: 0 0 20px 0;
+	font-size: 16px;
+    font-weight: 700;
+    padding: 0;
+}
+.modula-upsell .button {
+	margin-right: 10px;
+	box-shadow: none;
+    line-height: 30px;
+    height: 33px;
+}
+.modula-upsell .action-link,
+.modula-upsell .action-link:hover {
+	background: #51AD31;
+    border-color: #51AD31;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Modula Gallery upload */
+#modula-uploader-container {
+    min-height: 300px;
+    position: relative;
+    margin-top: 12px;
+}
+.modula-upload-actions {
+  line-height: 28px;
+}
+.wp-core-ui .modula-upload-actions > a {
+  margin: 0 5px;
+}
+#modula-dropzone-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,86,132,.9);
+    z-index: 250000;
+    display: none;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 250ms;
+}
+#modula-dropzone-container .modula-uploader-window-content {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed #fff;
+}
+#poststuff #modula-dropzone-container .modula-uploader-window-content h1 {
+    margin: -.5em 0 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 400;
+    color: #fff;
+    padding: 0;
+}
+.modula-uploader-inline-content {
+  position: relative;
+  min-height: 300px;
+  width: 100%;
+}
+.modula-uploader-inline-content h2 {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+}
+#poststuff .modula-upload-message {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 400;
+    margin: 0;
+    display: none;
+}
+.modula-uploader-inline p {
+    font-size: 12px;
+    margin: .5em 0;
+}
+#poststuff .modula-uploader-inline .modula-upload-instructions {
+    font-size: 14px;
+    color: #444;
+    font-weight: 400;
+    padding: 0;
+}
+.modula-uploader-footer .max-upload-size {
+  float: left;
+}
+.modula-uploader-footer .modula-upload-numbers {
+  float: right;
+  opacity: 0;
+}
+.modula-uploader-footer:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+.modula-progress-bar {
+    width: 100%;
+    position: relative;
+    height: 10px;
+    width: 100%;
+    margin: 12px auto 5px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+}
+.modula-progress-bar .modula-progress-bar-inner {
+  height: 10px;
+  min-width: 20px;
+  width: 0;
+  background: #aaa;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  -webkit-transition: width 300ms;
+  -moz-transition: width 300ms;
+  -ms-transition: width 300ms;
+  -o-transition: width 300ms;
+  transition: width 300ms;
+}
+.modula-uploader-footer.show-progress .modula-upload-numbers,
+.modula-uploader-footer.show-progress .modula-progress-bar {
+  opacity: 1;
+}
+
+.modula-uploader-inline-content .modula-single-image,
+.modula-uploader-inline-content .modula-single-image-placeholder {
+    cursor: move;
+    display: inline-block;
+    padding: 8px;
+    box-sizing: border-box;
+    width: 16%;
+}
+.modula-uploader-inline-content .modula-single-image-placeholder:after {
+  width: 100%;
+  height: 100%;
+  display: block;
+  content: "";
+  position: relative;
+  border: 2px dashed #eee;
+  padding-top: 100%;
+}
+.modula-uploader-inline-content .modula-single-image .modula-single-image-content {
+    position: relative;
+    border: 1px solid rgba(0,0,0,.1);
+    background: #eee;
+    box-sizing: border-box;
+}
+.modula-uploader-inline-content .modula-single-image .modula-single-image-content img {
+  display: block;
+  width: 100%;
+}
+#poststuff .modula-uploader-inline-content > .modula-upload-message:only-child {
+  display: block;
+}
+.modula-uploader-inline-content .modula-single-image .actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    background: #0073aa;
+    border-bottom-left-radius: 3px;
+}
+.modula-uploader-inline-content .modula-single-image .actions a {
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  padding: 5px;
+}
+.modula-uploader-inline-content .modula-single-image .actions a span {
+  font-size: 18px;
+}
+.modula-uploader-inline-content .modula-single-image .actions a.modula-delete-image:hover {
+  color: #dc3232;
+}
+.modula-uploader-inline-content:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* Modula Popup */
+.media-modal .modula-edit-popup.edit-attachment-frame .edit-media-header button.right {
+    border-right: 1px solid #ddd;
+}
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings .setting {
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings .setting span.name {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+}
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings .setting input[type="text"],
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings .setting textarea {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    margin: 0;
+}
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings .setting div.description {
+    clear: both;
+    float: left;
+    margin: 5px 0 0 0;
+    text-align: left;
+    font-size: 13px;
+    font-style: italic;
+    color: #666;
+}
+.media-modal .modula-edit-popup .attachment-details .attachment-info .settings {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.media-modal .attachment-info .actions a {
+  display: inline-block;
+}
+.inline-input {
+  display: inline;
+}

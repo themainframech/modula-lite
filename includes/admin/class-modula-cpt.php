@@ -1,0 +1,235 @@
+<?php
+
+/**
+ * The cpt plugin class.
+ *
+ * This is used to define the custom post type that will be used for galleries
+ *
+ * @since      2.0.0
+ */
+class Modula_CPT {
+
+	private $labels    = array();
+	private $args      = array();
+	private $metaboxes = array();
+	private $cpt_name;
+	private $builder;
+
+	public function __construct() {
+
+		$this->labels = apply_filters( 'modula_cpt_labels', array(
+			'name'                  => _x( 'Galleries', 'Gallery', 'text_domain' ),
+			'singular_name'         => _x( 'Gallery', 'Gallery', 'text_domain' ),
+			'menu_name'             => __( 'Modula', 'text_domain' ),
+			'name_admin_bar'        => __( 'Modula', 'text_domain' ),
+			'archives'              => __( 'Item Archives', 'text_domain' ),
+			'attributes'            => __( 'Item Attributes', 'text_domain' ),
+			'parent_item_colon'     => __( 'Parent Item:', 'text_domain' ),
+			'all_items'             => __( 'Galleries', 'text_domain' ),
+			'add_new_item'          => __( 'Add New Item', 'text_domain' ),
+			'add_new'               => __( 'Add New', 'text_domain' ),
+			'new_item'              => __( 'New Item', 'text_domain' ),
+			'edit_item'             => __( 'Edit Item', 'text_domain' ),
+			'update_item'           => __( 'Update Item', 'text_domain' ),
+			'view_item'             => __( 'View Item', 'text_domain' ),
+			'view_items'            => __( 'View Items', 'text_domain' ),
+			'search_items'          => __( 'Search Item', 'text_domain' ),
+			'not_found'             => __( 'Not found', 'text_domain' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
+			'featured_image'        => __( 'Featured Image', 'text_domain' ),
+			'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
+			'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
+			'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
+			'insert_into_item'      => __( 'Insert into item', 'text_domain' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this item', 'text_domain' ),
+			'items_list'            => __( 'Items list', 'text_domain' ),
+			'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
+			'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
+		) );
+
+		$this->args = apply_filters( 'modula_cpt_args', array(
+			'label'                 => __( 'Modula Gallery', 'text_domain' ),
+			'description'           => __( 'Modula is one of the best & most creative WordPress gallery plugins. Use it to create a great grid or masonry image gallery.', 'text_domain' ),
+			'supports'              => array( 'title' ),
+			'hierarchical'          => false,
+			'public'                => true,
+			'show_ui'               => true,
+			'show_in_menu'          => true,
+			'menu_position'         => 25,
+			'menu_icon'             => MODULA_URL . '/assets/images/icon.png',
+			'show_in_admin_bar'     => true,
+			'show_in_nav_menus'     => false,
+			'can_export'            => true,
+			'has_archive'           => false,
+			'exclude_from_search'   => true,
+			'publicly_queryable'    => true,
+			'rewrite'               => false,
+			'capability_type'       => 'page',
+		) );
+
+		$this->metaboxes = apply_filters( 'modula_cpt_metaboxes', array(
+			'modula-preview-gallery' => array(
+				'title' => esc_html__( 'Gallery', 'text_domain' ),
+				'callback' => 'output_gallery_images',
+				'context' => 'advanced',
+			),
+			'modula-settings' => array(
+				'title' => esc_html__( 'Settings', 'text_domain' ),
+				'callback' => 'output_gallery_settings',
+				'context' => 'advanced',
+			),
+			'modula-shortcode' => array(
+				'title' => esc_html__( 'Shortcode', 'text_domain' ),
+				'callback' => 'output_gallery_shortcode',
+				'context' => 'side',
+			),
+		) );
+
+		$this->cpt_name = apply_filters( 'modula_cpt_name', 'modula-gallery' );
+		
+		add_action( 'init', array( $this, 'register_cpt' ) );
+
+		/* Fire our meta box setup function on the post editor screen. */
+		add_action( 'load-post.php', array( $this, 'meta_boxes_setup' ) );
+		add_action( 'load-post-new.php', array( $this, 'meta_boxes_setup' ) );
+
+		/* Load Fields Helper */
+		require_once MODULA_PATH . 'includes/admin/class-modula-cpt-fields-helper.php';
+
+		/* Load Builder */
+		require_once MODULA_PATH . 'includes/admin/class-modula-field-builder.php';
+		$this->builder = Modula_Field_Builder::get_instance();
+
+	}
+
+	public function register_cpt() {
+
+		$args = $this->args;
+		$args['labels'] = $this->labels;
+
+		register_post_type( $this->cpt_name, $args );
+
+	}
+
+	public function meta_boxes_setup() {
+
+		/* Add meta boxes on the 'add_meta_boxes' hook. */
+  		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+
+  		/* Save post meta on the 'save_post' hook. */
+		add_action( 'save_post', array( $this, 'save_meta_boxes' ), 10, 2 );
+	}
+
+	public function add_meta_boxes() {
+
+		foreach ( $this->metaboxes as $metabox_id => $metabox ) {
+			add_meta_box(
+			    $metabox_id,      // Unique ID
+			    $metabox['title'],    // Title
+			    array( $this, $metabox['callback'] ),   // Callback function
+			    'modula-gallery',         // Admin page (or post type)
+			    $metabox['context'],         // Context
+			    'default'         // Priority
+			);
+		}
+
+	}
+
+	public function output_gallery_images() {
+		$this->builder->render( 'gallery' );
+	}
+	
+	public function output_gallery_settings() {
+		$this->builder->render( 'settings' );
+	}
+
+	public function output_gallery_shortcode() {
+		$this->builder->render( 'shortcode' );
+	}
+
+	public function save_meta_boxes( $post_id, $post ) {
+
+		/* Get the post type object. */
+		$post_type = get_post_type_object( $post->post_type );
+
+		/* Check if the current user has permission to edit the post. */
+		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+			return $post_id;
+		}
+
+		// Here we will save gallery images
+		if ( isset( $_POST['modula-images'] ) ) {
+
+			// This list will not contain id because we save our images based on image id.
+			$image_attributes = apply_filters( 'modula_gallery_image_attributes', array(
+				'alt',
+				'title',
+				'caption',
+				'halign',
+				'valign',
+				'link',
+				'target',
+			) );
+
+			$modula_images = array();
+
+			foreach ( $_POST['modula-images']['id'] as $index => $image_id ) {
+				$new_image = array();
+
+				// Save the image's id
+				$new_image['id'] = $image_id;
+
+				// Get from the current image only accepted attributes
+				foreach ( $image_attributes as $attribute ) {
+					if ( isset( $_POST['modula-images'][ $attribute ][ $index ] ) ) {
+						// @todo: Create a sanitization function
+						$new_image[ $attribute ] = $_POST['modula-images'][ $attribute ][ $index ];
+					}else{
+						$new_image[ $attribute ] = '';
+					}
+				}
+
+				// Add new image to modula images
+				$modula_images[ $index ] = $new_image;
+			}
+
+			// Add images to gallery meta
+			update_post_meta( $post_id, 'modula-images', $modula_images );
+
+		}
+
+		if ( isset( $_POST['modula-settings'] ) ) {
+			
+			$fields_with_tabs = Modula_CPT_Fields_Helper::get_fields( 'all' );
+
+			// Here we will save all our settings
+			$modula_settings = array();
+
+			// We will save only our settings.
+			foreach ( $fields_with_tabs as $tab => $fields ) {
+
+				// We will iterate throught all fields of current tab
+				foreach ( $fields as $field_id => $field ) {
+
+					if ( isset( $_POST['modula-settings'][ $field_id ] ) ) {
+
+						// @todo: find a method to sanitize modula settings
+						$modula_settings[ $field_id ] = $_POST['modula-settings'][ $field_id ];
+
+					}elseif ( isset( $field['default'] ) ) {
+						$modula_settings[ $field_id ] = $field['default'];
+					}else{
+						$modula_settings[ $field_id ] = '';
+					}
+
+				}
+
+			}
+
+			// Add settings to gallery meta
+			update_post_meta( $post_id, 'modula-settings', $modula_settings );
+
+		}
+
+	}
+}
