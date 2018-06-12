@@ -61,7 +61,7 @@ class Modula_Field_Builder {
 
     }
 
-	public function render( $metabox ) {
+	public function render( $metabox, $post = false ) {
 
 		switch ( $metabox ) {
 			case 'gallery':
@@ -71,7 +71,7 @@ class Modula_Field_Builder {
 				$this->_render_settings_metabox();
 				break;
 			case 'shortcode':
-				$this->_render_shortcode_metabox();
+				$this->_render_shortcode_metabox( $post );
 				break;
 			default:
 				do_action( "modula_metabox_fields_{$metabox}" );
@@ -194,8 +194,9 @@ class Modula_Field_Builder {
 	}
 
 	/* Create HMTL for shortcode metabox */
-	private function _render_shortcode_metabox() {
-		
+	private function _render_shortcode_metabox( $post ) {
+		$shortcode = '[modula id="' . $post->ID . '"]';
+		echo '<input type="text" style="width:100%;" value="' . esc_attr( $shortcode ) . '" disabled>';
 	}
 
 	/* Create HMTL for a tab */
@@ -227,7 +228,6 @@ class Modula_Field_Builder {
 	/* Create HMTL for a field */
 	private function _render_field( $field, $value = '' ) {
 		$html = '';
-		$value = ( '' == $value && isset( $field['default'] ) ) ? $field['default'] : $value;
 
 		switch ( $field['type'] ) {
 			case 'text':

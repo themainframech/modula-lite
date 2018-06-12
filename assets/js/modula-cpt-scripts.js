@@ -41,7 +41,7 @@
 		},
 		initColorPickers: function(){
 			var modulaObject = this,
-			    colorPickers = modulaObject.settingsMetabox.find( '.modula-colorpickers' );
+			    colorPickers = modulaObject.settingsMetabox.find( '.modula-color' );
 			if ( colorPickers.length > 0 ) {
 	            colorPickers.each( function( $index, colorPicker ) {
 	                $( colorPicker ).wpColorPicker();

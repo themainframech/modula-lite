@@ -14,9 +14,20 @@
  *
  * @since    2.0.0
  */
-define( 'MODULA_VERSION', '2.0.0' );
+define( 'MODULA_LITE_VERSION', '2.0.0' );
 define( 'MODULA_PATH', plugin_dir_path( __FILE__ ) );
 define( 'MODULA_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-modula-activator.php
+ */
+function modula_activate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-modula-activator.php';
+	Modula_Activator::activate();
+}
+
+register_activation_hook( __FILE__, 'modula_activate' );
 
 /**
  * The core plugin class that is used to define internationalization,

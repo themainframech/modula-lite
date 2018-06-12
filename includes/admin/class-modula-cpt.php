@@ -51,8 +51,7 @@ class Modula_CPT {
 			'label'                 => __( 'Modula Gallery', 'text_domain' ),
 			'description'           => __( 'Modula is one of the best & most creative WordPress gallery plugins. Use it to create a great grid or masonry image gallery.', 'text_domain' ),
 			'supports'              => array( 'title' ),
-			'hierarchical'          => false,
-			'public'                => true,
+			'public'                => false,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'menu_position'         => 25,
@@ -62,8 +61,8 @@ class Modula_CPT {
 			'can_export'            => true,
 			'has_archive'           => false,
 			'exclude_from_search'   => true,
-			'publicly_queryable'    => true,
 			'rewrite'               => false,
+			'query_var'             => false,
 			'capability_type'       => 'page',
 		) );
 
@@ -100,6 +99,9 @@ class Modula_CPT {
 		require_once MODULA_PATH . 'includes/admin/class-modula-field-builder.php';
 		$this->builder = Modula_Field_Builder::get_instance();
 
+		/* Initiate Image Resizer */
+		$this->resizer = new Modula_Image();
+
 	}
 
 	public function register_cpt() {
@@ -122,7 +124,14 @@ class Modula_CPT {
 
 	public function add_meta_boxes() {
 
+		global $post;
+
 		foreach ( $this->metaboxes as $metabox_id => $metabox ) {
+
+			if ( 'modula-shortcode' == $metabox_id && 'auto-draft' == $post->post_status ) {
+				break;
+			}
+
 			add_meta_box(
 			    $metabox_id,      // Unique ID
 			    $metabox['title'],    // Title
@@ -143,8 +152,8 @@ class Modula_CPT {
 		$this->builder->render( 'settings' );
 	}
 
-	public function output_gallery_shortcode() {
-		$this->builder->render( 'shortcode' );
+	public function output_gallery_shortcode( $post ) {
+		$this->builder->render( 'shortcode', $post );
 	}
 
 	public function save_meta_boxes( $post_id, $post ) {
@@ -189,6 +198,17 @@ class Modula_CPT {
 					}
 				}
 
+				// Check if we need to resize this image
+				if ( isset( $_POST['modula-settings']['img_size'] ) ) {
+					$img_size = absint( $_POST['modula-settings']['img_size'] );
+					$sizes = $this->resizer->get_image_size( $image_id, $img_size );
+					if ( ! is_wp_error( $sizes ) ) {
+						$this->resizer->resize_image( $sizes['url'], $sizes['width'], $sizes['height'] );
+					}
+					
+				}
+
+
 				// Add new image to modula images
 				$modula_images[ $index ] = $new_image;
 			}
@@ -216,10 +236,8 @@ class Modula_CPT {
 						// @todo: find a method to sanitize modula settings
 						$modula_settings[ $field_id ] = $_POST['modula-settings'][ $field_id ];
 
-					}elseif ( isset( $field['default'] ) ) {
-						$modula_settings[ $field_id ] = $field['default'];
 					}else{
-						$modula_settings[ $field_id ] = '';
+						$modula_settings[ $field_id ] = '0';
 					}
 
 				}
