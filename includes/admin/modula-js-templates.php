@@ -1,28 +1,26 @@
-<script type="text/html" id="tmpl-modula-single-image">
-    <div class="modula-single-image" data-id="{{ data.id }}">
-        <div class="modula-single-image-content">
-            <# 
-            if ( data.image != '' ) { 
-                #>
-                <img src="{{ data.image }}" alt="{{ data.alt }}" />
-                <# 
-            } 
-            #>
-            <div class="actions">
-                <a href="#" class="modula-edit-image""><span class="dashicons dashicons-edit"></span></a>
-                <a href="#" class="modula-delete-image""><span class="dashicons dashicons-trash"></span></a>
-            </div>
-            <div class="values">
-                <input type="hidden" name="modula-images[id][]" class="modula-image-id" value="{{ data.id }}">
-                <input type="hidden" name="modula-images[alt][]" class="modula-image-alt" value="{{ data.alt }}">
-                <input type="hidden" name="modula-images[title][]" class="modula-image-title" value="{{ data.title }}">
-                <input type="hidden" name="modula-images[caption][]" class="modula-image-caption" value="{{ data.caption }}">
-                <input type="hidden" name="modula-images[halign][]" class="modula-image-halign" value="{{ data.halign }}">
-                <input type="hidden" name="modula-images[valign][]" class="modula-image-valign" value="{{ data.valign }}">
-                <input type="hidden" name="modula-images[link][]" class="modula-image-link" value="{{ data.link }}">
-                <input type="hidden" name="modula-images[target][]" class="modula-image-target" value="{{ data.target }}">
-            </div>
+<script type="text/html" id="tmpl-modula-image">
+    <div class="modula-single-image-content" <# if ( data.full != '' ) { #> style="background-image:url({{ data.full }})" <# } #> >
+        <# if ( data.thumbnail != '' ) { #>
+            <img src="{{ data.thumbnail }}">
+        <# } #>
+        <div class="actions">
+            <a href="#" class="modula-edit-image""><span class="dashicons dashicons-edit"></span></a>
+            <a href="#" class="modula-delete-image""><span class="dashicons dashicons-trash"></span></a>
         </div>
+        <div class="values">
+            <input type="hidden" name="modula-images[id][{{data.index}}]" class="modula-image-id" value="{{ data.id }}">
+            <input type="hidden" name="modula-images[alt][{{data.index}}]" class="modula-image-alt" value="{{ data.alt }}">
+            <input type="hidden" name="modula-images[title][{{data.index}}]" class="modula-image-title" value="{{ data.title }}">
+            <input type="hidden" name="modula-images[caption][{{data.index}}]" class="modula-image-caption" value="{{ data.caption }}">
+            <input type="hidden" name="modula-images[halign][{{data.index}}]" class="modula-image-halign" value="{{ data.halign }}">
+            <input type="hidden" name="modula-images[valign][{{data.index}}]" class="modula-image-valign" value="{{ data.valign }}">
+            <input type="hidden" name="modula-images[link][{{data.index}}]" class="modula-image-link" value="{{ data.link }}">
+            <input type="hidden" name="modula-images[target][{{data.index}}]" class="modula-image-target" value="{{ data.target }}">
+
+            <input type="hidden" name="modula-images[width][{{data.index}}]" class="modula-image-width" value="{{ data.width }}">
+            <input type="hidden" name="modula-images[height][{{data.index}}]" class="modula-image-height" value="{{ data.height }}">
+        </div>
+        <div class="segrip ui-resizable-handle ui-resizable-se"></div>
     </div>
 </script>
 
@@ -39,7 +37,7 @@
             <!-- Left -->
             <div class="attachment-media-view portrait">
                 <div class="thumbnail thumbnail-image">
-                    <img class="details-image" src="{{ data.src }}" draggable="false" />
+                    <img class="details-image" src="{{ data.full }}" draggable="false" />
                 </div>
             </div>
             

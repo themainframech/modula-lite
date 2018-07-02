@@ -19,14 +19,19 @@ class Modula_Shortcode {
 
 	public function add_gallery_scripts() {
 		
-		// @todo: minify all css & js for a better optimization.
-		wp_register_script( 'modula', MODULA_URL . 'assets/js/jquery.modula.js', array( 'jquery' ), null, true );
+		wp_register_style( 'lightbox2_stylesheet', MODULA_URL . 'assets/css/lightbox.min.css' );
+		
 		// @todo: move effects to modula style
 		wp_register_style( 'modula', MODULA_URL . 'assets/css/modula.css', null, null );
 		wp_register_style( 'modula-effects', MODULA_URL . 'assets/css/effects.css', null, null );
 
+		// Scripts necessary for some galleries
 		wp_register_script( 'lightbox2_script', MODULA_URL . 'assets/js/lightbox.min.js', array( 'jquery' ), null, true );
-		wp_register_style( 'lightbox2_stylesheet', MODULA_URL . 'assets/css/lightbox.min.css' );
+		wp_register_script( 'packery', MODULA_URL . 'assets/js/packery.pkgd.min.js', array( 'jquery' ), null, true );
+		
+
+		// @todo: minify all css & js for a better optimization.
+		wp_register_script( 'modula', MODULA_URL . 'assets/js/jquery.modula.js', array( 'jquery' ), null, true );
 
 	}
 
@@ -74,10 +79,9 @@ class Modula_Shortcode {
 			return esc_html__( 'Gallery not found.', 'modula-gallery' );
 		}
 
-		// Main CSS & JS
-		wp_enqueue_style( 'modula' );
-		wp_enqueue_style( 'modula-effects' );
-		wp_enqueue_script( 'modula' );
+		if ( isset( $settings['type'] ) && 'custom-grid' == $settings['type'] ) {
+			wp_enqueue_script( 'packery' );
+		}
 
 		switch ( $settings['lightbox'] ) {
 			case "lightbox2":
@@ -89,6 +93,11 @@ class Modula_Shortcode {
 				do_action( 'modula_lighbox_shortcode', $settings['lightbox'] );
 				break;
 		}
+
+		// Main CSS & JS
+		wp_enqueue_style( 'modula' );
+		wp_enqueue_style( 'modula-effects' );
+		wp_enqueue_script( 'modula' );
 
 		$template_data = array(
 			'gallery_id' => $gallery_id,
@@ -135,8 +144,9 @@ class Modula_Shortcode {
 			$css .= "#{$gallery_id} .item .figc h2.jtg-title {  font-size: " . $settings['titleFontSize'] . "px; }";
 
 			// $css .= "#{$gallery_id} .item { transform: scale(" . $settings['loadedScale'] / 100 . ") translate(" . $settings['loadedHSlide'] . 'px,' . $settings['loadedVSlide'] . "px) rotate(" . $settings['loadedRotate'] . "deg); }";
-
-			$css .= "#{$gallery_id} .items { width:" . $settings['width'] . "; height:" . absint( $settings['height'] ) . "px; }";
+			if ( 'custom-grid' != $settings['type'] ) {
+				$css .= "#{$gallery_id} .items { width:" . $settings['width'] . "; height:" . absint( $settings['height'] ) . "px; }";
+			}
 
 			$css .= "#{$gallery_id} .items .figc p.description { color:" . $settings['captionColor'] . "; }";
 

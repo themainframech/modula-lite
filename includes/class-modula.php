@@ -83,13 +83,53 @@ class Modula {
 	            'post' => $post_id,
 	        ) );
 
+	        $modula_helper = array(
+	        	'items' => array(),
+	        	'settings' => array(),
+	        );
+
+	        // Get all items from current gallery.
+	        $images = get_post_meta( $post_id, 'modula-images', true );
+	        if ( is_array( $images ) && ! empty( $images ) ) {
+	        	foreach ( $images as $image ) {
+
+	        		$image_url = wp_get_attachment_image_src( $image['id'], 'thumbnail' );
+					$image_full = wp_get_attachment_image_src( $image['id'], 'full' );
+
+					$image['full'] = $image_full[0];
+					$image['thumbnail'] = $image_url[0];
+
+					$modula_helper['items'][] = $image;
+
+	        	}
+	        }
+
+	        // Get current gallery settings.
+	        $settings = get_post_meta( $post_id, 'modula-settings', true );
+	        if ( is_array( $settings ) ) {
+	        	$modula_helper['settings'] = wp_parse_args( $settings, Modula_CPT_Fields_Helper::get_defaults() );
+	        }else{
+	        	$modula_helper['settings'] = Modula_CPT_Fields_Helper::get_defaults();
+	        }
+
 			wp_enqueue_style( 'wp-color-picker' );
-			wp_enqueue_style( 'jquery-ui', MODULA_URL . '/assets/css/jquery-ui.min.css' );
-			wp_enqueue_style( 'modula-icons', MODULA_URL . '/assets/css/materialdesignicons.css' );
-			wp_enqueue_style( 'modula-cpt-style', MODULA_URL . '/assets/css/modula-cpt.css' );
+			wp_enqueue_style( 'jquery-ui', MODULA_URL . 'assets/css/jquery-ui.min.css' );
+			wp_enqueue_style( 'modula-icons', MODULA_URL . 'assets/css/materialdesignicons.css' );
+			wp_enqueue_style( 'modula-cpt-style', MODULA_URL . 'assets/css/modula-cpt.css' );
+
+
+			wp_enqueue_script( 'modula-packery', MODULA_URL . 'assets/js/packery.pkgd.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-draggable' ), '2.0.0', true );
+			wp_enqueue_script( 'modula-settings', MODULA_URL . 'assets/js/wp-modula-settings.js', array( 'jquery', 'jquery-ui-slider', 'wp-color-picker', 'jquery-ui-sortable' ), '2.0.0', true );
+			wp_enqueue_script( 'modula-items', MODULA_URL . 'assets/js/wp-modula-items.js', array(), '2.0.0', true );
+			wp_enqueue_script( 'modula-modal', MODULA_URL . 'assets/js/wp-modula-modal.js', array(), '2.0.0', true );
+			wp_enqueue_script( 'modula-upload', MODULA_URL . 'assets/js/wp-modula-upload.js', array(), '2.0.0', true );
+			wp_enqueue_script( 'modula-gallery', MODULA_URL . 'assets/js/wp-modula-gallery.js', array(), '2.0.0', true );
+			wp_enqueue_script( 'modula-conditions', MODULA_URL . 'assets/js/wp-modula-conditions.js', array(), '2.0.0', true );
+
+			wp_enqueue_script( 'modula', MODULA_URL . 'assets/js/wp-modula.js', array(), '2.0.0', true );
+			wp_localize_script( 'modula', 'modulaHelper', $modula_helper );
 			
-			wp_enqueue_script( 'modula-cpt-script', MODULA_URL . '/assets/js/modula-cpt-scripts.js', array( 'jquery', 'jquery-ui-slider', 'wp-color-picker', 'jquery-ui-sortable' ), '2.0.0', true );
-			wp_enqueue_script( 'modula-image-edit-script', MODULA_URL . '/assets/js/modula-edit.js', array( 'jquery' ), '2.0.0', true );
+			wp_enqueue_script( 'modula-cpt-script', MODULA_URL . 'assets/js/modula-cpt-scripts.js', array( 'jquery', 'jquery-ui-slider', 'wp-color-picker', 'jquery-ui-sortable' ), '2.0.0', true );
 
 		}
 

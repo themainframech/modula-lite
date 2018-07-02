@@ -26,6 +26,9 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
             resizer: '/',
             margin: 10,
             keepArea: true,
+            type: 'creative-gallery',
+            columns: 6,
+            gutter: 10,
             enableTwitter: false,
             enableFacebook: false,
             enableGplus: false,
@@ -33,7 +36,7 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         };
 
     // The actual plugin constructor
-    function Plugin(element, options) {
+    function Plugin( element, options ) {
         this.element = element;
         this.$element = $(element);
         this.$itemsCnt = this.$element.find(".items");
@@ -49,14 +52,82 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         this.completed = false;
         this.lastWidth = 0;
         this.resizeTO = 0;
+        this.isPackeryActive = false;
+
+        // Initiate Gallery
         this.init();
     }
 
+    // Create custom grid gallery based on packery.
+    Plugin.prototype.createCustomGallery = function () {
+
+    	var size,
+    		containerWidth = this.$element.width(),
+    		plugin = this;;
+
+    	size = Math.ceil( ( containerWidth - this.options.gutter * this.options.columns ) / this.options.columns );
+
+    	this.$items.not(".jtg-hidden").each(function (i, item) {
+            var slot = {}, widthColumns, heightColumns;
+
+            widthColumns  = $( item ).data( 'width' );
+            heightColumns = $( item ).data( 'height' );
+
+            if ( widthColumns > plugin.options.gutter ) {
+            	widthColumns = plugin.options.gutter;
+            }
+
+            slot.width = size * widthColumns + ( plugin.options.gutter * ( widthColumns - 1 ) );
+            slot.height = size * heightColumns + ( plugin.options.gutter * ( heightColumns - 1 ) );
+
+            $(item)
+		   		.data('size', slot)
+		   		.addClass('tiled')
+		   		.addClass(slot.width > slot.height ? 'tile-h' : 'tile-v')
+                .data('position');
+
+            $(item).css($(item).data('size'));
+            $(item).find(".figc").css({
+	            width: $(item).data('size').width,
+	            height: $(item).data('size').height
+            });
+
+        });
+
+    	if ( this.isPackeryActive ) {
+    		this.$itemsCnt.packery( 'destroy' );
+    	}
+
+        this.$itemsCnt.packery({
+        	itemSelector: '.item',
+            gutter: parseInt( plugin.options.gutter ),
+            columnWidth: size,
+            rowHeight: size,
+            resize: false
+        });
+        this.isPackeryActive = true;
+
+    }
+
+    // Create Modula default gallery grid
     Plugin.prototype.createGrid = function () {
         var plugin = this;
+
+        if (this.options.width) {
+            this.$itemsCnt.width(this.options.width);
+        }
+
+        if (this.options.height) {
+            this.$itemsCnt.height(this.options.height);
+        }
+
+        this.$itemsCnt.data('area', this.$itemsCnt.width() * this.$itemsCnt.height());
+
+        this.lastWidth = this.$itemsCnt.width();
         
-        for (var i = 0; i < this.$items.not(".jtg-hidden").length; i++)
+        for (var i = 0; i < this.$items.not(".jtg-hidden").length; i++){
             this.tiles.push(plugin.getSlot());
+        }
         
         this.tiles.sort(function (x, y) {
             return x.position - y.position;
@@ -156,7 +227,13 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     Plugin.prototype.reset = function () {
         var instance = this;
         instance.tiles = [];
-        instance.createGrid();
+
+        if ( 'custom-grid' === instance.options.type ) {
+        	instance.createCustomGallery();
+        }else{
+        	instance.createGrid();
+        }
+
         instance.$itemsCnt.find('.pic').each(function (i, o) {
             instance.placeImage(i);
         });
@@ -266,55 +343,9 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         source.attr("src", original_src);
     }
 
-    Plugin.prototype.setupFilters = function () {
-        
-        var filterClick = $('#filterClick').val();
-        var instance = this;
-        instance.$element.delegate(".filters a", "click", function (e) {
-            if(filterClick != "T")
-            {                
-                e.preventDefault();
-            }
-			
-			if($(this).hasClass("selected"))
-				return;
-				
-			instance.$element.find(".filters a").removeClass("selected");
-			$(this).addClass("selected");
-			
-            var filter = $(this).attr("href").substr(1);
-            if (filter) {
-                instance.$items.removeClass('jtg-hidden');
-                instance.$items.show();
-                instance.$items.not("." + filter).addClass("jtg-hidden").hide();                
-            } else {
-                instance.$items.removeClass('jtg-hidden');
-                instance.$items.show();
-            }
-
-            instance.reset();
-        });
-    };
-
     Plugin.prototype.init = function () {
      
         var instance = this;
-        
-        var current_filter = tg_getURLParameter('jtg-filter');
-
-        if(current_filter != null)
-        {
-            instance.$element.find(".filters a").removeClass('selected');
-            instance.$element.find(".filters a").each(function(){
-              
-                if($(this).data('filter') == current_filter)
-                {
-                    $(this).addClass('selected');
-                }
-            })
-        }   
-
-        var hash = window.location.hash;
 
         this.$itemsCnt.css({
             position: 'relative',
@@ -324,22 +355,18 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         this.$items.addClass("tile");
         this.$items.find(".pic").removeAttr("src");
 
-        if (this.options.width) {
-            this.$itemsCnt.width(this.options.width);
+        if ( 'custom-grid' === this.options.type ) {
+        	this.createCustomGallery();
+        }else{
+        	this.createGrid();
         }
 
-        if (this.options.height) {
-            this.$itemsCnt.height(this.options.height);
-        }
+        // Create gallery grid
+        // this.createGrid();
 
-        this.$itemsCnt.data('area', this.$itemsCnt.width() * this.$itemsCnt.height());
-
-        this.lastWidth = this.$itemsCnt.width();
-        this.createGrid();
-
+        // Load Images
         this.loadImage(0);
 
-        var instance = this;
         $(window).resize(function () {
             instance.onResize(instance);
         });
@@ -348,45 +375,14 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
             instance.onResize(instance);
         });
 
-        this.setupFilters();
+        // Create social links
         this.setupSocial();
         
-        if(this.options.onComplete)
+        // Trigger custom gallery JS
+        if(this.options.onComplete) {
         	this.options.onComplete();
-
-        if(hash != "" && hash != "#" && current_filter == null) {
-           var hash_class = hash.replace('#', '.');           
-
-            var filters = [];
-
-                 instance.$element.find(".filters a").each(function(){
-                    filters.push($(this).attr('href'));
-                 })
-                 filters.shift();
-
-                 $('.filters a').each(function() {
-                    $(this).removeClass('selected');
-                    if($(this).attr('href') == hash)
-                    {
-                        $(this).addClass('selected');
-                    }
-                 })
-
-
-                 if( $.inArray(hash, filters) >= 0)
-                 {
-                    instance.$items.addClass('jtg-hidden').hide();
-                 }               
-                 
-                 hash_class = hash_class.replace('.','');
-                 instance.$items.each(function(){
-                    if($(this).hasClass(hash_class))
-                    {
-                        $(this).removeClass('jtg-hidden');
-                        $(this).show();
-                    }
-                });
         }
+
     };
 
     Plugin.prototype.setupSocial = function () {

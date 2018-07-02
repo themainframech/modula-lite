@@ -178,15 +178,18 @@ class Modula_CPT {
 				'valign',
 				'link',
 				'target',
+				'width',
+				'height',
 			) );
 
 			$modula_images = array();
 
-			foreach ( $_POST['modula-images']['id'] as $index => $image_id ) {
+			for ( $index=0; $index < count( $_POST['modula-images']['id'] ); $index++ ) { 
+			// foreach ( $_POST['modula-images']['id'] as $index => $image_id ) {
 				$new_image = array();
 
 				// Save the image's id
-				$new_image['id'] = $image_id;
+				$new_image['id'] = $_POST['modula-images']['id'][ $index ];
 
 				// Get from the current image only accepted attributes
 				foreach ( $image_attributes as $attribute ) {
@@ -201,13 +204,12 @@ class Modula_CPT {
 				// Check if we need to resize this image
 				if ( isset( $_POST['modula-settings']['img_size'] ) ) {
 					$img_size = absint( $_POST['modula-settings']['img_size'] );
-					$sizes = $this->resizer->get_image_size( $image_id, $img_size );
+					$sizes = $this->resizer->get_image_size( $new_image['id'], $img_size );
 					if ( ! is_wp_error( $sizes ) ) {
 						$this->resizer->resize_image( $sizes['url'], $sizes['width'], $sizes['height'] );
 					}
 					
 				}
-
 
 				// Add new image to modula images
 				$modula_images[ $index ] = $new_image;

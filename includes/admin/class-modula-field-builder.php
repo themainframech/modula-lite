@@ -91,46 +91,54 @@ class Modula_Field_Builder {
 	    }
 
 		echo '<div class="modula-uploader-container">';
-		echo '<div class="modula-upload-actions">Drop files anywhere to upload or <a href="#" id="modula-uploader-browser" class="button">Select Files</a> or <a href="#" id="modula-wp-gallery" class="button">Select from Media Library</a>. Drag the images in order to sort them.</div>';
+		echo '<div class="modula-upload-actions">';
+		echo '<div class="upload-info-container">';
+		echo '<div class="upload-info">';
+		echo sprintf( __( 'Drag and drop files in this window (max %s per file), you can also drag to change the order of the images.', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) );
+		echo '</div>';
+		echo '<div class="upload-progress">';
+		echo '<p class="modula-upload-numbers">' . esc_html( 'Uploading image', 'text-domain' ) . ' <span class="modula-current"></span> ' . esc_html( 'of', 'text-domain' ) . ' <span class="modula-total"></span>';
+		echo '<div class="modula-progress-bar"><div class="modula-progress-bar-inner"></div></div>';
+		echo '</div>';
+		echo '</div>';
+		echo '<div class="buttons">';
+		echo '<a href="#" id="modula-uploader-browser" class="button">Upload image files</a><a href="#" id="modula-wp-gallery" class="button button-primary">Select from Library</a>';
+		echo '</div>';
+		echo '</div>';
 		echo '<div id="modula-uploader-container" class="modula-uploader-inline">';
 			echo '<div class="modula-error-container"></div>';
-			echo '<div class="modula-uploader-inline-content">';
-				echo '<h2 class="modula-upload-message">No images.</h2>';
+			echo '<div class="modula-uploader-inline-content six-columns">';
+				echo '<h2 class="modula-upload-message"><span class="dashicons dashicons-upload"></span>Drag & Drop files here!</h2>';
 
-				if ( is_array( $images ) && ! empty( $images ) ) {
+				// if ( is_array( $images ) && ! empty( $images ) ) {
 					
-					foreach ( $images as $image ) {
-						$image_url = wp_get_attachment_image_src( $image['id'], 'thumbnail' );
-						$image_full = wp_get_attachment_image_src( $image['id'], 'full' );
+				// 	foreach ( $images as $image ) {
+				// 		$image_url = wp_get_attachment_image_src( $image['id'], 'thumbnail' );
+				// 		$image_full = wp_get_attachment_image_src( $image['id'], 'full' );
 
-						echo '<div class="modula-single-image" data-id="' . esc_attr( $image['id'] ) . '">';
-					        echo '<div class="modula-single-image-content">';
-				                echo '<img src="' . esc_url( $image_url[0] ) . '" alt="' . esc_attr( $image['alt'] ) . '" data-image="' . esc_url( $image_full[0] ) . '" />';
-					            echo '<div class="actions">';
-					                echo ' <a href="#" class="modula-edit-image""><span class="dashicons dashicons-edit"></span></a>';
-					                echo '<a href="#" class="modula-delete-image""><span class="dashicons dashicons-trash"></span></a>';
-					            echo '</div>';
-					            echo '<div class="values">';
-					                echo '<input type="hidden" name="modula-images[id][]" class="modula-image-id" value="' . esc_attr( $image['id'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[alt][]" class="modula-image-alt" value="' . esc_attr( $image['alt'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[title][]" class="modula-image-title" value="' . esc_attr( $image['title'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[caption][]" class="modula-image-caption" value="' . esc_attr( $image['caption'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[halign][]" class="modula-image-halign" value="' . esc_attr( $image['halign'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[valign][]" class="modula-image-valign" value="' . esc_attr( $image['valign'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[link][]" class="modula-image-link" value="' . esc_attr( $image['link'] ) . '">';
-					                echo '<input type="hidden" name="modula-images[target][]" class="modula-image-target" value="' . esc_attr( $image['target'] ) . '">';
-					            echo '</div>';
-					        echo '</div>';
-					    echo '</div>';
-					}
+				// 		echo '<div class="modula-single-image" data-id="' . esc_attr( $image['id'] ) . '">';
+				// 	        echo '<div class="modula-single-image-content">';
+				//                 echo '<img src="' . esc_url( $image_url[0] ) . '" alt="' . esc_attr( $image['alt'] ) . '" data-image="' . esc_url( $image_full[0] ) . '" />';
+				// 	            echo '<div class="actions">';
+				// 	                echo ' <a href="#" class="modula-edit-image""><span class="dashicons dashicons-edit"></span></a>';
+				// 	                echo '<a href="#" class="modula-delete-image""><span class="dashicons dashicons-trash"></span></a>';
+				// 	            echo '</div>';
+				// 	            echo '<div class="values">';
+				// 	                echo '<input type="hidden" name="modula-images[id][]" class="modula-image-id" value="' . esc_attr( $image['id'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[alt][]" class="modula-image-alt" value="' . esc_attr( $image['alt'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[title][]" class="modula-image-title" value="' . esc_attr( $image['title'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[caption][]" class="modula-image-caption" value="' . esc_attr( $image['caption'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[halign][]" class="modula-image-halign" value="' . esc_attr( $image['halign'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[valign][]" class="modula-image-valign" value="' . esc_attr( $image['valign'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[link][]" class="modula-image-link" value="' . esc_attr( $image['link'] ) . '">';
+				// 	                echo '<input type="hidden" name="modula-images[target][]" class="modula-image-target" value="' . esc_attr( $image['target'] ) . '">';
+				// 	            echo '</div>';
+				// 	        echo '</div>';
+				// 	    echo '</div>';
+				// 	}
 
-				}
+				// }
 
-			echo '</div>';
-			echo '<div class="modula-uploader-footer">';
-			echo '<div class="modula-progress-bar"><div class="modula-progress-bar-inner"></div></div>';
-			echo '<p class="max-upload-size">' . sprintf( __( 'Maximum upload file size: %s.', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) ) . '</p>';
-			echo '<p class="modula-upload-numbers">' . esc_html( 'Uploading image', 'text-domain' ) . ' <span class="modula-current"></span> ' . esc_html( 'of', 'text-domain' ) . ' <span class="modula-total"></span>';
 			echo '</div>';
 			echo '<div id="modula-dropzone-container"><div class="modula-uploader-window-content"><h1>Drop files to upload</h1></div></div>';
 		echo '</div>';
@@ -172,6 +180,7 @@ class Modula_Field_Builder {
 			}
 
 			// Generate all fields for current tab
+			$current_tab_content .= '<div class="form-table-wrapper">';
 			$current_tab_content .= '<table class="form-table"><tbody>';
 			foreach ( $fields as $field_id => $field ) {
 				$field['id'] = $field_id;
@@ -180,6 +189,7 @@ class Modula_Field_Builder {
 			$current_tab_content .= '</tbody></table>';
 			// Filter to add extra content to a specific tab
 			$current_tab_content .= apply_filters( 'modula_' . $tab_id . '_tab_content', '' );
+			$current_tab_content .= '</div>';
 			$current_tab_content .= '</div>';
 			$tabs_content_html .= $current_tab_content;
 
@@ -210,7 +220,11 @@ class Modula_Field_Builder {
 
 	/* Create HMTL for a row */
 	private function _render_row( $field ) {
-		$format = '<tr><th scope="row"><label>%s</label></th><td>%s</td></tr>';
+		$format = '<tr data-container="' . $field['id'] . '"><th scope="row"><label>%s</label></th><td>%s</td></tr>';
+
+		if ( 'textarea' == $field['type'] || 'custom_code' == $field['type'] ) {
+			$format = '<tr data-container="' . $field['id'] . '"><td colspan="2"><label class="th-label">%s</label><div>%s</div></td></tr>';
+		}
 
 		$default = '';
 
@@ -231,10 +245,10 @@ class Modula_Field_Builder {
 
 		switch ( $field['type'] ) {
 			case 'text':
-				$html = '<input type="text" class="regular-text" name="modula-settings[' . $field['id'] . ']" value="' . esc_attr( $value ) . '">';
+				$html = '<input type="text" class="regular-text" name="modula-settings[' . $field['id'] . ']" data-setting="' . $field['id'] . '" value="' . esc_attr( $value ) . '">';
 				break;
 			case 'select' :
-				$html = '<select name="modula-settings[' . $field['id'] . ']" class="regular-text">';
+				$html = '<select name="modula-settings[' . $field['id'] . ']" data-setting="' . $field['id'] . '" class="regular-text">';
 				foreach ( $field['values'] as $key => $option ) {
 					if ( is_array( $option ) ) {
 						$html .= '<optgroup label="' . $key . '">';
@@ -243,7 +257,7 @@ class Modula_Field_Builder {
 						}
 						$html .= '</optgroup>';
 					}else{
-						$html .= '<option value="' . $key . '" ' . selected( $key, $option, false ) . '>' . $option . '</option>';
+						$html .= '<option value="' . $key . '" ' . selected( $key, $value, false ) . '>' . $option . '</option>';
 					}
 				}
 				if ( isset( $field['disabled'] ) && is_array( $field['disabled'] ) ) {
@@ -259,25 +273,28 @@ class Modula_Field_Builder {
 				$min  = isset( $field['min'] ) ? $field['min'] : 0;
 				$max  = isset( $field['max'] ) ? $field['max'] : 100;
 				$step = isset( $field['step'] ) ? $field['step'] : 1;
+				$value = ( '' == $value ) ? $min : $value;
 				$attributes = 'data-min="' . $min . '" data-max="' . $max . '" data-step="' . $step . '"';
 				$html .= '<div class="slider-container modula-ui-slider-container">';
-					$html .= '<input readonly="readonly"  name="modula-settings[' . $field['id'] . ']" type="text" class="rl-slider modula-ui-slider-input" id="input_' . $field['id'] . '" value="' . $value . '" ' . $attributes . '/>';
+					$html .= '<input readonly="readonly" data-setting="' . $field['id'] . '"  name="modula-settings[' . $field['id'] . ']" type="text" class="rl-slider modula-ui-slider-input" id="input_' . $field['id'] . '" value="' . $value . '" ' . $attributes . '/>';
 					$html .= '<div id="slider_' . $field['id'] . '" class="ss-slider modula-ui-slider"></div>';
 				$html .= '</div>';
 				break;
 			case 'color' :
 				$html .= '<div class="modula-colorpickers">';
-				$html .= '<input id="' . esc_attr( $field['id'] ) . '" class="modula-color" name="modula-settings[' . $field['id'] . ']" value="' . esc_attr( $value ) . '">';
+				$html .= '<input id="' . esc_attr( $field['id'] ) . '" class="modula-color" data-setting="' . $field['id'] . '" name="modula-settings[' . $field['id'] . ']" value="' . esc_attr( $value ) . '">';
 				$html .= '</div>';
 				break;
 			case "toggle":
 				$html .= '<div class="onoffswitch">';
-					$html .= '<input type="checkbox" id="' . $field['id'] . '" name="modula-settings[' . $field['id'] . ']" class="onoffswitch-checkbox" value="1" ' . checked( 1, $value, false ) . ' >';
+					$html .= '<input type="checkbox" id="' . $field['id'] . '" name="modula-settings[' . $field['id'] . ']" data-setting="' . $field['id'] . '" class="onoffswitch-checkbox" value="1" ' . checked( 1, $value, false ) . ' >';
 					$html .= '<label class="onoffswitch-label" for="' . $field['id'] . '"></label>';
 				$html .= '</div>';
 				break;
 			case "custom_code":
-				$html = '<div class="modula-code-editor" data-syntax="' . $field['syntax'] . '"><textarea name="modula-settings[' . $field['id'] . ']" id="modula-' . $field['id'] . '" class="large-text code"  rows="10" cols="50">' . $value . '</textarea></div>';
+				$html = '<div class="modula-code-editor" data-syntax="' . $field['syntax'] . '">';
+				$html .= '<textarea data-setting="' . $field['id'] . '" name="modula-settings[' . $field['id'] . ']" id="modula-' . $field['id'] . '" class="large-text code"  rows="10" cols="50">' . $value . '</textarea>';
+				$html .= '</div>';
 				break;
 			case "hover-effect":
 				$hovers = array( 
@@ -297,7 +314,7 @@ class Modula_Field_Builder {
 					'seemo'     => esc_html__( 'Seemo', 'modula-gallery' ),
 					'comodo'    => esc_html__( 'Comodo', 'modula-gallery' ),
 				);
-				$html .= '<select name="modula-settings[' . $field['id'] . ']"  class="regular-text">';
+				$html .= '<select name="modula-settings[' . $field['id'] . ']" data-setting="' . $field['id'] . '" class="regular-text">';
 				foreach ( $hovers as $key => $option ) {
 					$html .= '<option value="' . $key . '" ' . selected( $key, $value, false ) . '>' . $option . '</option>';
 				}

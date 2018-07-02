@@ -1,19 +1,24 @@
 <?php
 
-$js_config = json_encode( array(
+$js_config = array(
 	"margin"          => absint( $data->settings['margin'] ),
 	"enableTwitter"   => boolval( $data->settings['enableTwitter'] ),
 	"enableFacebook"  => boolval( $data->settings['enableFacebook'] ),
 	"enablePinterest" => boolval( $data->settings['enablePinterest'] ),
 	"enableGplus"     => boolval( $data->settings['enableGplus'] ),
 	"randomFactor"    => ( $data->settings['randomFactor'] / 100 ),
-) );
+	'type'            => isset( $data->settings['type'] ) ? $data->settings['type'] : 'creative-gallery',
+	'columns'         => isset( $data->settings['columns'] ) ? $data->settings['columns'] : 6,
+	'gutter'          => isset( $data->settings['gutter'] ) ? $data->settings['gutter'] : 10,
+);
+
+$js_config = apply_filters( 'modula_gallery_settings', $js_config );
 
 // print_r( $data->settings );
 
 ?>
 
-<div id="<?php echo $data->gallery_id ?>" class="modula modula-gallery" data-config="<?php echo esc_attr( $js_config ) ?>">
+<div id="<?php echo $data->gallery_id ?>" class="modula modula-gallery" data-config="<?php echo esc_attr( json_encode( $js_config ) ) ?>">
 	<div class='items'>
 		<?php
 

@@ -9,18 +9,22 @@
 
 /* Settings Tabs */
 .modula-settings-container .modula-tabs {
-	background-color: #f5f5f5;
+	background-color: #f8f8f8;
 }
 .modula-settings-container .modula-tabs .modula-tab {
-	margin: 0 20px;
+	margin: 0 10px 0 0;
     padding: 20px 0 20px 0px;
-    color: #999;
+    color: #9c9c9c;
     cursor: pointer;
     position: relative;
-    width: 150px;
+    width: 180px;
+    font-size: 16px;
+    position: relative;
+    position: relative;
 }
 .modula-settings-container .modula-tabs .modula-tab > i {
-	margin-right: 5px;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 .modula-settings-container .modula-tabs .modula-tab:after {
 	position: absolute;
@@ -34,17 +38,36 @@
 .modula-settings-container .modula-tabs .modula-tab.active-tab:first-child {
 	border-top: 0 none;
 }
-
+.modula-settings-container .modula-tabs .modula-tab:hover {
+	color: #333333;
+}
 .modula-settings-container .modula-tabs .modula-tab.active-tab {
 	margin: 0;
-    padding: 20px 20px 20px 20px;
+    padding: 15px 10px 15px 0;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
-    color: #444;
+    color: #333333;
+    box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.43) inset;
+}
+.modula-settings-container .modula-tabs .modula-tab.active-tab:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 3px;
+	height: 100%;
+	background-color: #57a7c9;
 }
 .modula-settings-container .modula-tabs .modula-tab.active-tab:after {
 	background-color: #fff;
+}
+
+tr label.th-label {
+	color: #23282d;
+	font-weight: 600;
+	margin-bottom: 10px;
+	display: block;
 }
 
 
@@ -52,24 +75,42 @@
 .postbox .modula-settings-container table.form-table {
 	margin: 0;
 }
+.postbox .modula-settings-container .form-table-wrapper {
+	padding: 0 20px;
+	box-sizing: border-box;
+}
 .modula-settings-container .modula-tabs-content {
-	padding: 20px;
+	padding: 30px 20px 20px;
 	border-left: 1px solid #ddd;
+	flex-grow: 1;
 }
 .modula-tabs-content > div:not( .active-tab ) {
 	display: none;
 }
 .modula-settings-container .modula-tabs-content .tab-content-header {
 	width: 100%;
-	padding-bottom: 30px;
+    padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header h2 {
-	font-size: 18px;
+	font-size: 22px;
     font-weight: 700;
     padding: 0;
     margin-bottom: 10px;
+    line-height: 40px;
+    color: #333333;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description {
+    font-size: 16px;
+    line-height: 22px;
+    opacity: .8;
+}
+.modula-settings-container .form-table td p.description {
+	font-size: 13px;
 }
 
 /* Fields */
@@ -151,12 +192,12 @@
 }
 
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label {
-  background-color: #3caf0e;
+  background-color: #57a7c9;
 }
 
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  border-color: #3caf0e;
+  border-color: #57a7c9;
 }
 
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
@@ -240,7 +281,7 @@
 	display: block;
 	border: 0;
 	background-position: 0 0;
-	background: #E04D43;
+	background: #57a7c9;
 	top: 0;
 	bottom: 0;
 }
@@ -254,7 +295,6 @@
     height: 267px;
     overflow: hidden;
     position: relative;
-    float: left;
 }
 .modula-effects-preview .item img {
     position: absolute;
@@ -407,22 +447,41 @@
 
 /* Upsells */
 .modula-upsell {
-	background: #fcf8e3;
-    border: 1px solid #faebcc;
+	background: #e5f3e2;
+    border: 1px solid #a8d69c;
     padding: 20px;
     margin-top: 30px;
 }
 #poststuff .modula-upsell h2 {
-	margin: 0 0 20px 0;
-	font-size: 16px;
+	margin: 0 0 10px 0;
+	font-size: 18px;
     font-weight: 700;
     padding: 0;
+    color: #333333;
+}
+.modula-upsell p {
+	margin: 0;
+}
+.modula-upsell p.modula-upsell-description {
+	font-size: 16px;
+	color: #333333;
+	opacity: .8;
+	margin-top: 0;
+	margin-bottom: 30px;
 }
 .modula-upsell .button {
+    height: 31px;
+    line-height: 31px;
+    font-weight: bold;
+}
+.modula-upsell .button:first-child {
 	margin-right: 10px;
-	box-shadow: none;
-    line-height: 30px;
-    height: 33px;
+}
+.modula-upsell .button.button-primary {
+	background-color: #52ad3a;
+	border-color: #378c21;
+	box-shadow: 0 1px 0 #378c21;
+	text-shadow: 0 -1px 1px #378c21, 1px 0 1px #378c21, 0 1px 1px #378c21, -1px 0 1px #378c21;
 }
 .modula-upsell .action-link,
 .modula-upsell .action-link:hover {
@@ -436,10 +495,38 @@
 #modula-uploader-container {
     min-height: 300px;
     position: relative;
-    margin-top: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#modula-uploader-container.modula-resizer-enabled {
+	padding-left: 20px;
+	margin-bottom: 20px;
 }
 .modula-upload-actions {
-  line-height: 28px;
+    padding: 15px 20px;
+    background-color: #f8fcfd;
+    border-bottom: 1px solid #ecf6f9;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.segrip.ui-resizable-se {
+	width: 20px;
+	height: 20px;
+	background-image: url( '../images/modula-resize-icon.png' );
+	display: none;
+}
+.modula-resizer-enabled .segrip.ui-resizable-se {
+	display: block;
+}
+.modula-upload-actions #modula-uploader-browser {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.modula-upload-actions #modula-wp-gallery {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 .wp-core-ui .modula-upload-actions > a {
   margin: 0 5px;
@@ -492,11 +579,18 @@
   transform: translate( -50%, -50% );
 }
 #poststuff .modula-upload-message {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 43px;
+    line-height: 1;
     font-weight: 400;
     margin: 0;
     display: none;
+    color: #ebebeb;
+}
+#poststuff .modula-upload-message .dashicons,
+#poststuff .modula-upload-message .dashicons-before:before{
+  font-size: 43px;
+  width: 43px;
+  height: 43px;
 }
 .modula-uploader-inline p {
     font-size: 12px;
@@ -520,28 +614,54 @@
   content: "";
   clear: both;
 }
+.upload-progress .modula-upload-numbers {
+  margin: 0;
+  line-height: 1.4em;
+}
 .modula-progress-bar {
     width: 100%;
+    max-width: 400px;
     position: relative;
-    height: 10px;
-    width: 100%;
-    margin: 12px auto 5px;
+    height: 2px;
+    margin: 8px 0 0;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
-    opacity: 0;
+    background: #e5e5e5;
 }
+.upload-info-container {
+  position: relative;
+  overflow: hidden;
+}
+.upload-info-container .upload-info {
+  padding: 5px 0;
+}
+.upload-info-container .upload-progress {
+    position: absolute;
+    background-color: #f8fcfd;
+    height: 100%;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    transition: transform 0.5s;
+    transform: translateY( 100% );
+}
+
+.modula-upload-actions.show-progress .upload-info-container .upload-progress {
+  transform: translateY( 0 );
+}
+
 .modula-progress-bar .modula-progress-bar-inner {
-  height: 10px;
+  height: 2px;
   min-width: 20px;
-  width: 0;
-  background: #aaa;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  width: 0px;
+  background: #0085ba;
   -webkit-transition: width 300ms;
   -moz-transition: width 300ms;
   -ms-transition: width 300ms;
   -o-transition: width 300ms;
   transition: width 300ms;
+  border-radius: 5px;
 }
 .modula-uploader-footer.show-progress .modula-upload-numbers,
 .modula-uploader-footer.show-progress .modula-progress-bar {
@@ -552,9 +672,9 @@
 .modula-uploader-inline-content .modula-single-image-placeholder {
     cursor: move;
     display: inline-block;
-    padding: 8px;
+    padding: 0 10px 20px;
     box-sizing: border-box;
-    width: 16%;
+    width: 16.66%;
 }
 .modula-uploader-inline-content .modula-single-image-placeholder:after {
   width: 100%;
@@ -562,14 +682,16 @@
   display: block;
   content: "";
   position: relative;
-  border: 2px dashed #eee;
+  border: 1px dashed #d0d1d1;
   padding-top: 100%;
 }
 .modula-uploader-inline-content .modula-single-image .modula-single-image-content {
     position: relative;
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid #d6d6d6;
     background: #eee;
     box-sizing: border-box;
+    background-position: center;
+    background-size: cover;
 }
 .modula-uploader-inline-content .modula-single-image .modula-single-image-content img {
   display: block;
@@ -580,17 +702,31 @@
 }
 .modula-uploader-inline-content .modula-single-image .actions {
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 0;
+    right: 50%;
+    transform: translateX( 50% );
     z-index: 99;
-    background: #0073aa;
-    border-bottom-left-radius: 3px;
+    font-size: 0;
 }
 .modula-uploader-inline-content .modula-single-image .actions a {
-  text-decoration: none;
-  color: #fff;
-  display: inline-block;
-  padding: 5px;
+  	text-decoration: none;
+  	color: #fff;
+  	display: inline-block;
+  	padding: 5px;
+  	display: inline-block;
+
+  	text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+	background: #0085ba;
+	border: 1px solid #006799;
+	border-bottom-width: 2px;
+
+}
+.modula-uploader-inline-content .modula-single-image .actions a:first-child {
+	border-top-left-radius: 5px;
+}
+.modula-uploader-inline-content .modula-single-image .actions a:last-child {
+	border-left-width: 0;
+	border-top-right-radius: 5px;
 }
 .modula-uploader-inline-content .modula-single-image .actions a span {
   font-size: 18px;
@@ -649,4 +785,49 @@
 }
 .inline-input {
   display: inline;
+}
+
+/* Resizeble & Draggble */
+.ui-draggable.ui-resizable > .segrip {
+    width: 10px;
+    height: 10px;
+    background: red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.ui-draggable.ui-resizable .modula-single-image-content img {
+  display: none;
+}
+.ui-draggable.ui-resizable .modula-single-image-content {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-draggable.ui-resizable.modula-single-image {
+  padding: 0;
+}
+
+.packery-drop-placeholder {
+  outline: 3px dashed #444;
+  outline-offset: -6px;
+  /* transition position changing */
+  -webkit-transition: -webkit-transform 0.2s;
+          transition: transform 0.2s;
+}
+
+.ui-resizable-helper {
+  border: 3px dashed #444;
+  box-sizing: border-box;
+}
+
+/* New Design by Gabi */
+#poststuff #modula-preview-gallery h2.hndle,
+#poststuff #modula-settings h2.hndle {
+  padding-left: 20px;
+}
+
+#poststuff #modula-preview-gallery .inside {
+  margin-top: 0;
+  padding: 0;
 }

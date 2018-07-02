@@ -28,7 +28,7 @@ $hasTitle = empty( $image['title'] ) ? ' notitle' : '';
 ?>
 
 
-<div class="item<?php echo $hasTitle ?>">
+<div class="item<?php echo $hasTitle ?>" data-width="<?php echo esc_attr( $image['width'] ) ?>" data-height="<?php echo esc_attr( $image['height'] ) ?>">
 	<a<?php echo Modula_Helper::generate_attributes( $data->link_attributes ) ?> class="tile-inner">
 		<img data-valign='<?php echo esc_attr( $image['valign'] ) ?>' alt='<?php echo esc_attr( $image['alt'] ) ?>' data-halign='<?php echo esc_attr( $image['halign'] ) ?>' class='pic' src='<?php echo esc_url( $image_url ) ?>' data-src='<?php echo esc_url( $image_url ) ?>' />
 	</a>
