@@ -102,7 +102,7 @@
                         <label>
                         <span class="description">
                             <input type="checkbox" name="target" value="1"<# if ( data.target == '1' ) { #> checked <# } #> />
-                            <?php _e( 'Opens your image links in a new browser window / tab.', 'modula-gallery' ); ?>
+                            <span><?php _e( 'Opens your image links in a new browser window / tab.', 'modula-gallery' ); ?></span>
                         </span>
                         </label>
                     </div>
