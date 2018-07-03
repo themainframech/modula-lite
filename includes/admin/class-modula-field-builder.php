@@ -273,7 +273,7 @@ class Modula_Field_Builder {
 				$min  = isset( $field['min'] ) ? $field['min'] : 0;
 				$max  = isset( $field['max'] ) ? $field['max'] : 100;
 				$step = isset( $field['step'] ) ? $field['step'] : 1;
-				$value = ( '' == $value ) ? $min : $value;
+				$value = ( '' == $value ) ? $min : absint( $value );
 				$attributes = 'data-min="' . $min . '" data-max="' . $max . '" data-step="' . $step . '"';
 				$html .= '<div class="slider-container modula-ui-slider-container">';
 					$html .= '<input readonly="readonly" data-setting="' . $field['id'] . '"  name="modula-settings[' . $field['id'] . ']" type="text" class="rl-slider modula-ui-slider-input" id="input_' . $field['id'] . '" value="' . $value . '" ' . $attributes . '/>';

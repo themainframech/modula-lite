@@ -138,10 +138,20 @@ class Modula_Shortcode {
 			}
 
 			$css .= "#{$gallery_id} .item .caption { background-color: " . $settings['captionColor'] . ";  }";
+			if ( '' != $settings['captionColor'] || '' != $settings['captionFontSize'] ) {
+				$css .= "#{$gallery_id} .item .figc {";
+				if ( '' != $settings['captionColor'] ) {
+					$css .= 'color:' . $settings['captionColor'] . ';';
+				}
+				if ( '' != $settings['captionFontSize'] && 0 != $settings['captionFontSize'] ) {
+					$css .= 'font-size:' . $settings['captionFontSize'] . 'px;';
+				}
+				$css .= '}';
+			}
 
-			$css .= "#{$gallery_id} .item .figc { color: " . $settings['captionColor'] . "; font-size: " . $settings['captionFontSize'] . "px; }";
-
-			$css .= "#{$gallery_id} .item .figc h2.jtg-title {  font-size: " . $settings['titleFontSize'] . "px; }";
+			if ( '' != $settings['titleFontSize'] && 0 != $settings['titleFontSize'] ) {
+				$css .= "#{$gallery_id} .item .figc h2.jtg-title {  font-size: " . $settings['titleFontSize'] . "px; }";
+			}
 
 			// $css .= "#{$gallery_id} .item { transform: scale(" . $settings['loadedScale'] / 100 . ") translate(" . $settings['loadedHSlide'] . 'px,' . $settings['loadedVSlide'] . "px) rotate(" . $settings['loadedRotate'] . "deg); }";
 			if ( 'custom-grid' != $settings['type'] ) {
