@@ -212,6 +212,8 @@ var modulaItemView = Backbone.View.extend({
     },
 
     resizeImage: function( event, ui ) {
+
+        $(event.target).css('z-index','999');
         
         var snap_width = wp.Modula.Resizer.calculateSize( ui.size.width );
         var snap_height = wp.Modula.Resizer.calculateSize( ui.size.height );
@@ -224,7 +226,7 @@ var modulaItemView = Backbone.View.extend({
         ui.element.width( ui.size.width );
         ui.element.height( ui.size.height );
 
-        wp.Modula.GalleryView.resetPackary();
+        // wp.Modula.GalleryView.resetPackary();
 
     },
 
