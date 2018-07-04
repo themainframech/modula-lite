@@ -1,10 +1,35 @@
 wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
 
+ModulaToolbar = wp.media.view.Toolbar.Select.extend({
+	clickSelect: function() {
+
+		var controller = this.controller,
+			state = controller.state(),
+			selection = state.get('selection');
+
+		controller.close();
+		state.trigger( 'insert', selection ).reset();
+
+	}
+});
+
+ModulaFrame = wp.media.view.MediaFrame.Select.extend({
+
+	createSelectToolbar: function( toolbar, options ) {
+		options = options || this.options.button || {};
+		options.controller = this;
+
+		toolbar.view = new ModulaToolbar( options );
+	},
+
+});
+
 wp.Modula.uploadHandler = {
 	uploaderOptions: {
 		container: $( '#modula-uploader-container' ),
 		browser: $( '#modula-uploader-browser' ),
-		dropzone: $( '#modula-uploader-container' )
+		dropzone: $( '#modula-uploader-container' ),
+		max_files: 20,
 	},
 	dropzone: $( '#modula-dropzone-container' ),
 	progressBar: $( '.modula-progress-bar' ),
@@ -85,17 +110,19 @@ wp.Modula.uploadHandler = {
 		});
 
 		// Modula WordPress Media Library
-        wp.media.frames.modula = wp.media( {
-            frame: 'post',
+        wp.media.frames.modula = new ModulaFrame( {
+            frame: 'select',
+            reset: false,
             title:  wp.media.view.l10n.addToGalleryTitle,
             button: {
                 text: wp.media.view.l10n.addToGallery,
             },
-            multiple: true
+            multiple: 'add',
         } );
 
         // Mark existing Gallery images as selected when the modal is opened
         wp.media.frames.modula.on( 'open', function() {
+
             // Get any previously selected images
             var selection = wp.media.frames.modula.state().get( 'selection' );
 
@@ -104,7 +131,9 @@ wp.Modula.uploadHandler = {
             	var image = wp.media.attachment( item.get( 'id' ) );
                 selection.add( image ? [ image ] : [] );
             } );
+
         } );
+        
 
         // Insert into Gallery Button Clicked
         wp.media.frames.modula.on( 'insert', function( selection ) {
@@ -121,7 +150,7 @@ wp.Modula.uploadHandler = {
             		currentModel = oldItemsCollection.get( attachmentAtts['id'] );
 
             	if ( currentModel ) {
-            		wp.Modula.Items.add( currentModel );
+            		wp.Modula.Items.addItem( currentModel );
             		oldItemsCollection.remove( currentModel );
             	}else{
             		modulaGalleryObject.generateSingleImage( attachmentAtts );
@@ -177,7 +206,11 @@ wp.Modula.uploadHandler = {
 			titleSource = wp.Modula.Settings.get( 'wp_field_title' );
 
 		data['full']      = attachment['sizes']['full']['url'];
-		data['thumbnail'] = attachment['sizes']['thumbnail']['url'];
+		if ( undefined == attachment['sizes']['thumbnail'] ) {
+			data['thumbnail']      = attachment['sizes']['full']['url'];
+		}else{
+			data['thumbnail'] = attachment['sizes']['thumbnail']['url'];
+		}
 		data['id']        = attachment['id'];
 		data['alt']       = attachment['alt'];
 

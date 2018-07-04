@@ -1,6 +1,7 @@
 wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
 
 var modulaItemsCollection = Backbone.Collection.extend({
+    maxFiles: 20,
 
     moveItem: function( model, index ){
         var currentIndex = this.indexOf( model );
@@ -11,6 +12,17 @@ var modulaItemsCollection = Backbone.Collection.extend({
             this.remove(model, {silent: true}); 
             this.add(model, {at: index-1});
         }
+
+    },
+
+    addItem: function( model ) {
+
+        if ( this.length > 19 ) {
+            var removedItem = this.at( 0 );
+            removedItem.delete();
+        }
+
+        this.add( model );
 
     }
 
@@ -48,7 +60,7 @@ var modulaItem = Backbone.Model.extend( {
   		wp.Modula.Items = 'undefined' === typeof( wp.Modula.Items ) ? new modulaItemsCollection() : wp.Modula.Items;
 
   		// Add this model to items
-  		wp.Modula.Items.add( this );
+  		wp.Modula.Items.addItem( this );
 
   		// Set collection index to this model
   		this.set( 'index', wp.Modula.Items.indexOf( this ) );

@@ -1,6 +1,9 @@
 wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
 
 jQuery( document ).ready( function( $ ){
+
+	// Here we will have all gallery's items.
+	wp.Modula.Items = new modulaItemsCollection();
 	
 	// Settings related objects.
 	wp.Modula.Settings = new modulaSettings( modulaHelper.settings );
@@ -17,9 +20,6 @@ jQuery( document ).ready( function( $ ){
 	if ( 'undefined' == typeof wp.Modula.Resizer ) {
 		wp.Modula.Resizer = new modulaGalleryResizer();
 	}
-
-	// Here we will have all gallery's items.
-	wp.Modula.Items = new modulaItemsCollection();
 
 	// Modula edit item modal.
 	wp.Modula.EditModal = new modulaModal();

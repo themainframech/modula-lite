@@ -37,7 +37,7 @@ var modulaGalleryResizer = Backbone.Model.extend({
     	   We will calculate the size ( width and height, because every item is a square ) of an item.
 		   The formula is : from the container size we will subtract gutter * number of columns and then we will dived by number of columns
     	 */
-    	size = Math.ceil( ( containerWidth - gutter * columns ) / columns );
+    	size = Math.floor( ( containerWidth - ( gutter * ( columns -1 ) ) ) / columns );
     	this.set( 'size', size );
     },
     /* 
@@ -83,7 +83,7 @@ var modulaGalleryResizer = Backbone.Model.extend({
 
         // Change packary columnWidth & columnHeight
         wp.Modula.GalleryView.setPackaryOption( 'columnWidth', this.get( 'size' ) );
-        wp.Modula.GalleryView.setPackaryOption( 'columnHeight', this.get( 'size' ) );
+        wp.Modula.GalleryView.setPackaryOption( 'rowHeight', this.get( 'size' ) );
 
         // Update Grid
         wp.Modula.GalleryView.setPackaryOption( 'gutter', parseInt( this.get( 'gutter' ) ) );
@@ -186,6 +186,8 @@ var modulaGalleryView = Backbone.View.extend({
         if ( 'undefined' == typeof wp.Modula.Resizer ) {
             wp.Modula.Resizer = new modulaGalleryResizer({ 'galleryView': this });
         }
+
+        console.log( wp.Modula.Resizer.get( 'size' ) );
 
     	this.container.packery({
     		itemSelector: '.modula-single-image',
