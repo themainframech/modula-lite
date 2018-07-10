@@ -86,6 +86,9 @@ class Modula {
 	        $modula_helper = array(
 	        	'items' => array(),
 	        	'settings' => array(),
+	        	'strings' => array(
+	        		'limitExceeded' => sprintf( __( 'You excedeed the limit of 20 photos. You can remove an image or %supgrade to pro%s', 'modula-gallery' ), '<a href="#" target="_blank">', '</a>' ),
+	        	),
 	        );
 
 	        // Get all items from current gallery.

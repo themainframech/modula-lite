@@ -850,3 +850,41 @@ tr label.th-label {
   text-align: left;
     vertical-align: middle;
 }
+
+.modula-media-modal .attachments-browser .media-toolbar .media-toolbar-secondary {
+  width: 100%;
+}
+
+/* Modula Error */
+.modula-error-container {
+  display: block;
+}
+.modula-error-container.hide {
+  display: none;
+}
+.modula-error-container .modula-error {
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fff;
+    border-left: 4px solid #dc3232;
+    box-shadow: 0px 0px 4px 0 rgba(0,0,0,.1);
+    font-weight: 600;
+    margin-top: 5px;
+    position: relative;
+}
+.modula-error-container .modula-error .upload-dismiss-errors {
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    padding: 10px;
+    transition: none;
+    display: block;
+    text-decoration: none;
+    margin-top: -18px;
+}
+.modula-error-container .modula-error .upload-dismiss-errors:before {
+  content: "\f153";
+  display: block;
+  font: 400 16px/1 dashicons;
+  color: #72777c;
+}

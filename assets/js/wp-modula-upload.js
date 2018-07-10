@@ -1,6 +1,6 @@
 wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
 
-ModulaToolbar = wp.media.view.Toolbar.Select.extend({
+var ModulaToolbar = wp.media.view.Toolbar.Select.extend({
 	clickSelect: function() {
 
 		var controller = this.controller,
@@ -13,7 +13,74 @@ ModulaToolbar = wp.media.view.Toolbar.Select.extend({
 	}
 });
 
-ModulaFrame = wp.media.view.MediaFrame.Select.extend({
+var ModulaAttachmentsBrowser = wp.media.view.AttachmentsBrowser.extend({
+	createToolbar: function() {
+		var LibraryViewSwitcher, Filters, toolbarOptions;
+
+		toolbarOptions = {
+			controller: this.controller
+		};
+
+		if ( this.controller.isModeActive( 'grid' ) ) {
+			toolbarOptions.className = 'media-toolbar wp-filter';
+		}
+
+		/**
+		* @member {wp.media.view.Toolbar}
+		*/
+		this.toolbar = new wp.media.view.Toolbar( toolbarOptions );
+
+		this.views.add( this.toolbar );
+
+		this.toolbar.set( 'spinner', new wp.media.view.Spinner({
+			priority: -60
+		}) );
+
+		this.toolbar.set( 'modula-error', new ModulaError({
+			controller: this.controller,
+			priority: -80
+		}) );
+
+		if ( this.options.search ) {
+			// Search is an input, screen reader text needs to be rendered before
+			this.toolbar.set( 'searchLabel', new wp.media.view.Label({
+				value: wp.media.view.l10n.searchMediaLabel,
+				attributes: {
+					'for': 'media-search-input'
+				},
+				priority:   60
+			}).render() );
+			this.toolbar.set( 'search', new wp.media.view.Search({
+				controller: this.controller,
+				model:      this.collection.props,
+				priority:   60
+			}).render() );
+		}
+	},
+});
+
+var ModulaFrame = wp.media.view.MediaFrame.Select.extend({
+
+	className: 'media-frame modula-media-modal',
+
+	createStates: function() {
+		var options = this.options;
+
+		if ( this.options.states ) {
+			return;
+		}
+
+		// Add the default states.
+		this.states.add([
+			// Main states.
+			new ModulaLibrary({
+				library:   wp.media.query( options.library ),
+				multiple:  options.multiple,
+				title:     options.title,
+				priority:  20
+			})
+		]);
+	},
 
 	createSelectToolbar: function( toolbar, options ) {
 		options = options || this.options.button || {};
@@ -22,6 +89,139 @@ ModulaFrame = wp.media.view.MediaFrame.Select.extend({
 		toolbar.view = new ModulaToolbar( options );
 	},
 
+	browseContent: function( contentRegion ) {
+		var state = this.state();
+
+		// this.$el.removeClass('hide-toolbar');
+
+		// Browse our library of attachments.
+		contentRegion.view = new ModulaAttachmentsBrowser({
+			controller: this,
+			collection: state.get('library'),
+			selection:  state.get('selection'),
+			model:      state,
+			sortable:   state.get('sortable'),
+			search:     state.get('searchable'),
+			filters:    state.get('filterable'),
+			date:       state.get('date'),
+			display:    state.has('display') ? state.get('display') : state.get('displaySettings'),
+			dragInfo:   state.get('dragInfo'),
+
+			idealColumnWidth: state.get('idealColumnWidth'),
+			suggestedWidth:   state.get('suggestedWidth'),
+			suggestedHeight:  state.get('suggestedHeight'),
+
+			AttachmentView: state.get('AttachmentView')
+		});
+	},
+
+});
+
+var ModulaSelection = wp.media.model.Selection.extend({
+
+	add: function( models, options ) {
+		var needed;
+
+		if ( ! this.multiple ) {
+			this.remove( this.models );
+		}
+
+		if ( this.length >= 20 ) {
+			models = [];
+			wp.media.frames.modula.trigger( 'modula:show-error', {'message' : modulaHelper.strings.limitExceeded } );
+		}else{
+
+			needed = 20 - this.length;
+
+			if ( Array.isArray( models ) && models.length > 1 ) {
+				models = models.slice( 1 );
+
+				if ( models.length > needed ) {
+					models = models.slice( 0, needed );
+					wp.media.frames.modula.trigger( 'modula:show-error', {'message' : modulaHelper.strings.limitExceeded } );
+				}
+
+			}
+
+		}
+
+		/**
+		 * call 'add' directly on the parent class
+		 */
+		return wp.media.model.Attachments.prototype.add.call( this, models, options );
+	},
+
+});
+
+var ModulaLibrary = wp.media.controller.Library.extend({
+
+	initialize: function() {
+		var selection = this.get('selection'),
+			props;
+
+		if ( ! this.get('library') ) {
+			this.set( 'library', wp.media.query() );
+		}
+
+		if ( ! ( selection instanceof ModulaSelection ) ) {
+			props = selection;
+
+			if ( ! props ) {
+				props = this.get('library').props.toJSON();
+				props = _.omit( props, 'orderby', 'query' );
+			}
+
+			this.set( 'selection', new ModulaSelection( null, {
+				multiple: this.get('multiple'),
+				props: props
+			}) );
+		}
+
+		this.resetDisplays();
+	},
+
+});
+
+var ModulaError = wp.media.View.extend({
+	tagName:   'div',
+	className: 'modula-error-container hide',
+	errorTimeout: false,
+	delay: 400,
+	message: '',
+
+	events: {
+		'click .upload-dismiss-errors': 'hide',
+	},
+
+	initialize: function() {
+
+		this.controller.on( 'modula:show-error', this.show, this );
+		this.controller.on( 'modula:hide-error', this.hide, this );
+
+		this.render();
+	},
+
+	show: function( e ) {
+
+		if ( 'undefined' !== typeof e.message ) {
+			this.message = e.message;
+		}
+
+		if ( '' != this.message ) {
+			this.render();
+			this.$el.removeClass( 'hide' );
+		}
+
+	},
+
+	hide: function() {
+		this.$el.addClass( 'hide' );
+	},
+
+	render: function() {
+		var html = '<div class="modula-error"><span>' + this.message + '</span><button type="button" class="button-link upload-dismiss-errors"><span class="screen-reader-text">Dismiss Errors</span></button></div>';
+		this.$el.html( html );
+	}
 });
 
 wp.Modula.uploadHandler = {
@@ -42,6 +242,7 @@ wp.Modula.uploadHandler = {
 			uploader,
 			dropzone,
 			attachments,
+			limitExceeded = false,
 			modula_files_count = 0;
 
 		uploader = new wp.Uploader( modulaGalleryObject.uploaderOptions );
@@ -79,7 +280,13 @@ wp.Modula.uploadHandler = {
 		// File Uploaded - add images to the screen
 		uploader.uploader.bind( 'FileUploaded', function( up, file, info ) {
 			var response = JSON.parse( info.response );
-			modulaGalleryObject.generateSingleImage( response['data'] );
+			console.log( wp.Modula.Items.length );
+			if ( wp.Modula.Items.length < 20 ) {
+				modulaGalleryObject.generateSingleImage( response['data'] );
+			}else{
+				modulaGalleryObject.limitExceeded = true;
+			}
+			
 		});
 
 		// Files Uploaded - hide progress bar
@@ -87,6 +294,13 @@ wp.Modula.uploadHandler = {
 			setTimeout( function() {
                 modulaGalleryObject.containerUploader.removeClass( 'show-progress' );
             }, 1000 );
+
+			if ( modulaGalleryObject.limitExceeded ) {
+				modulaGalleryObject.limitExceeded= false;
+				wp.media.frames.modula.open();
+				wp.media.frames.modula.trigger( 'modula:show-error', {'message' : modulaHelper.strings.limitExceeded } );
+			}
+
 		});
 
 		// File Upload Error - show errors
@@ -125,12 +339,17 @@ wp.Modula.uploadHandler = {
 
             // Get any previously selected images
             var selection = wp.media.frames.modula.state().get( 'selection' );
+            selection.reset();
+
+            console.log( selection );
 
             // Get images that already exist in the gallery, and select each one in the modal
             wp.Modula.Items.each( function( item ) {
             	var image = wp.media.attachment( item.get( 'id' ) );
                 selection.add( image ? [ image ] : [] );
-            } );
+            });
+
+            selection.single( selection.last() );
 
         } );
         
