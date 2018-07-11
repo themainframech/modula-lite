@@ -26,6 +26,9 @@ var modulaGalleryResizer = Backbone.Model.extend({
         // Listen to column and gutter change
         this.listenTo( wp.Modula.Settings, 'change:columns', this.changeColumns );
         this.listenTo( wp.Modula.Settings, 'change:gutter', this.changeGutter );
+
+        // Listen to window resize
+        jQuery( window ).on( 'resize', $.proxy( this.windowResize, this ) );
     },
     generateSize: function(){
     	var columns = this.get( 'columns' ),
@@ -64,6 +67,16 @@ var modulaGalleryResizer = Backbone.Model.extend({
     getSizeColumns: function( currentSize ){
         var size = this.get( 'size' );
         return Math.round( currentSize / size );
+    },
+
+    windowResize: function() {
+
+        // Change Container Width
+        this.set( 'containerSize', wp.Modula.GalleryView.container.width() );
+
+        // Resize Items
+        this.resizeItems();
+
     },
 
     resizeItems: function(){

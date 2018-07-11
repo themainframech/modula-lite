@@ -120,7 +120,7 @@ var ModulaFrame = wp.media.view.MediaFrame.Select.extend({
 var ModulaSelection = wp.media.model.Selection.extend({
 
 	add: function( models, options ) {
-		var needed;
+		var needed, differences;
 
 		if ( ! this.multiple ) {
 			this.remove( this.models );
@@ -134,9 +134,16 @@ var ModulaSelection = wp.media.model.Selection.extend({
 			needed = 20 - this.length;
 
 			if ( Array.isArray( models ) && models.length > 1 ) {
-				models = models.slice( 1 );
+				// Create an array with elements that we don't have in our selection
+				differences = _.difference( _.pluck(models, 'cid'), _.pluck(this.models, 'cid') );
 
-				if ( models.length > needed ) {
+				// Check if we have mode elements that we need
+				if ( differences.length > needed ) {
+					// Filter our models, to have only that we don't have already
+					models = _.filter( models, function( model ){
+						return _.contains( differences, model.cid );
+					});
+					// Get only how many we need.
 					models = models.slice( 0, needed );
 					wp.media.frames.modula.trigger( 'modula:show-error', {'message' : modulaHelper.strings.limitExceeded } );
 				}
@@ -189,10 +196,6 @@ var ModulaError = wp.media.View.extend({
 	delay: 400,
 	message: '',
 
-	events: {
-		'click .upload-dismiss-errors': 'hide',
-	},
-
 	initialize: function() {
 
 		this.controller.on( 'modula:show-error', this.show, this );
@@ -219,7 +222,7 @@ var ModulaError = wp.media.View.extend({
 	},
 
 	render: function() {
-		var html = '<div class="modula-error"><span>' + this.message + '</span><button type="button" class="button-link upload-dismiss-errors"><span class="screen-reader-text">Dismiss Errors</span></button></div>';
+		var html = '<div class="modula-error"><span>' + this.message + '</span></div>';
 		this.$el.html( html );
 	}
 });
@@ -280,7 +283,6 @@ wp.Modula.uploadHandler = {
 		// File Uploaded - add images to the screen
 		uploader.uploader.bind( 'FileUploaded', function( up, file, info ) {
 			var response = JSON.parse( info.response );
-			console.log( wp.Modula.Items.length );
 			if ( wp.Modula.Items.length < 20 ) {
 				modulaGalleryObject.generateSingleImage( response['data'] );
 			}else{
@@ -340,8 +342,6 @@ wp.Modula.uploadHandler = {
             // Get any previously selected images
             var selection = wp.media.frames.modula.state().get( 'selection' );
             selection.reset();
-
-            console.log( selection );
 
             // Get images that already exist in the gallery, and select each one in the modal
             wp.Modula.Items.each( function( item ) {
