@@ -70,9 +70,16 @@ var modulaGalleryResizer = Backbone.Model.extend({
     },
 
     windowResize: function() {
+        var currentSize = this.get( 'containerSize' ),
+            newSize = wp.Modula.GalleryView.container.width();
+
+        // Check if container size have been changed.
+        if ( currentSize == newSize ) {
+            return;
+        }
 
         // Change Container Width
-        this.set( 'containerSize', wp.Modula.GalleryView.container.width() );
+        this.set( 'containerSize', newSize );
 
         // Resize Items
         this.resizeItems();
@@ -88,7 +95,6 @@ var modulaGalleryResizer = Backbone.Model.extend({
 
             // Resize all items when gutter or columns have changed.
             wp.Modula.Items.each( function( item ){
-                // console.log( item );
                 item.resize();
             });
 
@@ -193,14 +199,13 @@ var modulaGalleryView = Backbone.View.extend({
     },
 
     enableResizeble: function() {
+
     	this.isResizeble = true;
         this.$el.addClass( 'modula-resizer-enabled' );
 
         if ( 'undefined' == typeof wp.Modula.Resizer ) {
             wp.Modula.Resizer = new modulaGalleryResizer({ 'galleryView': this });
         }
-
-        console.log( wp.Modula.Resizer.get( 'size' ) );
 
     	this.container.packery({
     		itemSelector: '.modula-single-image',

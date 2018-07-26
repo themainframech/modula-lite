@@ -350,6 +350,10 @@ tr label.th-label {
 	opacity: 0;
 	transition: opacity .3s;
 }
+.modula .item .jtg-social svg {
+    width: 20px;
+    height: 16px;
+}
 .modula .item:hover .jtg-social a {
 	opacity: 1;
 }

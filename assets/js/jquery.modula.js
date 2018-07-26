@@ -344,8 +344,11 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     }
 
     Plugin.prototype.init = function () {
-     
+
         var instance = this;
+
+        // Trigger event before init
+        $( document ).trigger('modula_api_before_init', [ instance ]  );
 
         this.$itemsCnt.css({
             position: 'relative',
@@ -360,9 +363,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         }else{
         	this.createGrid();
         }
-
-        // Create gallery grid
-        // this.createGrid();
 
         // Load Images
         this.loadImage(0);
@@ -383,18 +383,12 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
         	this.options.onComplete();
         }
 
+        // Trigger event before init
+        $( document ).trigger('modula_api_after_init', [ instance ]  );
+
     };
 
     Plugin.prototype.setupSocial = function () {
-        if (this.options.enableTwitter || this.options.enableFacebook ||
-            this.options.enableGplus || this.options.enablePinterest) {
-
-            this.$items.each(function (i, tile) {
-                var $tile = $(tile);
-                $tile.append("<div class='jtg-social' />");
-            });
-        }
-
         if (this.options.enableTwitter)
             setupTwitter(this.$items, this);
         if (this.options.enableFacebook)
@@ -403,15 +397,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
             setupGplus(this.$items, this);
         if (this.options.enablePinterest)
             setupPinterest(this.$items, this);
-    }
-
-    var addSocialIcon = function ($tiles, cssClass, name) {
-        $tiles.find(".jtg-social").each(function (i, tile) {
-            var $tile = $(tile);
-
-            var tw = $("<a class='" + cssClass + "' href='#'></a>");
-            $tile.append(tw);
-        });
     }
 
     //credits James Padolsey http://james.padolsey.com/
@@ -424,7 +409,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     }
 
     var setupTwitter = function ($tiles, plugin) {
-        addSocialIcon($tiles, "icon modula-icon-twitter", "Twitter");
         $tiles.find(".modula-icon-twitter").click(function (e) {
             e.preventDefault();
             var $caption = $(this).parents(".tile:first").find(".caption");
@@ -438,7 +422,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     }
 
     var setupFacebook = function ($tiles, plugin) {
-        addSocialIcon($tiles, "icon modula-icon-facebook", "Facebook");
         $tiles.find(".modula-icon-facebook").click(function (e) {
             e.preventDefault();
 
@@ -468,7 +451,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     }
 
     var setupPinterest = function ($tiles, plugin) {
-        addSocialIcon($tiles, "icon modula-icon-pinterest", "Pinterest");
         $tiles.find(".modula-icon-pinterest").click(function (e) {
             e.preventDefault();
 
@@ -493,7 +475,6 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
     }
 
     var setupGplus = function ($tiles, plugin) {
-        addSocialIcon($tiles, "icon modula-icon-google-plus", "G+");
         $tiles.find(".modula-icon-google-plus").click(function (e) {
             e.preventDefault();
 

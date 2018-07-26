@@ -1,3 +1,6 @@
+wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
+wp.Modula.modalChildViews = 'undefined' === typeof( wp.Modula.modalChildViews ) ? [] : wp.Modula.modalChildViews;
+
 var modulaModal = Backbone.Model.extend( {
 
     defaults: {
@@ -8,6 +11,7 @@ var modulaModal = Backbone.Model.extend( {
 
         var modalView = new modulaModalView({
             'model': this,
+            'childViews' : args.childViews
         });
         
         var wpMediaView = new wp.media.view.Modal( {
@@ -89,6 +93,9 @@ var modulaModalView = Backbone.View.extend( {
         // Change item when model updates his attribute
         this.listenTo( this.model, 'change:item', this.changeItem );
 
+        // Child Views
+        this.childViews = args.childViews;
+
         // Set some flags
         this.is_loading = false;
         this.search_timer = '';
@@ -116,6 +123,19 @@ var modulaModalView = Backbone.View.extend( {
 
         // Get HTML
         this.$el.html( this.template( this.item.toJSON() ) );
+
+        // Generate Child Views
+        if ( this.childViews.length > 0 ) {
+            this.childViews.forEach( function( view ) {
+                // Init with model
+                var childView = new view( {
+                    model: this.model
+                } );
+
+                // Render view within our main view
+                this.$el.find( 'div.modula-addons' ).append( childView.render().el );
+            }, this );
+        }
 
         // Enable / disable the buttons depending on the index
         if ( this.attachment_index == 0 ) {

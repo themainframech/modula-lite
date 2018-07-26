@@ -108,6 +108,7 @@ var modulaItem = Backbone.Model.extend( {
 
     	this.trigger('destroy', this, this.collection, {});
     	this.get( 'view' ).remove();
+        wp.Modula.GalleryView.resetPackary();
 
     },
 
@@ -148,6 +149,9 @@ var modulaItemView = Backbone.View.extend({
 
     	// Listen if we need to enable/disable resize.
         this.listenTo( wp.Modula.Settings, 'change:type', this.checkSettingsType );
+
+        // Listen to remove items from collections
+        this.listenTo( wp.Modula.Items, 'remove', this.actualizeIndex );
 
         // Enable current gallery type
         this.checkGalleryType( wp.Modula.Settings.get( 'type' ) );
@@ -226,7 +230,7 @@ var modulaItemView = Backbone.View.extend({
     resizeImage: function( event, ui ) {
 
         $(event.target).css('z-index','999');
-        
+
         var snap_width = wp.Modula.Resizer.calculateSize( ui.size.width );
         var snap_height = wp.Modula.Resizer.calculateSize( ui.size.height );
 
@@ -275,6 +279,25 @@ var modulaItemView = Backbone.View.extend({
     updateIndex: function( event, data ) {
         this.model.set( 'index', data.index );
         wp.Modula.Items.moveItem( this.model, data.index );
+        this.render();
+
+    },
+
+    actualizeIndex: function( event, data ) {
+        var currentIndex = this.model.get( 'index' ),
+            newIndex = wp.Modula.Items.indexOf( this.model );
+
+        // If is -1 means this views is deleted
+        if ( -1 == newIndex ) {
+            return;
+        }
+
+        // If currentIndex and newIndex are the same that means we don't need to change index
+        if ( currentIndex == newIndex ) {
+            return;
+        }
+
+        this.model.set( 'index', newIndex );
         this.render();
 
     },

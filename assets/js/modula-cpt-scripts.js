@@ -19,7 +19,7 @@
 
 
 	$( document ).ready( function(){
-		Modula.initHoverEffects();
+		// Modula.initHoverEffects();
 	});
 
 })( jQuery );

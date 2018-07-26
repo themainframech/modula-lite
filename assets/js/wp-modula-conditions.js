@@ -15,12 +15,14 @@ var modulaGalleryConditions = Backbone.Model.extend({
 	initEvents: function(){
 
 		this.listenTo( wp.Modula.Settings, 'change:type', this.changedType );
+		this.listenTo( wp.Modula.Settings, 'change:effect', this.changedEffect );
 
 	},
 
 	initValues: function(){
 
 		this.changedType( false, wp.Modula.Settings.get( 'type' ) );
+		this.changedEffect( false, wp.Modula.Settings.get( 'effect' ) );
 
 	},
 
@@ -39,6 +41,13 @@ var modulaGalleryConditions = Backbone.Model.extend({
 
 		}
 
+	},
+
+	changedEffect: function( settings, value ){
+		var hoverBoxes = $( '.modula-effects-preview > div' );
+
+		hoverBoxes.hide();
+		hoverBoxes.filter( '.panel-' + value ).show();
 	}
 
 

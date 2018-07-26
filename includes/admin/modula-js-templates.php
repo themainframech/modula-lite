@@ -16,9 +16,9 @@
             <input type="hidden" name="modula-images[valign][{{data.index}}]" class="modula-image-valign" value="{{ data.valign }}">
             <input type="hidden" name="modula-images[link][{{data.index}}]" class="modula-image-link" value="{{ data.link }}">
             <input type="hidden" name="modula-images[target][{{data.index}}]" class="modula-image-target" value="{{ data.target }}">
-
             <input type="hidden" name="modula-images[width][{{data.index}}]" class="modula-image-width" value="{{ data.width }}">
             <input type="hidden" name="modula-images[height][{{data.index}}]" class="modula-image-height" value="{{ data.height }}">
+            <?php do_action( 'modula_item_extra_fields' ) ?>
         </div>
         <div class="segrip ui-resizable-handle ui-resizable-se"></div>
     </div>

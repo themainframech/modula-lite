@@ -140,11 +140,11 @@ class Modula_CPT_Fields_Helper {
 					"disabled" => array(
 						'title'  => esc_html__( 'Lightboxes with PRO license', 'modula-gallery' ),
 						'values' => array(
-							"magnific"    => esc_html__( 'Magnific popup', 'modula-gallery' ),
-							"prettyphoto" => esc_html__( 'PrettyPhoto', 'modula-gallery' ),
-							"fancybox"    => esc_html__( 'FancyBox', 'modula-gallery' ),
-							"swipebox"    => esc_html__( 'SwipeBox', 'modula-gallery' ),
-							"lightbox2"   => esc_html__( 'Lightbox', 'modula-gallery' ),
+							"magnific"     => esc_html__( 'Magnific popup', 'modula-gallery' ),
+							"prettyphoto"  => esc_html__( 'PrettyPhoto', 'modula-gallery' ),
+							"fancybox"     => esc_html__( 'FancyBox', 'modula-gallery' ),
+							"swipebox"     => esc_html__( 'SwipeBox', 'modula-gallery' ),
+							"lightgallery" => esc_html__( 'LightGallery', 'modula-gallery' ),
 						),
 					),
 					'priority' => 110,

@@ -1,4 +1,5 @@
 wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
+wp.Modula.modalChildViews = 'undefined' === typeof( wp.Modula.modalChildViews ) ? [] : wp.Modula.modalChildViews;
 
 jQuery( document ).ready( function( $ ){
 
@@ -22,7 +23,9 @@ jQuery( document ).ready( function( $ ){
 	}
 
 	// Modula edit item modal.
-	wp.Modula.EditModal = new modulaModal();
+	wp.Modula.EditModal = new modulaModal({
+		'childViews' : wp.Modula.modalChildViews
+	});
 
 	// Here we will add items for the gallery to collection.
 	if ( 'undefined' !== typeof modulaHelper.items ) {

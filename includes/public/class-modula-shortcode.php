@@ -6,15 +6,19 @@
 class Modula_Shortcode {
 
 	private $loader;
-	private $resizer;
 	
 	function __construct() {
 
 		$this->loader  = new Modula_Template_Loader();
-		$this->resizer = new Modula_Image();
 
 		add_shortcode( 'modula', array( $this, 'gallery_shortcode_handler' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_gallery_scripts' ) );
+
+		// Add shortcode related hooks
+		add_filter( 'modula_shortcode_item_data', 'modula_generate_image_links', 10, 3 );
+		add_filter( 'modula_shortcode_item_data', 'modula_check_lightboxes_and_links', 15, 3 );
+		add_filter( 'modula_shortcode_item_data', 'modula_check_hover_effect', 20, 3 );
+		add_filter( 'modula_shortcode_item_data', 'modula_check_custom_grid', 25, 3 );
 	}
 
 	public function add_gallery_scripts() {
@@ -46,6 +50,7 @@ class Modula_Shortcode {
 			return esc_html__( 'Gallery not found.', 'modula-gallery' );
 		}
 
+		/* Generate uniq id for this gallery */
 		$rid = rand( 1, 1000 );
 		$gallery_id = 'jtg-' . $atts['id'] . '-' . $rid;
 
@@ -72,7 +77,10 @@ class Modula_Shortcode {
 
 		}
 
+		/* Get gallery settings */
 		$settings = get_post_meta( $atts['id'], 'modula-settings', true );
+
+		/* Get gallery images */
 		$images   = get_post_meta( $atts['id'], 'modula-images', true );
 
 		if ( empty( $settings ) || empty( $images ) ) {
@@ -83,6 +91,7 @@ class Modula_Shortcode {
 			wp_enqueue_script( 'packery' );
 		}
 
+		/* Enqueue lightbox related scripts & styles */
 		switch ( $settings['lightbox'] ) {
 			case "lightbox2":
 				wp_enqueue_style( 'lightbox2_stylesheet' );
@@ -95,18 +104,46 @@ class Modula_Shortcode {
 		}
 
 		// Main CSS & JS
-		wp_enqueue_style( 'modula' );
-		wp_enqueue_style( 'modula-effects' );
-		wp_enqueue_script( 'modula' );
+		$necessary_scripts = apply_filters( 'modula_necessary_scripts', array( 'modula' ) );
+		$necessary_styles  = apply_filters( 'modula_necessary_styles', array( 'modula', 'modula-effects' ) );
+
+		if ( ! empty( $necessary_scripts ) ) {
+			foreach ( $necessary_scripts as $script ) {
+				wp_enqueue_script( $script );
+			}
+		}
+
+		if ( ! empty( $necessary_styles ) ) {
+			foreach ( $necessary_styles as $style ) {
+				wp_enqueue_style( $style );
+			}
+		}
+
+		$settings['gallery_id'] = $gallery_id;
 
 		$template_data = array(
 			'gallery_id' => $gallery_id,
 			'settings'   => $settings,
 			'images'     => $images,
 			'loader'     => $this->loader,
-			'resizer'     => $this->resizer,
 		);
+
 		ob_start();
+
+		/* Config for gallery script */
+		$js_config = array(
+			"margin"          => absint( $settings['margin'] ),
+			"enableTwitter"   => boolval( $settings['enableTwitter'] ),
+			"enableFacebook"  => boolval( $settings['enableFacebook'] ),
+			"enablePinterest" => boolval( $settings['enablePinterest'] ),
+			"enableGplus"     => boolval( $settings['enableGplus'] ),
+			"randomFactor"    => ( $settings['randomFactor'] / 100 ),
+			'type'            => isset( $settings['type'] ) ? $settings['type'] : 'creative-gallery',
+			'columns'         => isset( $settings['columns'] ) ? $settings['columns'] : 6,
+			'gutter'          => isset( $settings['gutter'] ) ? $settings['gutter'] : 10,
+		);
+
+		$template_data['js_config'] = apply_filters( 'modula_gallery_settings', $js_config, $settings );
 
 		echo $this->generate_gallery_css( $gallery_id, $settings );
 		$this->loader->set_template_data( $template_data );
@@ -153,12 +190,15 @@ class Modula_Shortcode {
 				$css .= "#{$gallery_id} .item .figc h2.jtg-title {  font-size: " . $settings['titleFontSize'] . "px; }";
 			}
 
-			// $css .= "#{$gallery_id} .item { transform: scale(" . $settings['loadedScale'] / 100 . ") translate(" . $settings['loadedHSlide'] . 'px,' . $settings['loadedVSlide'] . "px) rotate(" . $settings['loadedRotate'] . "deg); }";
+			$css .= "#{$gallery_id} .item { transform: rotate(" . $settings['loadedRotate'] . "deg); }";
+			
 			if ( 'custom-grid' != $settings['type'] ) {
 				$css .= "#{$gallery_id} .items { width:" . $settings['width'] . "; height:" . absint( $settings['height'] ) . "px; }";
 			}
 
 			$css .= "#{$gallery_id} .items .figc p.description { color:" . $settings['captionColor'] . "; }";
+
+			$css = apply_filters( 'modula_shortcode_css', $css, $gallery_id, $settings );
 
 
 			if ( strlen( $settings['style'] ) ) {

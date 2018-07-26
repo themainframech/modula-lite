@@ -235,7 +235,6 @@ class Modula_Field_Builder {
 
 		// Get the current value of the field
 		$value = $this->get_setting( $field['id'], $default );
-
 		return sprintf( $format, wp_kses_post( $field['name'] ), $this->_render_field( $field, $value ) );
 	}
 
@@ -273,7 +272,13 @@ class Modula_Field_Builder {
 				$min  = isset( $field['min'] ) ? $field['min'] : 0;
 				$max  = isset( $field['max'] ) ? $field['max'] : 100;
 				$step = isset( $field['step'] ) ? $field['step'] : 1;
-				$value = ( '' == $value ) ? $min : absint( $value );
+				if ( '' == $value ) {
+					if ( isset( $field['default'] ) ) {
+						$value = $field['default'];
+					}else{
+						$value = $min;
+					}
+				}
 				$attributes = 'data-min="' . $min . '" data-max="' . $max . '" data-step="' . $step . '"';
 				$html .= '<div class="slider-container modula-ui-slider-container">';
 					$html .= '<input readonly="readonly" data-setting="' . $field['id'] . '"  name="modula-settings[' . $field['id'] . ']" type="text" class="rl-slider modula-ui-slider-input" id="input_' . $field['id'] . '" value="' . $value . '" ' . $attributes . '/>';
@@ -297,11 +302,11 @@ class Modula_Field_Builder {
 				$html .= '</div>';
 				break;
 			case "hover-effect":
-				$hovers = array( 
+				$hovers = apply_filters( 'modula_available_hover_effects', array( 
 					'none'    => esc_html__( 'None', 'modula-gallery' ),
 					'pufrobo' => esc_html__( 'Pufrobo', 'modula-gallery' ),
-				);
-				$pro_hovers = array(
+				) );
+				$pro_hovers = apply_filters( 'modula_pro_hover_effects', array(
 					'fluid-up'  => esc_html__( 'Fluid Up', 'modula-gallery' ),
 					'hide'      => esc_html__( 'Hide', 'modula-gallery' ),
 					'quiet'     => esc_html__( 'Quiet', 'modula-gallery' ),
@@ -313,37 +318,56 @@ class Modula_Field_Builder {
 					'crafty'    => esc_html__( 'Crafty', 'modula-gallery' ),
 					'seemo'     => esc_html__( 'Seemo', 'modula-gallery' ),
 					'comodo'    => esc_html__( 'Comodo', 'modula-gallery' ),
-				);
+				) );
 				$html .= '<select name="modula-settings[' . $field['id'] . ']" data-setting="' . $field['id'] . '" class="regular-text">';
 				foreach ( $hovers as $key => $option ) {
 					$html .= '<option value="' . $key . '" ' . selected( $key, $value, false ) . '>' . $option . '</option>';
 				}
-				$html .= '<optgroup label="' . esc_html__( 'Hover Effects with PRO license', 'modula-gallery' ) . '">';
-				foreach ( $pro_hovers as $key => $option ) {
-					$html .= '<option value="' . $key . '" disabled>' . $option . '</option>';
+
+				if ( ! empty( $pro_hovers ) ) {
+					$html .= '<optgroup label="' . esc_html__( 'Hover Effects with PRO license', 'modula-gallery' ) . '">';
+					foreach ( $pro_hovers as $key => $option ) {
+						$html .= '<option value="' . $key . '" disabled>' . $option . '</option>';
+					}
+					$html .= '</optgroup>';
 				}
-				$html .= '</optgroup></select>';
+				
+
+				$html .= '</select>';
 				$html .= '<p class="description">' . esc_html__( 'Select an hover effect', 'modula-gallery' ) . '</p>';
 
 				// Creates effects preview
 				$html .= '<div class="modula-effects-preview modula">';
 
-				// Pufrobo Effect
-				$html .= '<div class="panel panel-pufrobo items clearfix">';
-				$html .= '<div class="item effect-pufrobo"><img src="' . MODULA_URL . '/assets/images/effect.jpg" class="pic"><div class="figc"><div class="figc-inner"><h2>Lorem ipsum</h2><p class="description">Quisque diam erat, mollisvitae enim eget</p><div class="jtg-social"><a class="fa fa-twitter" href="#"></a><a class="fa fa-facebook" href="#"></a><a class="fa fa-google-plus" href="#"></a><a class="fa fa-pinterest" href="#"></a></div></div></div></div>';
-				$html .= '<div class="effect-compatibility">';
-				$html .= '<p class="description">' . esc_html__( 'This effect is compatible with:', 'modula-gallery' );
-				$html .= '<span><strong> ' . esc_html__( 'Title', 'modula-gallery' ) . '</strong></span>,';
-				$html .= '<span><strong> ' . esc_html__( 'Social Icons', 'modula-gallery' ) . '</strong></span></p>';
-				$html .= '</div>';
-				$html .= '</div>';
+				foreach ( $hovers as $key => $name ) {
+					$effect = '';
+
+					if ( 'none' == $key ) {
+						$effect .= '<div class="panel panel-' . $key . ' items clearfix"></div>';
+					}elseif ( 'pufrobo' == $key ) {
+						// Pufrobo Effect
+						$effect .= '<div class="panel panel-pufrobo items clearfix">';
+						$effect .= '<div class="item effect-pufrobo"><img src="' . MODULA_URL . '/assets/images/effect.jpg" class="pic"><div class="figc"><div class="figc-inner"><h2>Lorem ipsum</h2><p class="description">Quisque diam erat, mollisvitae enim eget</p><div class="jtg-social"><a class="fa fa-twitter" href="#">' . Modula_Helper::get_icon( 'twitter' ) . '</a><a class="fa fa-facebook" href="#">' . Modula_Helper::get_icon( 'facebook' ) . '</a><a class="fa fa-google-plus" href="#">' . Modula_Helper::get_icon( 'google' ) . '</a><a class="fa fa-pinterest" href="#">' . Modula_Helper::get_icon( 'pinterest' ) . '</a></div></div></div></div>';
+						$effect .= '<div class="effect-compatibility">';
+						$effect .= '<p class="description">' . esc_html__( 'This effect is compatible with:', 'modula-gallery' );
+						$effect .= '<span><strong> ' . esc_html__( 'Title', 'modula-gallery' ) . '</strong></span>,';
+						$effect .= '<span><strong> ' . esc_html__( 'Social Icons', 'modula-gallery' ) . '</strong></span></p>';
+						$effect .= '</div>';
+						$effect .= '</div>';
+					}else{
+						$effect = apply_filters( 'modula_hover_effect_preview', '', $key );
+					}
+
+					$html .= $effect;
+				}
+				
 				$html .= '</div>';
 				// Hook to change how hover effects field is rendered
 				$html = apply_filters( "modula_render_hover_effect_field_type", $html, $field );
 				break;
 			default:
 				/* Filter for render custom field types */
-				$html = apply_filters( "modula_render_{$field['type']}_field_type", $html, $field );
+				$html = apply_filters( "modula_render_{$field['type']}_field_type", $html, $field, $value );
 				break;
 		}
 

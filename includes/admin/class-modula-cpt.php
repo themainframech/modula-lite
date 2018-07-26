@@ -70,12 +70,12 @@ class Modula_CPT {
 			'modula-preview-gallery' => array(
 				'title' => esc_html__( 'Gallery', 'text_domain' ),
 				'callback' => 'output_gallery_images',
-				'context' => 'advanced',
+				'context' => 'normal',
 			),
 			'modula-settings' => array(
 				'title' => esc_html__( 'Settings', 'text_domain' ),
 				'callback' => 'output_gallery_settings',
-				'context' => 'advanced',
+				'context' => 'normal',
 			),
 			'modula-shortcode' => array(
 				'title' => esc_html__( 'Shortcode', 'text_domain' ),

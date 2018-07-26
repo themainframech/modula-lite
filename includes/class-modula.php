@@ -35,6 +35,7 @@ class Modula {
 		require_once MODULA_PATH . 'includes/libraries/class-modula-template-loader.php';
 		require_once MODULA_PATH . 'includes/helper/class-modula-helper.php';
 		require_once MODULA_PATH . 'includes/admin/class-modula-image.php';
+		require_once MODULA_PATH . 'includes/public/modula-helper-functions.php';
 
 		require_once MODULA_PATH . 'includes/admin/class-modula-cpt.php';
 		require_once MODULA_PATH . 'includes/admin/class-modula-upsells.php';
@@ -117,7 +118,7 @@ class Modula {
 
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style( 'jquery-ui', MODULA_URL . 'assets/css/jquery-ui.min.css' );
-			wp_enqueue_style( 'modula-icons', MODULA_URL . 'assets/css/materialdesignicons.css' );
+			// wp_enqueue_style( 'modula-icons', MODULA_URL . 'assets/css/materialdesignicons.css' );
 			wp_enqueue_style( 'modula-cpt-style', MODULA_URL . 'assets/css/modula-cpt.css' );
 
 
@@ -129,8 +130,12 @@ class Modula {
 			wp_enqueue_script( 'modula-gallery', MODULA_URL . 'assets/js/wp-modula-gallery.js', array(), '2.0.0', true );
 			wp_enqueue_script( 'modula-conditions', MODULA_URL . 'assets/js/wp-modula-conditions.js', array(), '2.0.0', true );
 
+			do_action( 'modula_scripts_before_wp_modula' );
+
 			wp_enqueue_script( 'modula', MODULA_URL . 'assets/js/wp-modula.js', array(), '2.0.0', true );
 			wp_localize_script( 'modula', 'modulaHelper', $modula_helper );
+
+			do_action( 'modula_scripts_after_wp_modula' );
 			
 			wp_enqueue_script( 'modula-cpt-script', MODULA_URL . 'assets/js/modula-cpt-scripts.js', array( 'jquery', 'jquery-ui-slider', 'wp-color-picker', 'jquery-ui-sortable' ), '2.0.0', true );
 

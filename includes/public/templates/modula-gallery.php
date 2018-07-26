@@ -1,63 +1,63 @@
-<?php
+<div id="<?php echo $data->gallery_id ?>" class="modula modula-gallery" data-config="<?php echo esc_attr( json_encode( $data->js_config ) ) ?>">
 
-$js_config = array(
-	"margin"          => absint( $data->settings['margin'] ),
-	"enableTwitter"   => boolval( $data->settings['enableTwitter'] ),
-	"enableFacebook"  => boolval( $data->settings['enableFacebook'] ),
-	"enablePinterest" => boolval( $data->settings['enablePinterest'] ),
-	"enableGplus"     => boolval( $data->settings['enableGplus'] ),
-	"randomFactor"    => ( $data->settings['randomFactor'] / 100 ),
-	'type'            => isset( $data->settings['type'] ) ? $data->settings['type'] : 'creative-gallery',
-	'columns'         => isset( $data->settings['columns'] ) ? $data->settings['columns'] : 6,
-	'gutter'          => isset( $data->settings['gutter'] ) ? $data->settings['gutter'] : 10,
-);
+	<?php do_action( 'modula_shortcode_before_items', $data->settings ) ?>
 
-$js_config = apply_filters( 'modula_gallery_settings', $js_config );
-
-// print_r( $data->settings );
-
-?>
-
-<div id="<?php echo $data->gallery_id ?>" class="modula modula-gallery" data-config="<?php echo esc_attr( json_encode( $js_config ) ) ?>">
 	<div class='items'>
 		<?php
 
 		foreach ( $data->images as $image ) {
 
-			// Create link attributes like : title/rel
-			$link_attributes = array(
-				'href' => '#',
-			);
-			if ( in_array( $data->settings['lightbox'], array( 'prettyphoto', 'fancybox', 'swipebox', 'lightbox2' ) ) ) {
-				$link_attributes['title'] = $image['caption'];
-			}else{
-				$link_attributes['data-title'] = $image['caption'];
-			}
-
-			if ( 'prettyphoto' == $data->settings['lightbox'] ) {
-				$link_attributes['rel'] = 'prettyPhoto[' . $data->gallery_id . ']';
-			}elseif ( 'lightbox2' == $data->settings['lightbox'] ) {
-				$link_attributes['data-lightbox'] = $data->gallery_id;
-			}else{
-				$link_attributes['rel'] = $data->gallery_id;
-			}
-
 			// Create array with data in order to send it to image template
 			$item_data = array(
-				'image'            => $image,
-				'lightbox'         => $data->settings['lightbox'],
-				'size'             => $data->settings['img_size'],
-				'hide_title'       => boolval( $data->settings['hide_title'] ),
-				'hide_description' => boolval( $data->settings['hide_description'] ),
-				'resizer'          => $data->resizer,
-				'gallery_id'       => $data->gallery_id,
-				'link_attributes'  => $link_attributes,
+				/* Item Elements */
+				'title'            => $image['title'],
+				'description'      => $image['caption'],
+
+				/* What to show from elements */
+				'hide_title'       => boolval( $data->settings['hide_title'] ) ? true : false,
+				'hide_description' => boolval( $data->settings['hide_description'] ) ? true : false,
+				'hide_socials'     => false,
+				"enableTwitter"    => boolval( $data->settings['enableTwitter'] ),
+				"enableFacebook"   => boolval( $data->settings['enableFacebook'] ),
+				"enablePinterest"  => boolval( $data->settings['enablePinterest'] ),
+				"enableGplus"      => boolval( $data->settings['enableGplus'] ),
+
+				/* Item container attributes & classes */
+				'item_classes'     => array( 'item' ),
+				'item_attributes'  => array(),
+
+				/* Item link attributes & classes */
+				'link_classes'     => array( 'tile-inner' ),
+				'link_attributes'  => array(),
+
+				/* Item img attributes & classes */
+				'img_classes'      => array( 'pic' ),
+				'img_attributes'   => array(
+					'data-valign' => esc_attr( $image['valign'] ),
+					'data-halign' => esc_attr( $image['halign'] ),
+					'alt'         => esc_attr( $image['alt'] ),
+				),
 			);
 
+			/**
+			 * Hook: modula_shortcode_item_data.
+			 *
+			 * @hooked modula_generate_image_links - 10
+			 * @hooked modula_check_lightboxes_and_links - 15
+			 * @hooked modula_check_hover_effect - 20
+			 * @hooked modula_check_custom_grid - 25
+			 */
+			$item_data = apply_filters( 'modula_shortcode_item_data', $item_data, $image, $data->settings );
+
+			do_action( 'modula_shortcode_before_item', $data->settings, $item_data );
 			$data->loader->set_template_data( $item_data );
 			$data->loader->get_template_part( 'items/item', $data->settings['effect'] );
+			do_action( 'modula_shortcode_after_item', $data->settings, $item_data );
 		}
 
 		?>
 	</div>
+
+	<?php do_action( 'modula_shortcode_after_items', $data->settings ) ?>
+
 </div>
