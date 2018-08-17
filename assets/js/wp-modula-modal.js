@@ -208,11 +208,14 @@ var modulaModalView = Backbone.View.extend( {
     */
     loadPreviousItem: function() {
 
+        var item;
+
         // Decrement the index
         this.attachment_index--;
 
         // Get the model at the new index from the collection
-        this.item = wp.Modula.Items.at( this.attachment_index );
+        item = wp.Modula.Items.at( this.attachment_index );
+        this.model.set( 'item', item );
 
         // Re-render the view
         this.render();
@@ -224,12 +227,15 @@ var modulaModalView = Backbone.View.extend( {
     */
     loadNextItem: function() {
 
+        var item;
+
         // Increment the index
         this.attachment_index++;
 
         // Get the model at the new index from the collection
-        this.item = wp.Modula.Items.at( this.attachment_index );
-
+        item = wp.Modula.Items.at( this.attachment_index );
+        this.model.set( 'item', item );
+        
         // Re-render the view
         this.render();
 
