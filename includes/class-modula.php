@@ -39,8 +39,27 @@ class Modula {
 
 		require_once MODULA_PATH . 'includes/admin/class-modula-cpt.php';
 		require_once MODULA_PATH . 'includes/admin/class-modula-upsells.php';
+		require_once MODULA_PATH . 'includes/admin/class-modula-admin.php';
 
 		require_once MODULA_PATH . 'includes/public/class-modula-shortcode.php';
+
+		if ( is_admin() ) {
+			
+			if ( ! class_exists( 'Epsilon_Review' ) ) {
+				require_once MODULA_PATH . 'includes/libraries/class-modula-review.php';
+			}
+
+			Modula_Review::get_instance( array(
+			    'slug' => 'modula-best-grid-gallery',
+			    'messages' => array(
+			    	'notice'  => __( "Hey, I noticed you have created %s galleries - that's awesome! Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.", 'modula-gallery' ),
+					'rate'    => __( 'Ok, you deserve it', 'modula-gallery' ),
+					'rated'   => __( 'I already did', 'modula-gallery' ),
+					'no_rate' => __( 'No, not good enough', 'modula-gallery' ),
+			    ),
+			) );
+
+		}
 
 	}
 
@@ -51,8 +70,17 @@ class Modula {
 	private function define_admin_hooks() {
 		
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_init', array( $this, 'admin_init' ), 20 );
 
 		new Modula_CPT();
+
+	}
+
+	public function admin_init() {
+
+		if ( apply_filters( 'modula_show_upsells', true ) ) {
+			new Modula_Upsells();
+		}
 
 	}
 
@@ -139,6 +167,10 @@ class Modula {
 			
 			wp_enqueue_script( 'modula-cpt-script', MODULA_URL . 'assets/js/modula-cpt-scripts.js', array( 'jquery', 'jquery-ui-slider', 'wp-color-picker', 'jquery-ui-sortable' ), '2.0.0', true );
 
+		}elseif ( 'modula-gallery_page_modula' == $hook ) {
+			wp_enqueue_style( 'modula-welcome-style', MODULA_URL . 'assets/css/welcome.css' );
+		}elseif ( 'modula-gallery_page_modula-addons' == $hook ) {
+			wp_enqueue_style( 'modula-welcome-style', MODULA_URL . 'assets/css/addons.css' );
 		}
 
 	}

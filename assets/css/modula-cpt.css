@@ -104,10 +104,19 @@ tr label.th-label {
     color: #333333;
 }
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description {
-    font-size: 14;
+  margin-top: 10px;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description,
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description a,
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description p {
+    font-size: 15px;
     line-height: 20px;
-    opacity: .8;
-    margin-top: 10px;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description p {
+  margin: 0;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description a {
+  font-weight: bold;
 }
 .modula-settings-container .form-table td p.description {
 	font-size: 13px;
@@ -902,4 +911,8 @@ tr label.th-label {
   display: block;
   font: 400 16px/1 dashicons;
   color: #fff;
+}
+
+#normal-sortables {
+  display: none;
 }

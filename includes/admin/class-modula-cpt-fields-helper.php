@@ -7,45 +7,86 @@ class Modula_CPT_Fields_Helper {
 	
 	public static function get_tabs() {
 
+		$general_description = '<p>' . esc_html__( 'Here you fill find general settings like what type of gallery you want or what type of lightbox gallery should use.' ) . '</p>';
+		$general_description .= self::generate_more_help_links();
+
+		$caption_description = '<p>' . esc_html__( 'The settings below adjust how we should output the image title and description.' ) . '</p>';
+		$caption_description .= self::generate_more_help_links();
+
+		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your gallery images ( Twitter / Facebook / Google Plus / Pinterest ).' ) . '</p>';
+		$social_description .= self::generate_more_help_links();
+
+		$loadingeffects_description = '<p>' . esc_html__( 'The settings below adjust the effect of images after page is loaded.' ) . '</p>';
+		$loadingeffects_description .= self::generate_more_help_links();
+
+		$hover_description = '<p>' . esc_html__( 'Here you will select the how you images will comport on hover.' ) . '</p>';
+		$hover_description .= self::generate_more_help_links();
+
+		$style_description = '<p>' . esc_html__( 'Here you can style the look of your image.' ) . '</p>';
+		$style_description .= self::generate_more_help_links();
+
+		$customizations_description = '<p>' . esc_html__( 'Here you can add extras CSS & JS to your gallery' ) . '</p>';
+		$customizations_description .= self::generate_more_help_links();
+
 		return apply_filters( 'modula_gallery_tabs', array(
 			'general' => array(
 				'label'       => esc_html__( 'General', 'modula-gallery' ),
 				'title'       => esc_html__( 'General Settings', 'modula-gallery' ),
-				'description' => 'Proin suscipit rhoncus libero, et vehicula orci fermentum nec. Duis quam eros, semper ornare feugiat at, volutpat a ex. Aliquam sit amet purus odio. Nulla nunc dolor, aliquet at libero id, venenatis tincidunt orci. Nullam suscipit ex erat, laoreet mollis felis mollis eu. Aenean ultrices erat urna, et finibus justo ultricies quis. Nam ac rutrum nulla.',
+				'description' => $general_description,
 				"icon"        => "dashicons dashicons-admin-generic",
 				'priority'    => 10,
 			),
 			'captions' => array(
-				'label'    => esc_html__( 'Captions', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-text",
-				'priority' => 20,
+				'label'       => esc_html__( 'Captions', 'modula-gallery' ),
+				'title'       => esc_html__( 'Caption Settings', 'modula-gallery' ),
+				'description' => $caption_description,
+				"icon"        => "dashicons dashicons-text",
+				'priority'    => 20,
 			),
 			'social' => array(
-				'label'    => esc_html__( 'Social', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-admin-links",
-				'priority' => 30,
+				'label'       => esc_html__( 'Social', 'modula-gallery' ),
+				'title'       => esc_html__( 'Social Settings', 'modula-gallery' ),
+				'description' => $social_description,
+				"icon"        => "dashicons dashicons-admin-links",
+				'priority'    => 30,
 			),
 			'image-loaded-effects' => array(
-				'label'    => esc_html__( 'Loading effects', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-image-rotate",
-				'priority' => 40,
+				'label'       => esc_html__( 'Loading effects', 'modula-gallery' ),
+				'title'       => esc_html__( 'Loading Effects Settings', 'modula-gallery' ),
+				'description' => $loadingeffects_description,
+				"icon"        => "dashicons dashicons-image-rotate",
+				'priority'    => 40,
 			),
 			'hover-effect' => array(
-				'label'    => esc_html__( 'Hover effect', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-layout",
-				'priority' => 50,
+				'label'       => esc_html__( 'Hover effect', 'modula-gallery' ),
+				'title'       => esc_html__( 'Hover Effect Settings', 'modula-gallery' ),
+				'description' => $hover_description,
+				"icon"        => "dashicons dashicons-layout",
+				'priority'    => 50,
 			),
 			'style' => array(
-				'label'    => esc_html__( 'Style', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-admin-appearance",
-				'priority' => 60,
+				'label'       => esc_html__( 'Style', 'modula-gallery' ),
+				'title'       => esc_html__( 'Style Settings', 'modula-gallery' ),
+				'description' => $style_description,
+				"icon"        => "dashicons dashicons-admin-appearance",
+				'priority'    => 60,
 			),
 			'customizations' => array(
-				'label'    => esc_html__( 'Customizations', 'modula-gallery' ),
-				"icon"     => "dashicons dashicons-admin-tools",
-				'priority' => 70,
+				'label'       => esc_html__( 'Customizations', 'modula-gallery' ),
+				'title'       => esc_html__( 'Customization Settings', 'modula-gallery' ),
+				'description' => $customizations_description,
+				"icon"        => "dashicons dashicons-admin-tools",
+				'priority'    => 70,
 			),
 		) );
+
+	}
+
+	public static function generate_more_help_links() {
+
+		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a href="#" target>' . esc_html__( 'Read our documentation', 'modula-gallery' ) . '</a> or <a href="#">' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
+
+		return $output;
 
 	}
 
@@ -350,23 +391,6 @@ class Modula_CPT_Fields_Helper {
 			return array();
 		}
 
-	}
-
-	/**
-	 * Callback to sort tabs/fields on priority.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	public static function sort_data_by_priority( $a, $b ) {
-		if ( ! isset( $a['priority'], $b['priority'] ) ) {
-			return -1;
-		}
-		if ( $a['priority'] == $b['priority'] ) {
-			return 0;
-		}
-		return $a['priority'] < $b['priority'] ? -1 : 1;
 	}
 
 	public static function get_defaults() {

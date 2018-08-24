@@ -62,8 +62,6 @@ class Modula_CPT {
 			'has_archive'           => false,
 			'exclude_from_search'   => true,
 			'rewrite'               => false,
-			'query_var'             => false,
-			'capability_type'       => 'page',
 		) );
 
 		$this->metaboxes = apply_filters( 'modula_cpt_metaboxes', array(
@@ -138,7 +136,7 @@ class Modula_CPT {
 			    array( $this, $metabox['callback'] ),   // Callback function
 			    'modula-gallery',         // Admin page (or post type)
 			    $metabox['context'],         // Context
-			    'default'         // Priority
+			    'high'         // Priority
 			);
 		}
 

@@ -150,7 +150,7 @@ class Modula_Field_Builder {
 		$tabs = Modula_CPT_Fields_Helper::get_tabs();
 
 		// Sort tabs based on priority.
-		uasort( $tabs, array( 'Modula_CPT_Fields_Helper', 'sort_data_by_priority' ) );
+		uasort( $tabs, array( 'Modula_Helper', 'sort_data_by_priority' ) );
 
 		$tabs_html = '';
 		$tabs_content_html = '';
@@ -163,7 +163,7 @@ class Modula_Field_Builder {
 
 			$fields = Modula_CPT_Fields_Helper::get_fields( $tab_id );
 			// Sort fields based on priority.
-			uasort( $fields, array( 'Modula_CPT_Fields_Helper', 'sort_data_by_priority' ) );
+			uasort( $fields, array( 'Modula_Helper', 'sort_data_by_priority' ) );
 
 			$current_tab_content = '<div id="modula-' . esc_attr( $tab['id'] ) . '" class="' . ( $first ? 'active-tab' : '' ) . '">';
 

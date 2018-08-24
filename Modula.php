@@ -36,6 +36,11 @@ register_activation_hook( __FILE__, 'modula_activate' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-modula.php';
 
 /**
+ * The plugin feedback class that is used to collect feedback about our plugin.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/libraries/class-modula-feedback.php';
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,
@@ -46,7 +51,11 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-modula.php';
  */
 function modula_run() {
 
+	// Our core class
 	$plugin = new Modula();
+
+	// Our feedback class
+	$plugin_feedback = new Modula_Feedback( __FILE__ );
 
 }
 
