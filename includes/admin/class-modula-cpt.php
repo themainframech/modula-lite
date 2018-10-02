@@ -55,7 +55,7 @@ class Modula_CPT {
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'menu_position'         => 25,
-			'menu_icon'             => MODULA_URL . '/assets/images/icon.png',
+			'menu_icon'             => 'data:image/svg+xml;base64,' . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32"><path fill="#f0f5fa" d="M9.3 25.3c-2.4-0.7-4.7-1.4-7.1-2.1 2.4-3.5 4.7-7 7-10.5C9.3 12.9 9.3 24.9 9.3 25.3z"/><path fill="#f0f5fa" d="M9.6 20.1c3.7 2 7.4 3.9 11.1 5.9 -0.1 0.1-5 5-5.2 5.2C13.6 27.5 11.6 23.9 9.6 20.1 9.6 20.2 9.6 20.2 9.6 20.1z"/><path fill="#f0f5fa" d="M22.3 11.9c-3.7-2-7.4-4-11-6 0 0 0 0 0 0 0 0 0 0 0 0 1.7-1.7 3.4-3.3 5.1-5 0 0 0 0 0.1-0.1C18.5 4.5 20.4 8.2 22.3 11.9 22.4 11.9 22.3 11.9 22.3 11.9z"/><path fill="#f0f5fa" d="M4.7 15c-0.6-2.4-1.2-4.7-1.8-7 0.2 0 11.9 0.6 12.7 0.6 0 0 0 0 0 0 0 0 0 0 0 0 -3.6 2.1-7.2 4.2-10.7 6.3C4.8 15 4.8 15 4.7 15z"/><path fill="#f0f5fa" d="M22.9 19.6c-0.2-4.2-0.3-8.3-0.5-12.5 2.4 0.6 4.8 1.2 7.1 1.8C27.4 12.4 25.1 16 22.9 19.6 22.9 19.6 22.9 19.6 22.9 19.6z"/><path fill="#f0f5fa" d="M27.7 16.8c0.6 2.4 1.2 4.7 1.9 7.1 -4.2-0.2-8.5-0.4-12.7-0.5 0 0 0 0 0 0C20.5 21.2 24.1 19 27.7 16.8z"/></svg>'),
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => false,
 			'can_export'            => true,
@@ -182,9 +182,14 @@ class Modula_CPT {
 
 			$modula_images = array();
 
+			$gallery_type = isset( $_POST['modula-settings']['type'] ) ? $_POST['modula-settings']['type'] : 'creative-gallery';
 			for ( $index=0; $index < count( $_POST['modula-images']['id'] ); $index++ ) { 
 			// foreach ( $_POST['modula-images']['id'] as $index => $image_id ) {
 				$new_image = array();
+				$grid_sizes = array(
+					'width' => isset( $_POST['modula-images']['width'][ $index ] ) ? $_POST['modula-images']['width'][ $index ] : 1,
+					'height' => isset( $_POST['modula-images']['height'][ $index ] ) ? $_POST['modula-images']['height'][ $index ] : 1,
+				);
 
 				// Save the image's id
 				$new_image['id'] = $_POST['modula-images']['id'][ $index ];
@@ -202,11 +207,10 @@ class Modula_CPT {
 				// Check if we need to resize this image
 				if ( isset( $_POST['modula-settings']['img_size'] ) ) {
 					$img_size = absint( $_POST['modula-settings']['img_size'] );
-					$sizes = $this->resizer->get_image_size( $new_image['id'], $img_size );
+					$sizes = $this->resizer->get_image_size( $new_image['id'], $img_size, $gallery_type, $grid_sizes );
 					if ( ! is_wp_error( $sizes ) ) {
 						$this->resizer->resize_image( $sizes['url'], $sizes['width'], $sizes['height'] );
 					}
-					
 				}
 
 				// Add new image to modula images

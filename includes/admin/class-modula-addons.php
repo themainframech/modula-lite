@@ -16,12 +16,12 @@ class Modula_Addons {
 		// Get the transient where the addons are stored on-site.
 	    $data = get_transient( 'modula_addons' );
 
-	    // If we already have data, return it.
-	    if ( ! empty( $data ) )
-	        return $data;
+	    if ( $data ) {
+	    	return $data;
+	    }
 
 	    // Make sure this matches the exact URL from your site.
-	    $url = 'https://wp-modula.com/wp-json/mt/v1/addons';
+	    $url = apply_filters( "modula_addon_server_url", 'http://test.avianstudio.com/wp-json/mt/v1/addons' );
 
 	    // Get data from the remote URL.
 	    $response = wp_remote_get( $url );
@@ -48,16 +48,17 @@ class Modula_Addons {
 
 		if ( ! empty( $this->addons ) ) {
 			foreach ( $this->addons as $addon ) {
+				$image = ( '' != $addon->image ) ? $addon->image : MODULA_URL . 'assets/images/modula-logo.jpg';
 				echo '<div class="modula-addon">';
 				echo '<div class="modula-addon-box">';
-				echo '<img src="' . esc_attr( $addon['image'] ) . '">';
+				echo '<img src="' . esc_attr( $image ) . '">';
 				echo '<div class="modula-addon-content">';
-				echo '<h3>' . esc_html( $addon['title'] ) . '</h3>';
-				echo '<div class="modula-addon-description">' . wp_kses_post( $addon['description'] ) . '</div>';
+				echo '<h3>' . esc_html( $addon->name ) . '</h3>';
+				echo '<div class="modula-addon-description">' . wp_kses_post( $addon->description ) . '</div>';
 				echo '</div>';
 				echo '</div>';
 				echo '<div class="modula-addon-actions">';
-				echo apply_filters( "modula-{$addon['slug']}-addon-action", '<a href="' . $this->upgrade_url . '" target="_blank" class="button primary-button">' . esc_html__( 'Upgrade to PRO', 'modula-gallery' ) . '</a>', $addon );
+				echo apply_filters( "modula_addon_button_action", '<a href="' . $this->upgrade_url . '" target="_blank" class="button primary-button">' . esc_html__( 'Upgrade to PRO', 'modula-gallery' ) . '</a>', $addon );
 				echo '</div>';
 				echo '</div>';
 			}

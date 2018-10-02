@@ -2,22 +2,23 @@
 
 function modula_generate_image_links( $item_data, $item, $settings ){
 
-	$image_full = wp_get_attachment_image_src( $item['id'], 'full' );
+	$image_full = '';
 	$image_url = '';
 
 	// If the image is not resized we will try to resized it now
 	// This is safe to call every time, as resize_image() will check if the image already exists, preventing thumbnails from being generated every single time.
-	if ( $image_full ) {
-		$resizer = new Modula_Image();
-		
-		if ( $image_full[1] > $image_full[2] ) {
-			$image_url = $resizer->resize_image( $image_full[0], $settings['img_size'], 99999 );
-		}else{
-			$image_url = $resizer->resize_image( $image_full[0], 99999, $settings['img_size'] );
-		}
-	}
+	$resizer = new Modula_Image();
 
-	$item_data['image_full'] = $image_full[0];
+	$gallery_type = isset( $settings['type'] ) ? $settings['type'] : 'creative-gallery';
+	$grid_sizes = array(
+		'width' => isset( $item['width'] ) ? $item['width'] : 1,
+		'height' => isset( $item['height'] ) ? $item['height'] : 1,
+	);
+	$sizes = $resizer->get_image_size( $item['id'], $settings['img_size'], $gallery_type, $grid_sizes );
+	$image_full = $sizes['url'];
+	$image_url = $resizer->resize_image( $sizes['url'], $sizes['width'], $sizes['height'] );
+
+	$item_data['image_full'] = $image_full;
 	$item_data['image_url']  = $image_url;
 
 	// Add src/data-src attributes to img tag

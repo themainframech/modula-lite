@@ -18,25 +18,38 @@ class Modula_Image {
      * @param int $img_size    The desired image size.
      * @return WP_Error|string Return WP_Error on error, array of data on success.
      */
-	public function get_image_size( $id, $img_size ) {
+	public function get_image_size( $id, $img_size, $type = 'creative-gallery', $sizes = array() ) {
 
 		$image_full = wp_get_attachment_image_src( $id, 'full' );
 
+
 		if ( $image_full ) {
-			
-			if ( $image_full[1] > $image_full[2] ) {
-				return array(
-					'width'  => $img_size,
-					'height' => 99999,
-					'url' => $image_full[0]
-				);
-			}else{
-				return array(
-					'width'  => 99999,
-					'height' => $img_size,
-					'url' => $image_full[0]
-				);
-			}
+
+			$return = array(
+				'url' => $image_full[0],
+			);
+
+            switch ( $type ) {
+                case 'creative-gallery':
+                    if ( $image_full[1] > $image_full[2] ) {
+                        $return['width'] = $img_size;
+                        $return['height'] = 99999;
+                    }else{
+                        $return['width'] = 99999;
+                        $return['height'] = $img_size;
+                    }
+                    return $return;
+                    break;
+                case 'custom-grid':
+                	$return['width'] = absint( $img_size ) * absint( $sizes['width'] );
+                    $return['height'] = absint( $img_size ) * absint( $sizes['height'] );
+                    return $return;
+                    break;
+                default:
+                    $return = apply_filters( "modula_resize_image_{$type}", $return, $id, $img_size, $sizes );
+                    return $return;
+                    break;
+            }
 
 		}else{
 			return new WP_Error( 'modula-gallery-error-no-url', __( 'No image with this ID.', 'modula-gallery' ) );

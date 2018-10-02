@@ -71,6 +71,7 @@ class Modula {
 		
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ), 20 );
+		add_action( 'wp_ajax_modula-reload-addons', array( $this, 'reload_addons' ), 20 );
 
 		new Modula_CPT();
 
@@ -171,8 +172,14 @@ class Modula {
 			wp_enqueue_style( 'modula-welcome-style', MODULA_URL . 'assets/css/welcome.css' );
 		}elseif ( 'modula-gallery_page_modula-addons' == $hook ) {
 			wp_enqueue_style( 'modula-welcome-style', MODULA_URL . 'assets/css/addons.css' );
+			wp_enqueue_script( 'modula-addon', MODULA_URL . 'assets/js/modula-addon.js', array( 'jquery' ), '2.0.0', true );
 		}
 
+	}
+
+	public function reload_addons() {
+		delete_transient( 'modula_addons' );
+		die( 'succes' );
 	}
 
 }

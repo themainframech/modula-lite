@@ -2,7 +2,7 @@ wp.Modula = 'undefined' === typeof( wp.Modula ) ? {} : wp.Modula;
 
 var modulaGalleryResizer = Backbone.Model.extend({
 	defaults: {
-        'columns': 6,
+        'columns': 12,
         'gutter': 10,
         'containerSize': false,
         'size': false,
@@ -17,14 +17,14 @@ var modulaGalleryResizer = Backbone.Model.extend({
         }
     	
         // Get options
-        this.set( 'columns', parseInt( wp.Modula.Settings.get('columns') ) );
+        // this.set( 'columns', parseInt( wp.Modula.Settings.get('columns') ) );
         this.set( 'gutter', parseInt( wp.Modula.Settings.get('gutter') ) );
 
     	// calculate block size.
     	this.generateSize();
 
         // Listen to column and gutter change
-        this.listenTo( wp.Modula.Settings, 'change:columns', this.changeColumns );
+        // this.listenTo( wp.Modula.Settings, 'change:columns', this.changeColumns );
         this.listenTo( wp.Modula.Settings, 'change:gutter', this.changeGutter );
 
         // Listen to window resize
@@ -148,6 +148,9 @@ var modulaGalleryView = Backbone.View.extend({
     	// Enable current gallery type
     	this.checkGalleryType( wp.Modula.Settings.get( 'type' ) );
 
+        // Grid
+        this.gridView = new modulaGalleryGrid({ 'el' : this.$el.find( '#modula-grid' ), 'galleryView' : this });
+
     },
 
     checkSettingsType: function( model, value ) {
@@ -266,5 +269,91 @@ var modulaGalleryView = Backbone.View.extend({
         packaryOptions.options[ option ] = value;
 
     },
+
+});
+
+var modulaGalleryGrid = Backbone.View.extend({
+
+    containerHeight: 0,
+    currentRows: 0,
+
+    initialize: function( args ) {
+        var view = this;
+
+        this.galleryView = args.galleryView;
+        if ( 'undefined' == typeof wp.Modula.Resizer ) {
+            wp.Modula.Resizer = new modulaGalleryResizer({ 'galleryView': this.galleryView });
+        }
+        
+        this.containerHeight = this.galleryView.container.height();
+
+        // Listent when gallery type is changing.
+        this.listenTo( wp.Modula.Settings, 'change:type', this.checkSettingsType );
+
+        // On layout complete
+        this.galleryView.container.on( 'layoutComplete', function( event ){
+            view.generateGrid();
+        });
+
+        // Enable current gallery type
+        this.checkGalleryType( wp.Modula.Settings.get( 'type' ) );
+
+        // Generate grid
+        this.generateGrid();
+
+    },
+
+    checkSettingsType: function( model, value ) {
+        this.checkGalleryType( value );
+    },
+
+    checkGalleryType: function( type ) {
+        if ( 'creative-gallery' == type ) {
+            this.$el.hide();
+        }else if ( 'custom-grid' == type ) {
+            this.$el.show();
+        }
+    },
+
+    generateGrid: function() {
+        var view = this,
+            neededRows = 0,
+            columnWidth = wp.Modula.Resizer.get( 'size' ),
+            gutter = wp.Modula.Resizer.get( 'gutter' ),
+            neededItems = 0,
+            neededContainerHeight = 0,
+            containerHeight = 0,
+            packery = view.galleryView.container.data('packery');
+
+        containerHeight = packery.maxY - packery.gutter;
+
+        if ( containerHeight < 300 ) {
+            containerHeight = 300;
+        }
+
+        neededRows = Math.round( ( containerHeight + gutter ) / ( columnWidth + gutter ) ) + 1;
+        neededContainerHeight = ( neededRows ) * ( columnWidth + gutter ) - gutter;
+
+        while( containerHeight < neededContainerHeight ) {
+            neededContainerHeight = neededContainerHeight - ( columnWidth + gutter );
+        }
+
+        this.$el.height( neededContainerHeight );
+
+        if ( neededRows > this.currentRows ) {
+
+            neededItems = ( neededRows - this.currentRows ) * 12;
+            this.currentRows = neededRows;
+
+            for ( var i = 1; i <= neededItems; i++ ) {
+                this.$el.append( '<div class="modula-grid-item"></div>' );
+            }
+
+            this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
+
+        }
+        
+
+    }
 
 });

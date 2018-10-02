@@ -109,6 +109,7 @@ class Modula_Field_Builder {
 			echo '<div class="modula-error-container"></div>';
 			echo '<div class="modula-uploader-inline-content six-columns">';
 				echo '<h2 class="modula-upload-message"><span class="dashicons dashicons-upload"></span>Drag & Drop files here!</h2>';
+				echo '<div id="modula-grid"></div>';
 
 				// if ( is_array( $images ) && ! empty( $images ) ) {
 					

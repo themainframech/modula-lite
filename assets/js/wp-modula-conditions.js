@@ -32,12 +32,12 @@ var modulaGalleryConditions = Backbone.Model.extend({
 		if ( 'custom-grid' == value ) {
 			
 			rows.filter( '[data-container="columns"], [data-container="gutter"]' ).show();
-			rows.filter( '[data-container="width"], [data-container="height"], [data-container="img_size"], [data-container="margin"], [data-container="randomFactor"], [data-container="shuffle"]' ).hide();
+			rows.filter( '[data-container="width"], [data-container="height"], [data-container="margin"], [data-container="randomFactor"], [data-container="shuffle"]' ).hide();
 
 		}else if ( 'creative-gallery' ) {
 
 			rows.filter( '[data-container="columns"], [data-container="gutter"]' ).hide();
-			rows.filter( '[data-container="width"], [data-container="height"], [data-container="img_size"], [data-container="margin"], [data-container="randomFactor"], [data-container="shuffle"]' ).show();
+			rows.filter( '[data-container="width"], [data-container="height"], [data-container="margin"], [data-container="randomFactor"], [data-container="shuffle"]' ).show();
 
 		}
 
