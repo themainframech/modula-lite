@@ -23,8 +23,9 @@ define( 'MODULA_URL', plugin_dir_url( __FILE__ ) );
  * This action is documented in includes/class-modula-activator.php
  */
 function modula_activate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-modula-activator.php';
-	Modula_Activator::activate();
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-modula-upgrades.php';
+	$upgrades = Modula_Upgrades::get_instance();
+	$upgrades->check_on_activate();
 }
 
 register_activation_hook( __FILE__, 'modula_activate' );

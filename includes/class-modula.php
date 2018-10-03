@@ -44,6 +44,8 @@ class Modula {
 		require_once MODULA_PATH . 'includes/public/class-modula-shortcode.php';
 
 		if ( is_admin() ) {
+
+			require_once MODULA_PATH . 'includes/class-modula-upgrades.php';
 			
 			if ( ! class_exists( 'Epsilon_Review' ) ) {
 				require_once MODULA_PATH . 'includes/libraries/class-modula-review.php';
@@ -70,7 +72,7 @@ class Modula {
 	private function define_admin_hooks() {
 		
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		add_action( 'admin_init', array( $this, 'admin_init' ), 20 );
+		add_action( 'init', array( $this, 'admin_init' ), 20 );
 		add_action( 'wp_ajax_modula-reload-addons', array( $this, 'reload_addons' ), 20 );
 
 		new Modula_CPT();
@@ -82,6 +84,9 @@ class Modula {
 		if ( apply_filters( 'modula_show_upsells', true ) ) {
 			new Modula_Upsells();
 		}
+
+		$upgrades = Modula_Upgrades::get_instance();
+		$upgrades->initialize_admin();
 
 	}
 

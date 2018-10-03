@@ -12,6 +12,7 @@ class Modula_Shortcode {
 		$this->loader  = new Modula_Template_Loader();
 
 		add_shortcode( 'modula', array( $this, 'gallery_shortcode_handler' ) );
+		add_shortcode( 'Modula', array( $this, 'gallery_shortcode_handler' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_gallery_scripts' ) );
 
 		// Add shortcode related hooks

@@ -292,14 +292,15 @@ var modulaGalleryGrid = Backbone.View.extend({
 
         // On layout complete
         this.galleryView.container.on( 'layoutComplete', function( event ){
-            view.generateGrid();
+            if ( 'custom-grid' == wp.Modula.Settings.get( 'type' ) ) {
+                view.generateGrid();
+            }
         });
 
         // Enable current gallery type
         this.checkGalleryType( wp.Modula.Settings.get( 'type' ) );
 
-        // Generate grid
-        this.generateGrid();
+        
 
     },
 
@@ -312,6 +313,9 @@ var modulaGalleryGrid = Backbone.View.extend({
             this.$el.hide();
         }else if ( 'custom-grid' == type ) {
             this.$el.show();
+
+            // Generate grid
+            this.generateGrid();
         }
     },
 
