@@ -4,6 +4,10 @@
 	var modulaUpgrader = {
 		counts: 0,
 		completed: 0,
+		ajaxRequests: [],
+		ajaxStarted: 0,
+		ajaxTimeout: null,
+
 
 		init: function(){
 			$('#modula-upgrade-v2').click(function(e){
@@ -63,11 +67,34 @@
 		            	modulaUpgrader.completed = modulaUpgrader.completed + 1;
 		            	$('.modula-ajax-output').append( '<p>' + response.message + '</p>' );
 		            	modulaUpgrader.updateProgress();
+
+		            	// Remove one ajax from queue
+		            	modulaUpgrader.ajaxStarted = modulaUpgrader.ajaxStarted - 1;
 		            }
 		        };
-		        $.ajax(opts);
+		        modulaUpgrader.ajaxRequests.push( opts );
+		        // $.ajax(opts);
 
 			});
+			modulaUpgrader.runAjaxs();
+		},
+
+		runAjaxs: function() {
+			var currentAjax;
+
+			while( modulaUpgrader.ajaxStarted < 5 && modulaUpgrader.ajaxRequests.length > 0 ) {
+				modulaUpgrader.ajaxStarted = modulaUpgrader.ajaxStarted + 1;
+				currentAjax = modulaUpgrader.ajaxRequests.shift();
+				$.ajax( currentAjax );
+			}
+
+			if ( modulaUpgrader.ajaxRequests.length > 0 ) {
+				modulaUpgrader.ajaxTimeout = setTimeout(function() {
+					console.log( 'Delayed 1s' );
+                	modulaUpgrader.runAjaxs();
+              	}, 1000);
+			}
+
 		},
 
 		updateProgress: function() {

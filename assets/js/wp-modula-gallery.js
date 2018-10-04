@@ -290,17 +290,16 @@ var modulaGalleryGrid = Backbone.View.extend({
         // Listent when gallery type is changing.
         this.listenTo( wp.Modula.Settings, 'change:type', this.checkSettingsType );
 
+        // Listent when gallery gutter is changing.
+        this.listenTo( wp.Modula.Settings, 'change:gutter', this.changeGutter );
+
         // On layout complete
         this.galleryView.container.on( 'layoutComplete', function( event ){
-            if ( 'custom-grid' == wp.Modula.Settings.get( 'type' ) ) {
-                view.generateGrid();
-            }
+            view.updateGrid();
         });
 
         // Enable current gallery type
         this.checkGalleryType( wp.Modula.Settings.get( 'type' ) );
-
-        
 
     },
 
@@ -326,8 +325,51 @@ var modulaGalleryGrid = Backbone.View.extend({
             gutter = wp.Modula.Resizer.get( 'gutter' ),
             neededItems = 0,
             neededContainerHeight = 0,
+            containerHeight = 0;
+
+        containerHeight = view.$el.height();
+
+        if ( containerHeight < 300 ) {
+            containerHeight = 300;
+        }
+
+        neededRows = Math.round( ( containerHeight + gutter ) / ( columnWidth + gutter ) ) + 1;
+        neededContainerHeight = ( neededRows ) * ( columnWidth + gutter ) - gutter;
+
+        while( containerHeight < neededContainerHeight ) {
+            neededContainerHeight = neededContainerHeight - ( columnWidth + gutter );
+        }
+
+        this.$el.height( neededContainerHeight );
+
+        if ( neededRows > this.currentRows ) {
+
+            neededItems = ( neededRows - this.currentRows ) * 12;
+            this.currentRows = neededRows;
+
+            for ( var i = 1; i <= neededItems; i++ ) {
+                this.$el.append( '<div class="modula-grid-item"></div>' );
+            }
+
+            this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
+
+        }
+
+    },
+
+    updateGrid: function() {
+        var view = this,
+            neededRows = 0,
+            columnWidth = wp.Modula.Resizer.get( 'size' ),
+            gutter = wp.Modula.Resizer.get( 'gutter' ),
+            neededItems = 0,
+            neededContainerHeight = 0,
             containerHeight = 0,
             packery = view.galleryView.container.data('packery');
+
+        if ( 'undefined' == typeof packery ) {
+            return;
+        }
 
         containerHeight = packery.maxY - packery.gutter;
 
@@ -356,7 +398,38 @@ var modulaGalleryGrid = Backbone.View.extend({
             this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
 
         }
-        
+    },
+
+    changeGutter: function() {
+        var view = this,
+            neededRows = 0,
+            columnWidth = wp.Modula.Resizer.get( 'size' ),
+            gutter = wp.Modula.Resizer.get( 'gutter' ),
+            neededItems = 0,
+            neededContainerHeight = 0,
+            containerHeight = 0,
+            packery = view.galleryView.container.data('packery');
+
+        if ( 'undefined' == typeof packery ) {
+            return;
+        }
+
+        containerHeight = packery.maxY - packery.gutter;
+
+        if ( containerHeight < 300 ) {
+            containerHeight = 300;
+        }
+
+        neededRows = Math.round( ( containerHeight + gutter ) / ( columnWidth + gutter ) ) + 1;
+        neededContainerHeight = ( neededRows ) * ( columnWidth + gutter ) - gutter;
+
+        while( containerHeight < neededContainerHeight ) {
+            neededContainerHeight = neededContainerHeight - ( columnWidth + gutter );
+        }
+
+        this.$el.height( neededContainerHeight );
+
+        this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
 
     }
 

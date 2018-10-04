@@ -81,6 +81,10 @@ class Modula {
 
 	public function admin_init() {
 
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		if ( apply_filters( 'modula_show_upsells', true ) ) {
 			new Modula_Upsells();
 		}
