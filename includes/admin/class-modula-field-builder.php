@@ -94,7 +94,7 @@ class Modula_Field_Builder {
 		echo '<div class="modula-upload-actions">';
 		echo '<div class="upload-info-container">';
 		echo '<div class="upload-info">';
-		echo sprintf( __( 'Drag and drop files in this window (max %s per file), you can also drag to change the order of the images.', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) );
+		echo sprintf( __( '<b>Drag and drop</b> files in this window (max %s per file), you can also <b>drag to change the order</b> of the images.', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) );
 		echo '</div>';
 		echo '<div class="upload-progress">';
 		echo '<p class="modula-upload-numbers">' . esc_html( 'Uploading image', 'text-domain' ) . ' <span class="modula-current"></span> ' . esc_html( 'of', 'text-domain' ) . ' <span class="modula-total"></span>';

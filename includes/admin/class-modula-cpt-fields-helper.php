@@ -7,25 +7,25 @@ class Modula_CPT_Fields_Helper {
 	
 	public static function get_tabs() {
 
-		$general_description = '<p>' . esc_html__( 'Here you fill find general settings like what type of gallery you want or what type of lightbox gallery should use.' ) . '</p>';
+		$general_description = '<p>' . esc_html__( 'Choose between creative or custom grid (build your own). Pick your favorite lightbox script and be done quickly.' ) . '</p>';
 		$general_description .= self::generate_more_help_links();
 
-		$caption_description = '<p>' . esc_html__( 'The settings below adjust how we should output the image title and description.' ) . '</p>';
+		$caption_description = '<p>' . esc_html__( 'The settings below adjust how the image title and description are outputted on the front-end.' ) . '</p>';
 		$caption_description .= self::generate_more_help_links();
 
-		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your gallery images ( Twitter / Facebook / Google Plus / Pinterest ).' ) . '</p>';
+		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your gallery images ( Twitter / Facebook / Pinterest ).' ) . '</p>';
 		$social_description .= self::generate_more_help_links();
 
-		$loadingeffects_description = '<p>' . esc_html__( 'The settings below adjust the effect of images after page is loaded.' ) . '</p>';
+		$loadingeffects_description = '<p>' . esc_html__( 'The settings below adjust the effect applied to the images after the page is fully loaded.' ) . '</p>';
 		$loadingeffects_description .= self::generate_more_help_links();
 
-		$hover_description = '<p>' . esc_html__( 'Here you will select the how you images will comport on hover.' ) . '</p>';
+		$hover_description = '<p>' . esc_html__( 'Select how your images will behave on hover. Hover styles for your images.' ) . '</p>';
 		$hover_description .= self::generate_more_help_links();
 
-		$style_description = '<p>' . esc_html__( 'Here you can style the look of your image.' ) . '</p>';
+		$style_description = '<p>' . esc_html__( 'Here you can style the look of your images.' ) . '</p>';
 		$style_description .= self::generate_more_help_links();
 
-		$customizations_description = '<p>' . esc_html__( 'Here you can add extras CSS & JS to your gallery' ) . '</p>';
+		$customizations_description = '<p>' . esc_html__( 'Here you can add extra CSS & JS to your gallery' ) . '</p>';
 		$customizations_description .= self::generate_more_help_links();
 
 		return apply_filters( 'modula_gallery_tabs', array(
@@ -128,14 +128,14 @@ class Modula_CPT_Fields_Helper {
 				"width"          => array(
 					"name"        => esc_html__( 'Width', 'modula-gallery' ),
 					"type"        => "text",
-					"description" => esc_html__( 'Width of the gallery (i.e.: 100% or 500px)', 'modula-gallery' ),
+					"description" => esc_html__( 'Width of the gallery. Can be in % or pixels.', 'modula-gallery' ),
 					'default'     => '100%',
 					'priority' => 30,
 				),
 				"height"         => array(
 					"name"        => esc_html__( 'Height', 'modula-gallery' ),
 					"type"        => "text",
-					"description" => esc_html__( 'Height of the gallery in pixels', 'modula-gallery' ),
+					"description" => esc_html__( 'Height of the gallery in pixels.', 'modula-gallery' ),
 					'default'     => '800px',
 					'priority' => 40,
 				),
@@ -143,20 +143,20 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Image size', 'modula-gallery' ),
 					"type"        => "text",
 					'default'     => 500,
-					"description" => esc_html__( 'Minimum width or height of the images (i.e.: 500 that means 500px )', 'modula-gallery' ),
+					"description" => esc_html__( 'Minimum width or height of the images in pixels.', 'modula-gallery' ),
 					'priority'    => 50,
 				),
 				"margin"         => array(
 					"name"        => esc_html__( 'Margin', 'modula-gallery' ),
 					"type"        => "text",
 					'default'     => 10,
-					"description" => esc_html__( 'Margin between images (i.e.: 10 that means 10px)', 'modula-gallery' ),
+					"description" => esc_html__( 'Margin between images in pixels.', 'modula-gallery' ),
 					'priority' => 60,
 				),
 				"randomFactor"   => array(
 					"name"        => esc_html__( 'Random factor', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => "",
+					"description" => esc_html__( 'Toggling this to 0 will tune down the randomising factor on Modula\'s grid algorithm.', 'modula-gallery' ),
 					"min"         => 0,
 					"max"         => 100,
 					"step"        => 1,
@@ -166,7 +166,7 @@ class Modula_CPT_Fields_Helper {
 				"lightbox"       => array(
 					"name"        => esc_html__( 'Lightbox &amp; Links', 'modula-gallery' ),
 					"type"        => "select",
-					"description" => esc_html__( 'Define here what happens when user click on the images.', 'modula-gallery' ),
+					"description" => esc_html__( 'Choose your lightbox gallery script. Some lightboxes allow for image downloads, especially LightGallery.', 'modula-gallery' ),
 					'default'     => 'lightbox2',
 					"values"      => array(
 						esc_html__( 'Link', 'modula-gallery' ) => array( 
@@ -194,7 +194,7 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Shuffle images', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 0,
-					"description" => esc_html__( 'Flag it if you want to shuffle the gallery at each page load', 'modula-gallery' ),
+					"description" => esc_html__( 'Toggle this to ON to have the gallery shuffle on each page load', 'modula-gallery' ),
 					'priority'    => 120,
 				),
 			),
@@ -249,7 +249,7 @@ class Modula_CPT_Fields_Helper {
 					"min"         => 0,
 					"max"         => 100,
 					"default"     => 14,
-					"description" => esc_html__( 'The caption font size in pixel ( 0 means inherit from theme )', 'modula-gallery' ),
+					"description" => esc_html__( 'The caption font size in pixels ( 0 means it will use the themes\' font-sizes.  )', 'modula-gallery' ),
 					'priority'    => 60,
 				),
 				"titleFontSize"    => array(
@@ -258,7 +258,7 @@ class Modula_CPT_Fields_Helper {
 					"min"         => 0,
 					"max"         => 100,
 					"default"     => 0,
-					"description" => esc_html__( 'The title font size in pixel ( 0 means inherit from theme )', 'modula-gallery' ),
+					"description" => esc_html__( 'The title font size in pixel. ( 0 means it will use the themes\' font-sizes.  )', 'modula-gallery' ),
 					'priority'    => 70,
 				),
 			),
@@ -267,34 +267,33 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Add Twitter icon', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 1,
-					"description" => esc_html__( 'Enable Twitter Sharing', 'modula-gallery' ),
+					"description" => "",
 					'priority'    => 10,
 				),
 				"enableFacebook"  => array(
 					"name"        => esc_html__( 'Add Facebook icon', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 1,
-					"description" => esc_html__( 'Enable Facebook Sharing', 'modula-gallery' ),
+					"description" => "",
 					'priority'    => 20,
 				),
 				"enableGplus"     => array(
 					"name"        => esc_html__( 'Add Google Plus icon', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 1,
-					"description" => esc_html__( 'Enable Google Plus Sharing', 'modula-gallery' ),
+					"description" => "",
 					'priority'    => 30,
 				),
 				"enablePinterest" => array(
 					"name"        => esc_html__( 'Add Pinterest  icon', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 1,
-					"description" => esc_html__( 'Enable Pinterest Sharing', 'modula-gallery' ),
 					'priority'    => 40,
 				),
 				"socialIconColor" => array(
 					"name"        => esc_html__( 'Color of social sharing icons', 'modula-gallery' ),
 					"type"        => "color",
-					"description" => esc_html__( 'Set the color of the social sharing icons', 'modula-gallery' ),
+					"description" => "",
 					"default"     => "#ffffff",
 					'priority'    => 50,
 				),

@@ -13,18 +13,16 @@
 }
 .modula-settings-container .modula-tabs .modula-tab {
 	margin: 0 10px 0 0;
-    padding: 20px 0 20px 0px;
+    padding: 15px 0;
     color: #9c9c9c;
     cursor: pointer;
     position: relative;
     width: 161px;
-    font-size: 13px;
-    position: relative;
     position: relative;
 }
 .modula-settings-container .modula-tabs .modula-tab > i {
-	margin-right: 20px;
-	margin-left: 20px;
+	margin-right: 10px;
+	margin-left: 15px;
 }
 .modula-settings-container .modula-tabs .modula-tab:after {
 	position: absolute;
@@ -43,7 +41,7 @@
 }
 .modula-settings-container .modula-tabs .modula-tab.active-tab {
 	margin: 0;
-    padding: 15px 10px 15px 0;
+    padding: 10px 10px 10px 0;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
@@ -80,8 +78,8 @@ tr label.th-label {
 	box-sizing: border-box;
 }
 .modula-settings-container .modula-tabs-content {
-	padding: 20px;
-	border-left: 1px solid #ddd;
+	padding: 10px 20px;
+	border-left: 1px solid #eee;
 	flex-grow: 1;
 }
 .modula-tabs-content > div:not( .active-tab ) {
@@ -91,33 +89,23 @@ tr label.th-label {
 	width: 100%;
     padding-bottom: 30px;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
 }
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header h2 {
-    font-size: 16px;
     font-weight: 700;
     padding: 0;
-    line-height: 1.5;
-    color: #333333;
 }
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description {
   margin-top: 10px;
 }
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description,
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description a,
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description p {
-    font-size: 15px;
-    line-height: 20px;
-}
+
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description p {
   margin: 0;
 }
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description a {
-  font-weight: bold;
-}
+
 .modula-settings-container .form-table td p.description {
 	font-size: 13px;
 }
@@ -471,7 +459,6 @@ tr label.th-label {
 	font-size: 16px;
     font-weight: 700;
     padding: 0;
-    color: #333333;
 }
 .modula-upsell p {
 	margin: 0;
@@ -527,7 +514,6 @@ tr label.th-label {
     justify-content: space-between;
 }
 .modula-upload-actions .buttons {
-  width: 260px;
   flex-shrink: 0;
 }
 .segrip.ui-resizable-se {
