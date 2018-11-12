@@ -425,7 +425,7 @@ wp.Modula.uploadHandler = {
 			titleSource = wp.Modula.Settings.get( 'wp_field_title' );
 
 		data['full']      = attachment['sizes']['full']['url'];
-		if ( undefined == attachment['sizes']['thumbnail'] ) {
+		if ( undefined == attachment['sizes']['full'] ) {
 			data['thumbnail']      = attachment['sizes']['full']['url'];
 		}else{
 			data['thumbnail'] = attachment['sizes']['thumbnail']['url'];

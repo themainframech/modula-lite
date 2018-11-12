@@ -134,8 +134,11 @@ class Modula {
 	        $images = get_post_meta( $post_id, 'modula-images', true );
 	        if ( is_array( $images ) && ! empty( $images ) ) {
 	        	foreach ( $images as $image ) {
+	        		if ( ! is_numeric( $image['id'] ) ) {
+	        			continue;
+	        		}
 
-	        		$image_url = wp_get_attachment_image_src( $image['id'], 'thumbnail' );
+	        		$image_url = wp_get_attachment_image_src( $image['id'], 'large' );
 					$image_full = wp_get_attachment_image_src( $image['id'], 'full' );
 
 					$image['full'] = $image_full[0];
