@@ -27,7 +27,7 @@ jQuery(document).on( 'vc-full-width-row-single vc-full-width-row', function( eve
             margin: 10,
             keepArea: true,
             type: 'creative-gallery',
-            columns: 6,
+            columns: 12,
             gutter: 10,
             enableTwitter: false,
             enableFacebook: false,

@@ -140,7 +140,7 @@ class Modula_Shortcode {
 			"enableGplus"     => boolval( $settings['enableGplus'] ),
 			"randomFactor"    => ( $settings['randomFactor'] / 100 ),
 			'type'            => isset( $settings['type'] ) ? $settings['type'] : 'creative-gallery',
-			'columns'         => isset( $settings['columns'] ) ? $settings['columns'] : 6,
+			'columns'         => 12,
 			'gutter'          => isset( $settings['gutter'] ) ? $settings['gutter'] : 10,
 		);
 
