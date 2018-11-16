@@ -183,8 +183,12 @@ class Modula_CPT {
 			$modula_images = array();
 
 			$gallery_type = isset( $_POST['modula-settings']['type'] ) ? $_POST['modula-settings']['type'] : 'creative-gallery';
-			for ( $index=0; $index < count( $_POST['modula-images']['id'] ); $index++ ) { 
-			// foreach ( $_POST['modula-images']['id'] as $index => $image_id ) {
+			for ( $index=0; $index < count( $_POST['modula-images']['id'] ); $index++ ) {
+
+				if ( ! is_numeric( $_POST['modula-images']['id'][ $index ] ) ) {
+					continue;
+				}
+
 				$new_image = array();
 				$grid_sizes = array(
 					'width' => isset( $_POST['modula-images']['width'][ $index ] ) ? $_POST['modula-images']['width'][ $index ] : 1,
