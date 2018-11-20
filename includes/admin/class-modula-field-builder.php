@@ -207,7 +207,7 @@ class Modula_Field_Builder {
 	/* Create HMTL for shortcode metabox */
 	private function _render_shortcode_metabox( $post ) {
 		$shortcode = '[modula id="' . $post->ID . '"]';
-		echo '<input type="text" style="width:100%;" value="' . esc_attr( $shortcode ) . '" disabled>';
+		echo '<input type="text" style="width:100%;" value="' . esc_attr( $shortcode ) . '"  onclick="select()" readonly>';
 	}
 
 	/* Create HMTL for a tab */
