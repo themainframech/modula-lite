@@ -70,6 +70,11 @@ var modulaSettingsView = Backbone.View.extend({
     changeTab: function ( event ) {
 
     	var currentTab = jQuery( event.target ).data( 'tab' );
+
+        if ( this.tabContainers.filter( '#' + currentTab ).length < 1 ) {
+            return;
+        }
+
 		this.tabs.removeClass( 'active-tab' );
 		this.tabContainers.removeClass( 'active-tab' );
 		jQuery( event.target ).addClass( 'active-tab' );
