@@ -33,7 +33,7 @@ function modula_check_lightboxes_and_links( $item_data, $item, $settings ) {
 	// Create link attributes like : title/rel
 	$item_data['link_attributes']['href'] = '#';
 
-	if ( '' == $settings['lightbox'] ) {
+	if ( '' == $settings['lightbox'] || 'no-link' == $settings['lightbox'] ) {
 		$item_data['link_attributes']['href'] = '#';
 	}elseif ( 'attachment-page' == $settings['lightbox'] ) {
 		$item_data['link_attributes']['href'] = get_attachment_link( $item['id'] );

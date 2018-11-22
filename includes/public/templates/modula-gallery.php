@@ -12,6 +12,7 @@
 				/* Item Elements */
 				'title'            => $image['title'],
 				'description'      => $image['caption'],
+				'lightbox'         => $data->settings['lightbox'],
 
 				/* What to show from elements */
 				'hide_title'       => boolval( $data->settings['hide_title'] ) ? true : false,
