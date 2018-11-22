@@ -64,19 +64,25 @@ class Modula_CPT_Fields_Helper {
 				"icon"        => "dashicons dashicons-layout",
 				'priority'    => 50,
 			),
+			'video' => array(
+				'label'       => esc_html__( 'Video', 'modula-gallery' ),
+				'title'       => esc_html__( 'Video Settings', 'modula-gallery' ),
+				"icon"        => "dashicons dashicons-video-alt3",
+				'priority'    => 60,
+			),
 			'style' => array(
 				'label'       => esc_html__( 'Style', 'modula-gallery' ),
 				'title'       => esc_html__( 'Style Settings', 'modula-gallery' ),
 				'description' => $style_description,
 				"icon"        => "dashicons dashicons-admin-appearance",
-				'priority'    => 60,
+				'priority'    => 70,
 			),
 			'customizations' => array(
 				'label'       => esc_html__( 'Customizations', 'modula-gallery' ),
 				'title'       => esc_html__( 'Customization Settings', 'modula-gallery' ),
 				'description' => $customizations_description,
 				"icon"        => "dashicons dashicons-admin-tools",
-				'priority'    => 70,
+				'priority'    => 80,
 			),
 		) );
 

@@ -110,36 +110,6 @@ class Modula_Field_Builder {
 			echo '<div class="modula-uploader-inline-content six-columns">';
 				echo '<h2 class="modula-upload-message"><span class="dashicons dashicons-upload"></span>Drag & Drop files here!</h2>';
 				echo '<div id="modula-grid"></div>';
-
-				// if ( is_array( $images ) && ! empty( $images ) ) {
-					
-				// 	foreach ( $images as $image ) {
-				// 		$image_url = wp_get_attachment_image_src( $image['id'], 'thumbnail' );
-				// 		$image_full = wp_get_attachment_image_src( $image['id'], 'full' );
-
-				// 		echo '<div class="modula-single-image" data-id="' . esc_attr( $image['id'] ) . '">';
-				// 	        echo '<div class="modula-single-image-content">';
-				//                 echo '<img src="' . esc_url( $image_url[0] ) . '" alt="' . esc_attr( $image['alt'] ) . '" data-image="' . esc_url( $image_full[0] ) . '" />';
-				// 	            echo '<div class="actions">';
-				// 	                echo ' <a href="#" class="modula-edit-image""><span class="dashicons dashicons-edit"></span></a>';
-				// 	                echo '<a href="#" class="modula-delete-image""><span class="dashicons dashicons-trash"></span></a>';
-				// 	            echo '</div>';
-				// 	            echo '<div class="values">';
-				// 	                echo '<input type="hidden" name="modula-images[id][]" class="modula-image-id" value="' . esc_attr( $image['id'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[alt][]" class="modula-image-alt" value="' . esc_attr( $image['alt'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[title][]" class="modula-image-title" value="' . esc_attr( $image['title'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[caption][]" class="modula-image-caption" value="' . esc_attr( $image['caption'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[halign][]" class="modula-image-halign" value="' . esc_attr( $image['halign'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[valign][]" class="modula-image-valign" value="' . esc_attr( $image['valign'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[link][]" class="modula-image-link" value="' . esc_attr( $image['link'] ) . '">';
-				// 	                echo '<input type="hidden" name="modula-images[target][]" class="modula-image-target" value="' . esc_attr( $image['target'] ) . '">';
-				// 	            echo '</div>';
-				// 	        echo '</div>';
-				// 	    echo '</div>';
-				// 	}
-
-				// }
-
 			echo '</div>';
 			echo '<div id="modula-dropzone-container"><div class="modula-uploader-window-content"><h1>Drop files to upload</h1></div></div>';
 		echo '</div>';

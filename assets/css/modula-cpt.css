@@ -688,7 +688,7 @@ tr label.th-label {
   display: block;
   content: "";
   position: relative;
-  border: 1px dashed #d0d1d1;
+  border: 3px dashed #444;
   padding-top: 100%;
 }
 .modula-uploader-inline-content .modula-single-image .modula-single-image-content {

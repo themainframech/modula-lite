@@ -11,6 +11,7 @@ class Modula_Upsells {
 		add_filter( 'modula_general_tab_content', array( $this, 'general_tab_upsell' ) );
 		add_filter( 'modula_hover-effect_tab_content', array( $this, 'hovereffects_tab_upsell' ) );
 		add_filter( 'modula_image-loaded-effects_tab_content', array( $this, 'loadingeffects_tab_upsell' ) );
+		add_filter( 'modula_video_tab_content', array( $this, 'video_tab_upsell' ) );
 
 		/* Add pro vs lite tab */
 		add_filter( 'modula_admin_page_tabs', array( $this, 'pro_vs_lite_tab' ) );
@@ -26,8 +27,8 @@ class Modula_Upsells {
 		$upsell_box .= '<h2>' . esc_html( $title ) . '</h2>';
 		$upsell_box .= '<p class="modula-upsell-description">' . esc_html( $description ) . '</p>';
 		$upsell_box .= '<p>';
-		$upsell_box .= '<a href="#"  class="button">' . esc_html__( 'See LITE vs PRO Differences', 'modula-gallery' ) . '</a>';
-		$upsell_box .= '<a href="#" class="button-primary button">' . esc_html__( 'Get Modula Pro!', 'modula-gallery' ) . '</a>';
+		$upsell_box .= '<a target="_blank" href="' . admin_url( 'edit.php?post_type=modula-gallery&page=modula&modula-tab=provslite' ) . '"  class="button">' . esc_html__( 'See LITE vs PRO Differences', 'modula-gallery' ) . '</a>';
+		$upsell_box .= '<a target="_blank" href="#" class="button-primary button">' . esc_html__( 'Get Modula Pro!', 'modula-gallery' ) . '</a>';
 		$upsell_box .= '</p>';
 		$upsell_box .= '</div>';
 
@@ -59,6 +60,17 @@ class Modula_Upsells {
 
 		$upsell_title       = esc_html__( 'Need more effects ?', 'modula-gallery' );
 		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will have 11 more hover effects.', 'modula-gallery' );
+
+		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description );
+
+		return $tab_content;
+
+	}
+
+	public function video_tab_upsell( $tab_content ) {
+
+		$upsell_title       = esc_html__( 'You want videos in your gallery ?', 'modula-gallery' );
+		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will can add video to your gallery.', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description );
 
