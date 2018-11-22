@@ -90,7 +90,7 @@ class Modula_CPT_Fields_Helper {
 
 	public static function generate_more_help_links() {
 
-		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a href="#" target>' . esc_html__( 'Read our documentation', 'modula-gallery' ) . '</a> or <a href="#">' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
+		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="#" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
 
 		return $output;
 
