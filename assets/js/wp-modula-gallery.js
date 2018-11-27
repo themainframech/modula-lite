@@ -142,6 +142,12 @@ var modulaGalleryView = Backbone.View.extend({
 		// This is the container where the gallery items are.
 		this.container = this.$el.find( '.modula-uploader-inline-content' );
 
+        // Helper Grid container
+        this.helperGridContainer = this.$el.parent().find( '.modula-helper-guidelines-container' );
+        this.helperGrid = this.$el.find( '#modula-grid' );
+        // Listen to grid toggle
+        this.helperGridContainer.on( 'change', 'input', $.proxy( this.updateSettings, this ) );
+
 		// Listent when gallery type is changing.
     	this.listenTo( wp.Modula.Settings, 'change:type', this.checkSettingsType );
 
@@ -150,6 +156,22 @@ var modulaGalleryView = Backbone.View.extend({
 
         // Grid
         this.gridView = new modulaGalleryGrid({ 'el' : this.$el.find( '#modula-grid' ), 'galleryView' : this });
+
+    },
+
+    updateSettings: function( event ) {
+        var value,
+            setting = event.target.dataset.setting;
+
+        value = event.target.checked ? 1 : 0;
+
+        wp.Modula.Settings.set( 'helpergrid', value );
+
+        if ( value ) {
+            this.helperGrid.hide();
+        }else{
+            this.helperGrid.show();
+        }
 
     },
 
@@ -171,6 +193,8 @@ var modulaGalleryView = Backbone.View.extend({
         		this.enableSortable();
         	}
 
+            this.helperGridContainer.hide();
+
         }else if ( 'custom-grid' == type ) {
 
         	// If sortable is enable we will destroy it
@@ -182,6 +206,11 @@ var modulaGalleryView = Backbone.View.extend({
         	if ( ! this.isResizeble ) {
         		this.enableResizeble();
         	}
+
+            this.helperGridContainer.show();
+            if ( ! wp.Modula.Settings.get( 'helpergrid' ) ) {
+                this.helperGrid.show();
+            }
 
         }
     },
@@ -311,7 +340,9 @@ var modulaGalleryGrid = Backbone.View.extend({
         if ( 'creative-gallery' == type ) {
             this.$el.hide();
         }else if ( 'custom-grid' == type ) {
-            this.$el.show();
+            if ( ! wp.Modula.Settings.get( 'helpergrid' ) ) {
+                this.$el.show();
+            }
 
             // Generate grid
             this.generateGrid();

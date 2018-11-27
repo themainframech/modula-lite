@@ -113,7 +113,8 @@ tr label.th-label {
 /* Fields */
 
 /* Toggle */
-.modula-settings-container .onoffswitch_label {
+.modula-settings-container .onoffswitch_label,
+.modula-helper-guidelines-container .onoffswitch_label {
   display: block;
   float: left;
   margin: 0;
@@ -121,10 +122,12 @@ tr label.th-label {
   line-height: 22px;
 }
 
+.modula-helper-guidelines-container .onoffswitch_label,
 .modula-settings-container .onoffswitch_label {
   display: block;
 }
 
+.modula-helper-guidelines-container .onoffswitch,
 .modula-settings-container .onoffswitch {
   position: relative;
   width: 52px;
@@ -137,10 +140,12 @@ tr label.th-label {
   margin-right: 10px;
 }
 
+.modula-helper-guidelines-container .onoffswitch-checkbox,
 .modula-settings-container .onoffswitch-checkbox {
   display: none !important;
 }
 
+.modula-helper-guidelines-container .onoffswitch-label,
 .modula-settings-container .onoffswitch-label {
   display: block;
   overflow: hidden;
@@ -157,6 +162,7 @@ tr label.th-label {
   -moz-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
   box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
 }
+.modula-helper-guidelines-container .onoffswitch-label:before,
 .modula-settings-container .onoffswitch-label:before {
     content: "";
     display: block;
@@ -176,6 +182,7 @@ tr label.th-label {
     border-radius: 10px;
     transition: all 0.2s ease-in 0s;
 }
+.modula-helper-guidelines-container .onoffswitch-label:after,
 .modula-settings-container .onoffswitch-label:after {
     content: "OFF";
     display: block;
@@ -188,19 +195,24 @@ tr label.th-label {
     font-family: 'Arial';
 }
 
+.modula-helper-guidelines-container .onoffswitch-checkbox:checked + .onoffswitch-label,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label {
   background-color: #57a7c9;
 }
 
+.modula-helper-guidelines-container .onoffswitch-checkbox:checked + .onoffswitch-label,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label,
+.modula-helper-guidelines-container .onoffswitch-checkbox:checked + .onoffswitch-label:before,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
   border-color: #57a7c9;
 }
 
+.modula-helper-guidelines-container .onoffswitch-checkbox:checked + .onoffswitch-label:before,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:before {
   right: 2px;
 }
 
+.modula-helper-guidelines-container .onoffswitch-checkbox:checked + .onoffswitch-label:after,
 .modula-settings-container .onoffswitch-checkbox:checked + .onoffswitch-label:after {
   content: "ON";
   display: block;
@@ -936,3 +948,22 @@ a.modula-tab-link {
   display: block;
   clear: both;
 }
+
+/* Modula Helper Grid */
+
+.modula-helper-guidelines-container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.modula-helper-guidelines-container {
+  padding: 15px 20px;
+  background-color: #f8fcfd;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ecf6f9;
+}
+.modula-helper-guidelines-container .onoffswitch {
+  margin-top: 0;
+}
+

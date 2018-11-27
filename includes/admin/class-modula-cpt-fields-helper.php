@@ -432,6 +432,7 @@ class Modula_CPT_Fields_Helper {
 		    'style'            => '',
 		    'columns'          => 6,
 		    'gutter'           => 10,
+		    'helpergrid'       => 0,
 		) );
 	}
 

@@ -84,6 +84,7 @@ class Modula_Field_Builder {
 	private function _render_gallery_metabox() {
 
 		$images = get_post_meta( $this->get_id(), 'modula-images', true );
+		$helper_guidelines = $this->get_setting( 'helpergrid' );
 
 		$max_upload_size = wp_max_upload_size();
 	    if ( ! $max_upload_size ) {
@@ -109,10 +110,20 @@ class Modula_Field_Builder {
 			echo '<div class="modula-error-container"></div>';
 			echo '<div class="modula-uploader-inline-content six-columns">';
 				echo '<h2 class="modula-upload-message"><span class="dashicons dashicons-upload"></span>Drag & Drop files here!</h2>';
-				echo '<div id="modula-grid"></div>';
+				echo '<div id="modula-grid" style="display:none"></div>';
 			echo '</div>';
 			echo '<div id="modula-dropzone-container"><div class="modula-uploader-window-content"><h1>Drop files to upload</h1></div></div>';
 		echo '</div>';
+
+		// Helper Guildelines Toggle
+		echo '<div class="modula-helper-guidelines-container" style="display:none">';
+			echo '<div class="onoffswitch">';
+				echo '<input type="checkbox" id="modula-helper-guidelines" name="modula-settings[helpergrid]" data-setting="modula-helper-guidelines" class="onoffswitch-checkbox" value="1" ' . checked( 1, $helper_guidelines, false ) . ' >';
+				echo '<label class="onoffswitch-label" for="modula-helper-guidelines"></label>';
+			echo '</div>';
+			echo '<strong>' . esc_html__( 'Disable Helper Grid', 'modula-gallery' ) . '</strong>';
+		echo '</div>';
+
 		echo '</div>';
 	}
 

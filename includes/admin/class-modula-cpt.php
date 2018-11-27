@@ -252,6 +252,13 @@ class Modula_CPT {
 
 			}
 
+			// Save the value of helpergrid
+			if ( isset( $_POST['modula-settings']['helpergrid'] ) ) {
+				$modula_settings['helpergrid'] = 1;
+			}else{
+				$modula_settings['helpergrid'] = 0;
+			}
+
 			// Add settings to gallery meta
 			update_post_meta( $post_id, 'modula-settings', $modula_settings );
 
