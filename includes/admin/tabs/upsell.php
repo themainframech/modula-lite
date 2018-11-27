@@ -81,7 +81,7 @@ $features = array(
 		<tr>
 			<td></td>
 			<td colspan="2" class="text-right">
-				<a href="https://wp-modula.com/?utm_source=allegiant&utm_medium=about-page&utm_campaign=upsell" target="_blank" class="button button-primary button-hero"><span class="dashicons dashicons-cart"></span><?php _e( 'Get The Pro Version Now!', 'modula-lite' ); ?>
+				<a href="https://wp-modula.com/?utm_source=modula-lite&utm_medium=about-page&utm_campaign=upsell" target="_blank" class="button button-primary button-hero"><span class="dashicons dashicons-cart"></span><?php _e( 'Get The Pro Version Now!', 'modula-lite' ); ?>
 				</a></td>
 		</tr>
 		</tbody>
