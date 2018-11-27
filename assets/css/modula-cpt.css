@@ -65,7 +65,7 @@ tr label.th-label {
 	color: #23282d;
 	font-weight: 600;
 	margin-bottom: 10px;
-	display: block;
+	/*display: block;*/
 }
 
 
@@ -74,7 +74,7 @@ tr label.th-label {
 	margin: 0;
 }
 .postbox .modula-settings-container .form-table-wrapper {
-	padding: 0 20px;
+	padding: 0 0 0 20px;
 	box-sizing: border-box;
 }
 .modula-settings-container .modula-tabs-content {
@@ -87,19 +87,33 @@ tr label.th-label {
 }
 .modula-settings-container .modula-tabs-content .tab-content-header {
 	width: 100%;
-    padding-bottom: 30px;
+    padding-bottom: 12px;
     margin-bottom: 10px;
     border-bottom: 1px solid #eee;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 0;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header h2 {
+.modula-settings-container .modula-tabs-content .tab-content-header .tab-content-header-actions {
+  display: flex;
+  align-items: center;
+}
+.modula-settings-container .modula-tabs-content .tab-content-header .tab-content-header-actions > span {
+  margin: 0 10px;
+  font-style: italic;
+}
+.modula-settings-container .modula-tabs-content .tab-content-header .tab-content-header-actions a.button > span {
+  height: auto;
+  line-height: 26px;
+  margin-right: 10px;
+}
+#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-content-header-title > h2 {
     font-weight: 700;
     padding: 0;
-}
-#poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description {
-  margin-top: 10px;
+    display: inline-block;
 }
 
 #poststuff .modula-settings-container .modula-tabs-content .tab-content-header .tab-header-description p {
@@ -947,6 +961,46 @@ a.modula-tab-link {
   content: "";
   display: block;
   clear: both;
+}
+
+/* Tabs tooltips */
+.modula-tooltip {
+  position: relative;
+  display: inline-block;
+}
+.modula-tooltip > span {
+  cursor: pointer;
+  color: #0073aa;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+.modula-tooltip .modula-tooltip-content {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translate( 100% ,-50% );
+  width: 300px;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.modula-tooltip .modula-tooltip-content:before {
+  content: '';
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #000 transparent transparent;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  transform: translateY( -50% );
+}
+.modula-tooltip:hover .modula-tooltip-content {
+  display: block;
 }
 
 /* Modula Helper Grid */

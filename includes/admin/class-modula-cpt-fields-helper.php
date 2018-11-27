@@ -8,25 +8,25 @@ class Modula_CPT_Fields_Helper {
 	public static function get_tabs() {
 
 		$general_description = '<p>' . esc_html__( 'Choose between creative or custom grid (build your own). Pick your favorite lightbox script and be done quickly.' ) . '</p>';
-		$general_description .= self::generate_more_help_links();
+		// $general_description .= self::generate_more_help_links();
 
 		$caption_description = '<p>' . esc_html__( 'The settings below adjust how the image title and description are outputted on the front-end.' ) . '</p>';
-		$caption_description .= self::generate_more_help_links();
+		// $caption_description .= self::generate_more_help_links();
 
 		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your gallery images ( Twitter / Facebook / Pinterest ).' ) . '</p>';
-		$social_description .= self::generate_more_help_links();
+		// $social_description .= self::generate_more_help_links();
 
 		$loadingeffects_description = '<p>' . esc_html__( 'The settings below adjust the effect applied to the images after the page is fully loaded.' ) . '</p>';
-		$loadingeffects_description .= self::generate_more_help_links();
+		// $loadingeffects_description .= self::generate_more_help_links();
 
 		$hover_description = '<p>' . esc_html__( 'Select how your images will behave on hover. Hover styles for your images.' ) . '</p>';
-		$hover_description .= self::generate_more_help_links();
+		// $hover_description .= self::generate_more_help_links();
 
 		$style_description = '<p>' . esc_html__( 'Here you can style the look of your images.' ) . '</p>';
-		$style_description .= self::generate_more_help_links();
+		// $style_description .= self::generate_more_help_links();
 
 		$customizations_description = '<p>' . esc_html__( 'Here you can add extra CSS & JS to your gallery' ) . '</p>';
-		$customizations_description .= self::generate_more_help_links();
+		// $customizations_description .= self::generate_more_help_links();
 
 		return apply_filters( 'modula_gallery_tabs', array(
 			'general' => array(
@@ -90,7 +90,7 @@ class Modula_CPT_Fields_Helper {
 
 	public static function generate_more_help_links() {
 
-		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="#" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
+		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="https://wp-modula.com/contact-us/" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
 
 		return $output;
 

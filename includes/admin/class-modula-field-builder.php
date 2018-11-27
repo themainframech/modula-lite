@@ -152,12 +152,23 @@ class Modula_Field_Builder {
 			// Check if our tab have title & description
 			if ( isset( $tab['title'] ) || isset( $tab['description'] ) ) {
 				$current_tab_content .= '<div class="tab-content-header">';
+				$current_tab_content .= '<div class="tab-content-header-title">';
 				if ( isset( $tab['title'] ) && '' != $tab['title'] ) {
 					$current_tab_content .= '<h2>' . esc_html( $tab['title'] ) . '</h2>';
 				}
 				if ( isset( $tab['description'] ) && '' != $tab['description'] ) {
-					$current_tab_content .= '<div class="tab-header-description">' . wp_kses_post( $tab['description'] ) . '</div>';
+					$current_tab_content .= '<div class="tab-header-tooltip-container modula-tooltip"><span>[?]</span>';
+					$current_tab_content .= '<div class="tab-header-description modula-tooltip-content">' . wp_kses_post( $tab['description'] ) . '</div>';
+					$current_tab_content .= '</div>';
 				}
+				$current_tab_content .= '</div>';
+
+				$current_tab_content .= '<div class="tab-content-header-actions">';
+				// $current_tab_content .= '<a href="#" target="_blank" class="button"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a>';
+				// $current_tab_content .= '<span> - or - </span>';
+				$current_tab_content .= '<a href="https://wp-modula.com/contact-us/" target="_blank" class="button button-primary"><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a>';
+				$current_tab_content .= '</div>';
+
 				$current_tab_content .= '</div>';
 			}
 
@@ -202,10 +213,10 @@ class Modula_Field_Builder {
 
 	/* Create HMTL for a row */
 	private function _render_row( $field ) {
-		$format = '<tr data-container="' . $field['id'] . '"><th scope="row"><label>%s</label></th><td>%s</td></tr>';
+		$format = '<tr data-container="' . $field['id'] . '"><th scope="row"><label>%s</label>%s</th><td>%s</td></tr>';
 
 		if ( 'textarea' == $field['type'] || 'custom_code' == $field['type'] ) {
-			$format = '<tr data-container="' . $field['id'] . '"><td colspan="2"><label class="th-label">%s</label><div>%s</div></td></tr>';
+			$format = '<tr data-container="' . $field['id'] . '"><td colspan="2"><label class="th-label">%s</label>%s<div>%s</div></td></tr>';
 		}
 
 		$default = '';
@@ -215,9 +226,17 @@ class Modula_Field_Builder {
 			$default = $field['default'];
 		}
 
+		// Generate tooltip
+		$tooltip = '';
+		if ( isset( $field['description'] ) && '' != $field['description'] ) {
+			$tooltip .= '<div class="modula-tooltip"><span>[?]</span>';
+			$tooltip .= '<div class="modula-tooltip-content">' . wp_kses_post( $field['description'] ) . '</div>';
+			$tooltip .= '</div>';
+		}
+
 		// Get the current value of the field
 		$value = $this->get_setting( $field['id'], $default );
-		return sprintf( $format, wp_kses_post( $field['name'] ), $this->_render_field( $field, $value ) );
+		return sprintf( $format, wp_kses_post( $field['name'] ), $tooltip, $this->_render_field( $field, $value ) );
 	}
 
 	/* Create HMTL for a field */
@@ -353,9 +372,9 @@ class Modula_Field_Builder {
 				break;
 		}
 
-		if ( isset( $field['description'] ) && '' != $field['description'] ) {
-			$html .= '<p class="description">' . $field['description'] . '</p>';
-		}
+		// if ( isset( $field['description'] ) && '' != $field['description'] ) {
+		// 	$html .= '<p class="description">' . $field['description'] . '</p>';
+		// }
 		return $html;
 
 	}
