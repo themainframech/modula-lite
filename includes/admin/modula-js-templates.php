@@ -96,7 +96,7 @@
                             <span class="name"><?php esc_html_e( 'URL', 'modula-gallery' ); ?></span>
                             <input type="text" name="link" value="{{ data.link }}" />
                             <span class="description">
-                                <?php _e( 'Enter a hyperlink if you wish to link this image to somewhere other than its full size image.', 'modula-gallery' ); ?>
+                                <?php _e( 'Enter a hyperlink if you wish to link this image to somewhere other then its attachment page. In order to use it you will need to select attachment page on Lightbox & Links setting under General.', 'modula-gallery' ); ?>
                             </span>
                         </label>
                         <label>
