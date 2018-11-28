@@ -10,8 +10,8 @@
 			// Create array with data in order to send it to image template
 			$item_data = array(
 				/* Item Elements */
-				'title'            => $image['title'],
-				'description'      => $image['caption'],
+				'title'            => Modula_Helper::get_title( $image, $data->settings['wp_field_title'] ),
+				'description'      => Modula_Helper::get_description( $image, $data->settings['wp_field_caption'] ),
 				'lightbox'         => $data->settings['lightbox'],
 
 				/* What to show from elements */

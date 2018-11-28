@@ -11,7 +11,7 @@
             <input type="hidden" name="modula-images[id][{{data.index}}]" class="modula-image-id" value="{{ data.id }}">
             <input type="hidden" name="modula-images[alt][{{data.index}}]" class="modula-image-alt" value="{{ data.alt }}">
             <input type="hidden" name="modula-images[title][{{data.index}}]" class="modula-image-title" value="{{ data.title }}">
-            <input type="hidden" name="modula-images[caption][{{data.index}}]" class="modula-image-caption" value="{{ data.caption }}">
+            <input type="hidden" name="modula-images[description][{{data.index}}]" class="modula-image-description" value="{{ data.description }}">
             <input type="hidden" name="modula-images[halign][{{data.index}}]" class="modula-image-halign" value="{{ data.halign }}">
             <input type="hidden" name="modula-images[valign][{{data.index}}]" class="modula-image-valign" value="{{ data.valign }}">
             <input type="hidden" name="modula-images[link][{{data.index}}]" class="modula-image-link" value="{{ data.link }}">
@@ -26,8 +26,8 @@
 
 <script type="text/html" id="tmpl-modula-image-editor">
     <div class="edit-media-header">
-        <button class="left dashicons"><span class="screen-reader-text"><?php _e( 'Edit previous media item', 'modula-gallery' ); ?></span></button>
-        <button class="right dashicons"><span class="screen-reader-text"><?php _e( 'Edit next media item', 'modula-gallery' ); ?></span></button>
+        <button class="left dashicons"><span class="screen-reader-text"><?php esc_html_e( 'Edit previous media item', 'modula-gallery' ); ?></span></button>
+        <button class="right dashicons"><span class="screen-reader-text"><?php esc_html_e( 'Edit next media item', 'modula-gallery' ); ?></span></button>
     </div>
     <div class="media-frame-title">
         <h1><?php _e( 'Edit Metadata', 'modula-gallery' ); ?></h1>
@@ -50,7 +50,7 @@
                     
                     <!-- Image Title -->
                     <label class="setting">
-                        <span class="name"><?php _e( 'Title', 'modula-gallery' ); ?></span>
+                        <span class="name"><?php esc_html_e( 'Title', 'modula-gallery' ); ?></span>
                         <input type="text" name="title" value="{{ data.title }}" />
                         <div class="description">
                             <?php _e( 'Image titles can take any type of HTML. You can adjust the position of the titles in the main Lightbox settings.', 'modula-gallery' ); ?>
@@ -60,7 +60,7 @@
                     
                     <!-- Alt Text -->
                     <label class="setting">
-                        <span class="name"><?php _e( 'Alt Text', 'modula-gallery' ); ?></span>
+                        <span class="name"><?php esc_html_e( 'Alt Text', 'modula-gallery' ); ?></span>
                         <input type="text" name="alt" value="{{ data.alt }}" />
                         <div class="description">
                             <?php _e( 'Very important for SEO, the Alt Text describes the image.', 'modula-gallery' ); ?>
@@ -69,31 +69,31 @@
 
                     <!-- Caption Text -->
                     <label class="setting">
-                        <span class="name"><?php _e( 'Caption Text', 'modula-gallery' ); ?></span>
-                        <textarea name="caption">{{ data.caption }}</textarea>
+                        <span class="name"><?php esc_html_e( 'Caption Text', 'modula-gallery' ); ?></span>
+                        <textarea name="description">{{ data.description }}</textarea>
                         <div class="description">
                         </div>
                     </label>
 
                     <!-- Alignment -->
                     <div class="setting">
-                        <span class="name">Alignment</span>
+                        <span class="name"><?php esc_html_e( 'Alignment', 'modula-gallery' ); ?></span>
                         <select name="halign" class="inline-input">
-                            <option <# if ( 'left' == data.halign ) { #> selected <# } #>>left</option>
-                            <option <# if ( 'center' == data.halign ) { #> selected <# } #>>center</option>
-                            <option <# if ( 'right' == data.halign ) { #> selected <# } #>>right</option>
+                            <option <# if ( 'left' == data.halign ) { #> selected <# } #>><?php esc_html_e( 'left', 'modula-gallery' ); ?></option>
+                            <option <# if ( 'center' == data.halign ) { #> selected <# } #>><?php esc_html_e( 'center', 'modula-gallery' ); ?></option>
+                            <option <# if ( 'right' == data.halign ) { #> selected <# } #>><?php esc_html_e( 'right', 'modula-gallery' ); ?></option>
                         </select>
                         <select name="valign" class="inline-input">
-                            <option <# if ( 'top' == data.valign ) { #> selected <# } #>>top</option>
-                            <option <# if ( 'middle' == data.valign ) { #> selected <# } #>>middle</option>
-                            <option <# if ( 'bottom' == data.valign ) { #> selected <# } #>>bottom</option>
+                            <option <# if ( 'top' == data.valign ) { #> selected <# } #>><?php esc_html_e( 'top', 'modula-gallery' ); ?></option>
+                            <option <# if ( 'middle' == data.valign ) { #> selected <# } #>><?php esc_html_e( 'middle', 'modula-gallery' ); ?></option>
+                            <option <# if ( 'bottom' == data.valign ) { #> selected <# } #>><?php esc_html_e( 'bottom', 'modula-gallery' ); ?></option>
                         </select>
                     </div>
                     
                     <!-- Link -->
                     <div class="setting">
                         <label class="">
-                            <span class="name"><?php _e( 'URL', 'modula-gallery' ); ?></span>
+                            <span class="name"><?php esc_html_e( 'URL', 'modula-gallery' ); ?></span>
                             <input type="text" name="link" value="{{ data.link }}" />
                             <span class="description">
                                 <?php _e( 'Enter a hyperlink if you wish to link this image to somewhere other than its full size image.', 'modula-gallery' ); ?>
@@ -102,7 +102,7 @@
                         <label>
                         <span class="description">
                             <input type="checkbox" name="target" value="1"<# if ( data.target == '1' ) { #> checked <# } #> />
-                            <span><?php _e( 'Opens your image links in a new browser window / tab.', 'modula-gallery' ); ?></span>
+                            <span><?php esc_html_e( 'Opens your image links in a new browser window / tab.', 'modula-gallery' ); ?></span>
                         </span>
                         </label>
                     </div>
@@ -116,7 +116,7 @@
                 <!-- Actions -->
                 <div class="actions">
                     <a href="#" class="modula-gallery-meta-submit button media-button button-large button-primary media-button-insert" title="<?php esc_attr_e( 'Save Metadata', 'modula-gallery' ); ?>">
-                        <?php _e( 'Save Metadata', 'modula-gallery' ); ?>
+                        <?php esc_html_e( 'Save Metadata', 'modula-gallery' ); ?>
                     </a>
 
                     <!-- Save Spinner -->

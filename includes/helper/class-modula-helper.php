@@ -77,5 +77,49 @@ class Modula_Helper {
 		}
 		return $a['priority'] < $b['priority'] ? -1 : 1;
 	}
+
+	public static function get_image_info( $att_id, $what ) {
+
+		$caption = '';
+
+		switch ( $what ) {
+			case 'title':
+				$caption = get_the_title( $att_id );
+				break;
+			case 'caption':
+				$caption = wp_get_attachment_caption( $att_id );
+				break;
+			case 'description':
+				$caption = get_the_content( $att_id );
+				break;
+		}
+
+		return $caption;
+
+	}
+
+	public static function get_title( $item, $default_source ){
+
+		$title = $item['title'];
+
+		if ( '' == $item['title'] && 'none' != $default_source ) {
+			$title = self::get_image_info( $item['id'],$default_source );
+		}
+
+		return $title;
+
+	}
+
+	public static function get_description( $item, $default_source ){
+		
+		$description = $item['description'];
+
+		if ( '' == $item['description'] && 'none' != $default_source ) {
+			$description = self::get_image_info( $item['id'],$default_source );
+		}
+
+		return $description;
+
+	}
 	
 }

@@ -171,7 +171,7 @@ class Modula_CPT {
 			$image_attributes = apply_filters( 'modula_gallery_image_attributes', array(
 				'alt',
 				'title',
-				'caption',
+				'description',
 				'halign',
 				'valign',
 				'link',

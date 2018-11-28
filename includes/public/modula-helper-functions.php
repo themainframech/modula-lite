@@ -32,19 +32,42 @@ function modula_check_lightboxes_and_links( $item_data, $item, $settings ) {
 
 	// Create link attributes like : title/rel
 	$item_data['link_attributes']['href'] = '#';
+	$caption = $item['description'];
+
+	if ( '' == $caption && 'none' != $settings['wp_field_caption'] ) {
+		switch ( $settings['wp_field_caption'] ) {
+			case 'title':
+				$caption = get_the_title( $item['id'] );
+				break;
+			case 'caption':
+				$caption = wp_get_attachment_caption( $item['id'] );
+				break;
+			case 'description':
+				$caption = get_the_content( $item['id'] );
+				break;
+		}
+	}
 
 	if ( '' == $settings['lightbox'] || 'no-link' == $settings['lightbox'] ) {
 		$item_data['link_attributes']['href'] = '#';
 	}elseif ( 'attachment-page' == $settings['lightbox'] ) {
-		$item_data['link_attributes']['href'] = get_attachment_link( $item['id'] );
+		if ( '' != $item['link'] ) {
+			$item_data['link_attributes']['href'] = $item['link'];
+			if ( isset( $item['target'] ) && '1' == $item['target'] ) {
+				$item_data['link_attributes']['target'] = '_blank';
+			}
+		}else{
+			$item_data['link_attributes']['href'] = get_attachment_link( $item['id'] );
+		}
+		
 	}else{
 		$item_data['link_attributes']['href'] = $item_data['image_full'];
 	}
 
 	if ( in_array( $settings['lightbox'], array( 'prettyphoto', 'fancybox', 'swipebox', 'lightbox2' ) ) ) {
-		$item_data['link_attributes']['title'] = $item['caption'];
+		$item_data['link_attributes']['title'] = $caption;
 	}else{
-		$item_data['link_attributes']['data-title'] = $item['caption'];
+		$item_data['link_attributes']['data-title'] = $caption;
 	}
 
 	if ( 'prettyphoto' == $settings['lightbox'] ) {
