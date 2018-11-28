@@ -425,10 +425,10 @@ wp.Modula.uploadHandler = {
 			titleSource = wp.Modula.Settings.get( 'wp_field_title' );
 
 		data['full']      = attachment['sizes']['full']['url'];
-		if ( "undefined" == typeof attachment['sizes']['full'] ) {
-			data['thumbnail'] = attachment['sizes']['full']['url'];
+		if ( "undefined" == typeof attachment['sizes']['large'] ) {
+			data['thumbnail'] = attachment['sizes']['large']['url'];
 		}else{
-			data['thumbnail'] = attachment['sizes']['thumbnail']['url'];
+			data['thumbnail'] = data['full'];
 		}
 		data['id']        = attachment['id'];
 		data['alt']       = attachment['alt'];
