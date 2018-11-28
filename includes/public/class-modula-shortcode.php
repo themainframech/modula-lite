@@ -191,7 +191,7 @@ class Modula_Shortcode {
 				$css .= "#{$gallery_id} .item .figc h2.jtg-title {  font-size: " . $settings['titleFontSize'] . "px; }";
 			}
 
-			$css .= "#{$gallery_id} .item { transform: scale(" . $settings['loadedScale'] . "deg); }";
+			$css .= "#{$gallery_id} .item { transform: scale(" . absint( $settings['loadedScale'] ) / 100 . "); }";
 			
 			if ( 'custom-grid' != $settings['type'] ) {
 				$css .= "#{$gallery_id} .items { width:" . $settings['width'] . "; height:" . absint( $settings['height'] ) . "px; }";
