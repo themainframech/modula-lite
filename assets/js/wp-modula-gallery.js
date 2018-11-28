@@ -8,6 +8,7 @@ var modulaGalleryResizer = Backbone.Model.extend({
         'size': false,
     },
     initialize: function( args ){
+        var resizer = this;
 
         this.set( 'containerSize', jQuery( '#modula-uploader-container .modula-uploader-inline-content' ).width() );
 
@@ -23,6 +24,9 @@ var modulaGalleryResizer = Backbone.Model.extend({
 
         // Listen to window resize
         jQuery( window ).on( 'resize', $.proxy( this.windowResize, this ) );
+        new ResizeSensor( jQuery( '#modula-uploader-container .modula-uploader-inline-content' ), function() {
+            resizer.windowResize();
+        });
     },
     generateSize: function(){
     	var columns = this.get( 'columns' ),
