@@ -305,6 +305,7 @@ var modulaGalleryGrid = Backbone.View.extend({
 
     containerHeight: 0,
     currentRows: 0,
+    updateGridTimeout: false,
 
     initialize: function( args ) {
         var view = this;
@@ -321,6 +322,9 @@ var modulaGalleryGrid = Backbone.View.extend({
 
         // Listent when gallery gutter is changing.
         this.listenTo( wp.Modula.Settings, 'change:gutter', this.changeGutter );
+
+        // Listen when column width is changing
+        this.listenTo( wp.Modula.Resizer, 'change:size', this.updateGrid );
 
         // On layout complete
         this.galleryView.container.on( 'layoutComplete', function( event ){
@@ -417,18 +421,15 @@ var modulaGalleryGrid = Backbone.View.extend({
 
         this.$el.height( neededContainerHeight );
 
-        if ( neededRows > this.currentRows ) {
+        neededItems = ( neededRows - this.currentRows ) * 12;
+        this.currentRows = neededRows;
 
-            neededItems = ( neededRows - this.currentRows ) * 12;
-            this.currentRows = neededRows;
-
-            for ( var i = 1; i <= neededItems; i++ ) {
-                this.$el.append( '<div class="modula-grid-item"></div>' );
-            }
-
-            this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
-
+        for ( var i = 1; i <= neededItems; i++ ) {
+            this.$el.append( '<div class="modula-grid-item"></div>' );
         }
+
+        this.$el.find( '.modula-grid-item' ).css( { 'width': columnWidth, 'height' : columnWidth, 'margin-right' : gutter, 'margin-bottom' : gutter } );
+
     },
 
     changeGutter: function() {
