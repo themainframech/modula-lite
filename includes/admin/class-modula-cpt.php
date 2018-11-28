@@ -224,6 +224,10 @@ class Modula_CPT {
 			// Add images to gallery meta
 			update_post_meta( $post_id, 'modula-images', $modula_images );
 
+		}else{
+
+			delete_post_meta( $post_id, 'modula-images' );
+
 		}
 
 		if ( isset( $_POST['modula-settings'] ) ) {
