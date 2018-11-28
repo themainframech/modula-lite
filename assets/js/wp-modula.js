@@ -12,15 +12,15 @@ jQuery( document ).ready( function( $ ){
 	// Modula conditions
 	wp.Modula.Conditions = new modulaGalleryConditions();
 
-	// Initiate Gallery View
-	wp.Modula.GalleryView = new modulaGalleryView({
-		'el' : $( '#modula-uploader-container' ),
-	});
-
 	// Initiate Modula Resizer
 	if ( 'undefined' == typeof wp.Modula.Resizer ) {
 		wp.Modula.Resizer = new modulaGalleryResizer();
 	}
+	
+	// Initiate Gallery View
+	wp.Modula.GalleryView = new modulaGalleryView({
+		'el' : $( '#modula-uploader-container' ),
+	});
 
 	// Modula edit item modal.
 	wp.Modula.EditModal = new modulaModal({

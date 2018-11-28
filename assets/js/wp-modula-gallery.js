@@ -9,15 +9,9 @@ var modulaGalleryResizer = Backbone.Model.extend({
     },
     initialize: function( args ){
 
+        this.set( 'containerSize', jQuery( '#modula-uploader-container .modula-uploader-inline-content' ).width() );
 
-        if ( 'undefined' != typeof args && 'undefined' != typeof args.galleryView ) {
-            this.set( 'containerSize', args.galleryView.container.width() );
-        }else{
-           this.set( 'containerSize', wp.Modula.GalleryView.container.width() ); 
-        }
-    	
         // Get options
-        // this.set( 'columns', parseInt( wp.Modula.Settings.get('columns') ) );
         this.set( 'gutter', parseInt( wp.Modula.Settings.get('gutter') ) );
 
     	// calculate block size.
@@ -40,7 +34,7 @@ var modulaGalleryResizer = Backbone.Model.extend({
     	   We will calculate the size ( width and height, because every item is a square ) of an item.
 		   The formula is : from the container size we will subtract gutter * number of columns and then we will dived by number of columns
     	 */
-    	size = Math.floor( ( containerWidth - ( gutter * ( columns -1 ) ) ) / columns );
+    	size = Math.floor( ( containerWidth - ( gutter * ( columns - 1 ) ) ) / columns );
     	this.set( 'size', size );
     },
     /* 
@@ -71,7 +65,7 @@ var modulaGalleryResizer = Backbone.Model.extend({
 
     windowResize: function() {
         var currentSize = this.get( 'containerSize' ),
-            newSize = wp.Modula.GalleryView.container.width();
+            newSize = jQuery( '#modula-uploader-container .modula-uploader-inline-content' ).width();
 
         // Check if container size have been changed.
         if ( currentSize == newSize ) {
@@ -145,6 +139,7 @@ var modulaGalleryView = Backbone.View.extend({
         // Helper Grid container
         this.helperGridContainer = this.$el.parent().find( '.modula-helper-guidelines-container' );
         this.helperGrid = this.$el.find( '#modula-grid' );
+
         // Listen to grid toggle
         this.helperGridContainer.on( 'change', 'input', $.proxy( this.updateSettings, this ) );
 

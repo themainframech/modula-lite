@@ -538,6 +538,8 @@ tr label.th-label {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 }
 .modula-upload-actions .buttons {
   flex-shrink: 0;
