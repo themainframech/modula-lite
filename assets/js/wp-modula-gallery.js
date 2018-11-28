@@ -360,12 +360,15 @@ var modulaGalleryGrid = Backbone.View.extend({
             gutter = wp.Modula.Resizer.get( 'gutter' ),
             neededItems = 0,
             neededContainerHeight = 0,
-            containerHeight = 0;
+            containerHeight = 0,
+            minContainerHeight = 0,
+            parentHeight = this.$el.parent().height();
 
         containerHeight = view.$el.height();
+        minContainerHeight = ( columnWidth + gutter ) * 3 - gutter;
 
-        if ( containerHeight < 300 ) {
-            containerHeight = 300;
+        if ( containerHeight < minContainerHeight ) {
+            containerHeight = minContainerHeight;
         }
 
         neededRows = Math.round( ( containerHeight + gutter ) / ( columnWidth + gutter ) ) + 1;
@@ -376,6 +379,10 @@ var modulaGalleryGrid = Backbone.View.extend({
         }
 
         this.$el.height( neededContainerHeight );
+        $( '#modula-uploader-container' ).css( 'min-height', minContainerHeight + 'px' );
+        if ( neededContainerHeight > parentHeight ) {
+            this.$el.parent().height( neededContainerHeight );
+        }
 
         if ( neededRows > this.currentRows ) {
 
@@ -400,16 +407,18 @@ var modulaGalleryGrid = Backbone.View.extend({
             neededItems = 0,
             neededContainerHeight = 0,
             containerHeight = 0,
-            packery = view.galleryView.container.data('packery');
+            packery = view.galleryView.container.data('packery'),
+            parentHeight = this.$el.parent().height();
 
         if ( 'undefined' == typeof packery ) {
             return;
         }
 
         containerHeight = packery.maxY - packery.gutter;
+        minContainerHeight = ( columnWidth + gutter ) * 3 - gutter;
 
-        if ( containerHeight < 300 ) {
-            containerHeight = 300;
+        if ( containerHeight < minContainerHeight ) {
+            containerHeight = minContainerHeight;
         }
 
         neededRows = Math.round( ( containerHeight + gutter ) / ( columnWidth + gutter ) ) + 1;
@@ -420,6 +429,10 @@ var modulaGalleryGrid = Backbone.View.extend({
         }
 
         this.$el.height( neededContainerHeight );
+        $( '#modula-uploader-container' ).css( 'min-height', minContainerHeight + 'px' );
+        if ( neededContainerHeight > parentHeight ) {
+            this.$el.parent().height( neededContainerHeight );
+        }
 
         neededItems = ( neededRows - this.currentRows ) * 12;
         this.currentRows = neededRows;
