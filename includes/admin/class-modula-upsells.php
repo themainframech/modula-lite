@@ -37,8 +37,8 @@ class Modula_Upsells {
 
 	public function general_tab_upsell( $tab_content ) {
 
-		$upsell_title       = esc_html__( 'Looking for even more control and even more powerful galleries??', 'modula-gallery' );
-		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to get access to 5 more lightboxes, extra styles and more...', 'modula-gallery' );
+		$upsell_title       = esc_html__( 'Looking for even more control and even more powerful galleries?', 'modula-gallery' );
+		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to get access to 5 more lightboxes, extra styles, and more...', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description, 'general' );
 

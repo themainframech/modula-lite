@@ -124,7 +124,7 @@ class Modula_CPT_Fields_Helper {
 				"gutter"   => array(
 					"name"        => esc_html__( 'Gutter', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => "",
+					"description" => "Use this slider to adjust the spacing of images in your gallery.",
 					"min"         => 0,
 					"max"         => 100,
 					"step"        => 5,
@@ -141,7 +141,7 @@ class Modula_CPT_Fields_Helper {
 				"height"         => array(
 					"name"        => esc_html__( 'Height', 'modula-gallery' ),
 					"type"        => "text",
-					"description" => esc_html__( 'Height of the gallery in pixels.', 'modula-gallery' ),
+					"description" => esc_html__( 'Set the height of the gallery in pixels.', 'modula-gallery' ),
 					'default'     => '800px',
 					'priority' => 40,
 				),
@@ -149,14 +149,14 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Image size', 'modula-gallery' ),
 					"type"        => "text",
 					'default'     => 500,
-					"description" => esc_html__( 'Minimum width or height of the images in pixels.', 'modula-gallery' ),
+					"description" => esc_html__( 'Set the minimum width or height of the images in pixels.', 'modula-gallery' ),
 					'priority'    => 50,
 				),
 				"margin"         => array(
 					"name"        => esc_html__( 'Margin', 'modula-gallery' ),
 					"type"        => "text",
 					'default'     => 10,
-					"description" => esc_html__( 'Margin between images in pixels.', 'modula-gallery' ),
+					"description" => esc_html__( 'Set the margin between images in pixels.', 'modula-gallery' ),
 					'priority' => 60,
 				),
 				"randomFactor"   => array(
@@ -172,7 +172,7 @@ class Modula_CPT_Fields_Helper {
 				"lightbox"       => array(
 					"name"        => esc_html__( 'Lightbox &amp; Links', 'modula-gallery' ),
 					"type"        => "select",
-					"description" => esc_html__( 'Choose your lightbox gallery script. Some lightboxes allow for image downloads, especially LightGallery.', 'modula-gallery' ),
+					"description" => esc_html__( 'Choose your preferred lightbox style. Some styles, such as LightGallery, allow for image downloads.', 'modula-gallery' ),
 					'default'     => 'lightbox2',
 					"values"      => array(
 						esc_html__( 'Link', 'modula-gallery' ) => array(
