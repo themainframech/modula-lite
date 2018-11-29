@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ *
  */
 class Modula_Field_Builder {
 
@@ -95,7 +95,7 @@ class Modula_Field_Builder {
 		echo '<div class="modula-upload-actions">';
 		echo '<div class="upload-info-container">';
 		echo '<div class="upload-info">';
-		echo sprintf( __( '<b>Drag and drop</b> files in this window (max %s per file), you can also <b>drag to change the order</b> of the images.', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) );
+		echo sprintf( __( '<b>Drag and drop</b> files in this window (max %s per file), or <b>drag images around to change their order</b>', 'text-domain' ), esc_html( size_format( $max_upload_size ) ) );
 		echo '</div>';
 		echo '<div class="upload-progress">';
 		echo '<p class="modula-upload-numbers">' . esc_html( 'Uploading image', 'text-domain' ) . ' <span class="modula-current"></span> ' . esc_html( 'of', 'text-domain' ) . ' <span class="modula-total"></span>';
@@ -303,7 +303,7 @@ class Modula_Field_Builder {
 				$html .= '</div>';
 				break;
 			case "hover-effect":
-				$hovers = apply_filters( 'modula_available_hover_effects', array( 
+				$hovers = apply_filters( 'modula_available_hover_effects', array(
 					'none'    => esc_html__( 'None', 'modula-gallery' ),
 					'pufrobo' => esc_html__( 'Pufrobo', 'modula-gallery' ),
 				) );
@@ -332,7 +332,7 @@ class Modula_Field_Builder {
 					}
 					$html .= '</optgroup>';
 				}
-				
+
 
 				$html .= '</select>';
 				$html .= '<p class="description">' . esc_html__( 'Select an hover effect', 'modula-gallery' ) . '</p>';
@@ -361,7 +361,7 @@ class Modula_Field_Builder {
 
 					$html .= $effect;
 				}
-				
+
 				$html .= '</div>';
 				// Hook to change how hover effects field is rendered
 				$html = apply_filters( "modula_render_hover_effect_field_type", $html, $field );

@@ -1,19 +1,19 @@
 <?php
 
 /**
- * 
+ *
  */
 class Modula_CPT_Fields_Helper {
-	
+
 	public static function get_tabs() {
 
-		$general_description = '<p>' . esc_html__( 'Choose between creative or custom grid (build your own). Pick your favorite lightbox script and be done quickly.' ) . '</p>';
+		$general_description = '<p>' . esc_html__( 'Choose between creative or custom grid (build your own). Pick your favorite lightbox style and easily design your gallery.' ) . '</p>';
 		// $general_description .= self::generate_more_help_links();
 
-		$caption_description = '<p>' . esc_html__( 'The settings below adjust how the image title and description are outputted on the front-end.' ) . '</p>';
+		$caption_description = '<p>' . esc_html__( 'The settings below adjust how the image title/description will appear on the front-end.' ) . '</p>';
 		// $caption_description .= self::generate_more_help_links();
 
-		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your gallery images ( Twitter / Facebook / Pinterest ).' ) . '</p>';
+		$social_description = '<p>' . esc_html__( 'Here you can add social sharing buttons to your the images in your gallery.' ) . '</p>';
 		// $social_description .= self::generate_more_help_links();
 
 		$loadingeffects_description = '<p>' . esc_html__( 'The settings below adjust the effect applied to the images after the page is fully loaded.' ) . '</p>';
@@ -25,7 +25,7 @@ class Modula_CPT_Fields_Helper {
 		$style_description = '<p>' . esc_html__( 'Here you can style the look of your images.' ) . '</p>';
 		// $style_description .= self::generate_more_help_links();
 
-		$customizations_description = '<p>' . esc_html__( 'Here you can add extra CSS & JS to your gallery' ) . '</p>';
+		$customizations_description = '<p>' . esc_html__( 'Use this section to add custom CSS & JS to your gallery for advanced modifications.' ) . '</p>';
 		// $customizations_description .= self::generate_more_help_links();
 
 		return apply_filters( 'modula_gallery_tabs', array(
@@ -90,7 +90,7 @@ class Modula_CPT_Fields_Helper {
 
 	public static function generate_more_help_links() {
 
-		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="https://wp-modula.com/contact-us/" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team.', 'modula-gallery' ) . '</a></p>';
+		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="https://wp-modula.com/contact-us/" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team', 'modula-gallery' ) . '</a></p>';
 
 		return $output;
 
@@ -103,7 +103,7 @@ class Modula_CPT_Fields_Helper {
 				'type'           => array(
 					"name"        => esc_html__( 'Gallery Type', 'modula-gallery' ),
 					"type"        => "select",
-					"description" => esc_html__( 'Choose what type of gallery you want to use.', 'modula-gallery' ),
+					"description" => esc_html__( 'Choose the type of gallery you want to use.', 'modula-gallery' ),
 					'default'     => 'creative-gallery',
 					"values"      => array(
 						'creative-gallery' => esc_html__( 'Creative Gallery', 'modula-gallery' ),
@@ -162,7 +162,7 @@ class Modula_CPT_Fields_Helper {
 				"randomFactor"   => array(
 					"name"        => esc_html__( 'Random factor', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => esc_html__( 'Toggling this to 0 will tune down the randomising factor on Modula\'s grid algorithm.', 'modula-gallery' ),
+					"description" => esc_html__( 'Toggle this to 0 to tune down the randomising factor on Modula\'s grid algorithm.', 'modula-gallery' ),
 					"min"         => 0,
 					"max"         => 100,
 					"step"        => 1,
@@ -175,7 +175,7 @@ class Modula_CPT_Fields_Helper {
 					"description" => esc_html__( 'Choose your lightbox gallery script. Some lightboxes allow for image downloads, especially LightGallery.', 'modula-gallery' ),
 					'default'     => 'lightbox2',
 					"values"      => array(
-						esc_html__( 'Link', 'modula-gallery' ) => array( 
+						esc_html__( 'Link', 'modula-gallery' ) => array(
 							"no-link"         => esc_html__( 'No link', 'modula-gallery' ),
 							"direct"          => esc_html__( 'Direct link to image', 'modula-gallery' ),
 							"attachment-page" => esc_html__( 'Attachment page', 'modula-gallery' )
@@ -215,7 +215,7 @@ class Modula_CPT_Fields_Helper {
 				"wp_field_title"   => array(
 					"name"        => esc_html__( 'Default title', 'modula-gallery' ),
 					"type"        => "select",
-					"description" => __( 'If you leave empty the title input of an images this will get by default title from wordpress image', 'modula-gallery' ),
+					"description" => __( 'If you leave the title blank Modula will get the title from WordPress image by default.', 'modula-gallery' ),
 					"values"      => array(
 						'none'        => esc_html__( 'No default', 'modula-gallery' ),
 						'title'       => esc_html__( 'WP Image title', 'modula-gallery' ),
@@ -226,7 +226,7 @@ class Modula_CPT_Fields_Helper {
 				"wp_field_caption" => array(
 					"name"        => esc_html__( 'Default caption', 'modula-gallery' ),
 					"type"        => "select",
-					"description" => __( 'If you leave empty the caption input of an images this will get by default caption from wordpress image', 'modula-gallery' ),
+					"description" => __( 'If you leave the caption blank Modula will get the title from WordPress image by default.', 'modula-gallery' ),
 					"values"      => array(
 						"none"        => esc_html__( 'No default', 'modula-gallery' ),
 						"title"       => esc_html__( 'WP Image title', 'modula-gallery' ),
@@ -239,14 +239,14 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Hide Title', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 0,
-					"description" => esc_html__( 'Hide image title from frontend', 'modula-gallery' ),
+					"description" => esc_html__( 'Hide image titles from the gallery', 'modula-gallery' ),
 					'priority'    => 40,
 				),
 				"hide_description"        => array(
 					"name"        => esc_html__( 'Hide Description', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 0,
-					"description" => esc_html__( 'Hide image description from frontend', 'modula-gallery' ),
+					"description" => esc_html__( 'Hide image descriptions from the gallery', 'modula-gallery' ),
 					'priority'    => 50,
 				),
 				"captionFontSize"  => array(
@@ -255,7 +255,7 @@ class Modula_CPT_Fields_Helper {
 					"min"         => 0,
 					"max"         => 100,
 					"default"     => 14,
-					"description" => esc_html__( 'The caption font size in pixels ( 0 means it will use the themes\' font-sizes.  )', 'modula-gallery' ),
+					"description" => esc_html__( 'The caption font size in pixels (set to 0 to use the theme defaults)', 'modula-gallery' ),
 					'priority'    => 60,
 				),
 				"titleFontSize"    => array(
@@ -264,7 +264,7 @@ class Modula_CPT_Fields_Helper {
 					"min"         => 0,
 					"max"         => 100,
 					"default"     => 0,
-					"description" => esc_html__( 'The title font size in pixel. ( 0 means it will use the themes\' font-sizes.  )', 'modula-gallery' ),
+					"description" => esc_html__( 'The title font size in pixel. (set to 0 to use the theme defaults)', 'modula-gallery' ),
 					'priority'    => 70,
 				),
 			),
@@ -291,7 +291,7 @@ class Modula_CPT_Fields_Helper {
 					'priority'    => 30,
 				),
 				"enablePinterest" => array(
-					"name"        => esc_html__( 'Add Pinterest  icon', 'modula-gallery' ),
+					"name"        => esc_html__( 'Add Pinterest icon', 'modula-gallery' ),
 					"type"        => "toggle",
 					"default"     => 1,
 					'priority'    => 40,
@@ -371,7 +371,7 @@ class Modula_CPT_Fields_Helper {
 					"name"        => esc_html__( 'Custom scripts', 'modula-gallery' ),
 					"type"        => "custom_code",
 					"syntax"      => 'js',
-					"description" => esc_html__( 'This script will be called after the gallery initialization. Useful for custom lightboxes.', 'modula-gallery' ) . "
+					"description" => esc_html__( 'This script will be called after the gallery initialization and can be used to design custom lightboxes.', 'modula-gallery' ) . "
                         <br />
                         <strong>Write just the code without using the &lt;script&gt;&lt;/script&gt; tags</strong>",
 					'priority' => 10,

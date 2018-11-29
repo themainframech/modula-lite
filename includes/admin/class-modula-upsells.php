@@ -4,9 +4,9 @@
  * Class Modula Upsells
  */
 class Modula_Upsells {
-	
+
 	function __construct() {
-		
+
 		/* Hooks */
 		add_filter( 'modula_general_tab_content', array( $this, 'general_tab_upsell' ) );
 		add_filter( 'modula_hover-effect_tab_content', array( $this, 'hovereffects_tab_upsell' ) );
@@ -37,8 +37,8 @@ class Modula_Upsells {
 
 	public function general_tab_upsell( $tab_content ) {
 
-		$upsell_title       = esc_html__( 'Want to more control & ligthboxes?', 'modula-gallery' );
-		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will have 5 more lightboxes and new more customization avaible.', 'modula-gallery' );
+		$upsell_title       = esc_html__( 'Looking for even more control and even more powerful galleries??', 'modula-gallery' );
+		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to get access to 5 more lightboxes, extra styles and more...', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description, 'general' );
 
@@ -47,8 +47,8 @@ class Modula_Upsells {
 
 	public function loadingeffects_tab_upsell( $tab_content ) {
 
-		$upsell_title       = esc_html__( 'You need more flexibility ?', 'modula-gallery' );
-		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will have 3 more controls like scale an image, horizontal and vertical slide.', 'modula-gallery' );
+		$upsell_title       = esc_html__( 'Not enough control?', 'modula-gallery' );
+		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to unlock the ability to scale an image, and add horizontal/vertical slides...', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description, 'loadingeffects' );
 
@@ -58,8 +58,8 @@ class Modula_Upsells {
 
 	public function hovereffects_tab_upsell( $tab_content ) {
 
-		$upsell_title       = esc_html__( 'Need more effects ?', 'modula-gallery' );
-		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will have 11 more hover effects.', 'modula-gallery' );
+		$upsell_title       = esc_html__( 'Need a new hover effect?', 'modula-gallery' );
+		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to unlock 11 more hover effects...', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description, 'hovereffects' );
 
@@ -69,8 +69,8 @@ class Modula_Upsells {
 
 	public function video_tab_upsell( $tab_content ) {
 
-		$upsell_title       = esc_html__( 'You want videos in your gallery ?', 'modula-gallery' );
-		$upsell_description = esc_html__( 'By upgrading to Modula PRO you will can add video to your gallery.', 'modula-gallery' );
+		$upsell_title       = esc_html__( 'Trying to add a video to your gallery?', 'modula-gallery' );
+		$upsell_description = esc_html__( 'Upgrade to Modula Pro today to add your stunning videos to your gallery...', 'modula-gallery' );
 
 		$tab_content .= $this->generate_upsell_box( $upsell_title, $upsell_description, 'video' );
 
@@ -81,7 +81,7 @@ class Modula_Upsells {
 	public function pro_vs_lite_tab( $tabs ){
 
 		$tabs['provslite'] = array(
-			'label'    => esc_html__( 'PRO vs Lite', 'modula-lite' ),
+			'label'    => esc_html__( 'PRO vs. Lite', 'modula-lite' ),
 			'priority' => 20
 		);
 

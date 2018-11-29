@@ -49,7 +49,7 @@ class Modula_CPT {
 
 		$this->args = apply_filters( 'modula_cpt_args', array(
 			'label'                 => __( 'Modula Gallery', 'text_domain' ),
-			'description'           => __( 'Modula is one of the best & most creative WordPress gallery plugins. Use it to create a great grid or masonry image gallery.', 'text_domain' ),
+			'description'           => __( 'Modula is the most powerful, user-friendly WordPress gallery plugin. Add galleries, masonry grids and more in a few clicks.', 'text_domain' ),
 			'supports'              => array( 'title' ),
 			'public'                => false,
 			'show_ui'               => true,
@@ -83,7 +83,7 @@ class Modula_CPT {
 		) );
 
 		$this->cpt_name = apply_filters( 'modula_cpt_name', 'modula-gallery' );
-		
+
 		add_action( 'init', array( $this, 'register_cpt' ) );
 
 		/* Fire our meta box setup function on the post editor screen. */
@@ -145,7 +145,7 @@ class Modula_CPT {
 	public function output_gallery_images() {
 		$this->builder->render( 'gallery' );
 	}
-	
+
 	public function output_gallery_settings() {
 		$this->builder->render( 'settings' );
 	}
@@ -231,7 +231,7 @@ class Modula_CPT {
 		}
 
 		if ( isset( $_POST['modula-settings'] ) ) {
-			
+
 			$fields_with_tabs = Modula_CPT_Fields_Helper::get_fields( 'all' );
 
 			// Here we will save all our settings
