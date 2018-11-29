@@ -94,7 +94,7 @@ if ( ! class_exists( "ModulaLite" ) ) {
 
 			add_shortcode( 'Modula', array( $this, 'gallery_shortcode_handler' ) );
 			add_filter( 'the_content', array( $this, 'shortcode_empty_paragraph_fix' ), 99 );
-			
+
 			add_action( 'wp_ajax_modula_save_gallery', array( $this, 'save_gallery' ) );
 			add_action( 'wp_ajax_modula_save_image', array( $this, 'save_image' ) );
 			add_action( 'wp_ajax_modula_add_image', array( $this, 'add_image' ) );
@@ -175,7 +175,7 @@ if ( ! class_exists( "ModulaLite" ) ) {
 					"filters"        => array(
 						"name"        => esc_html__( 'Filters', 'modula-gallery' ),
 						"type"        => "PRO_FEATURE",
-						"description" => esc_html__( 'Add your own filters here. Each image can have one or more filters.', 'modula-gallery' ),
+						"description" => esc_html__( 'Add your own filters here. Images can have one or more filters.', 'modula-gallery' ),
 						"excludeFrom" => array(),
 					),
 					"filterClick"    => array(
@@ -185,7 +185,7 @@ if ( ! class_exists( "ModulaLite" ) ) {
 						"excludeFrom" => array(),
 					),
 					"allFilterLabel" => array(
-						"name"        => esc_html__( 'Text for "All" filter', 'modula-gallery' ),
+						"name"        => esc_html__( 'Text for "All" filter (contains all images in the gallery)', 'modula-gallery' ),
 						"type"        => "PRO_FEATURE",
 						"description" => esc_html__( 'Write here the label for the "All" filter', 'modula-gallery' ),
 						"default"     => "All",
@@ -194,9 +194,9 @@ if ( ! class_exists( "ModulaLite" ) ) {
 					"lightbox"       => array(
 						"name"        => esc_html__( 'Lightbox &amp; Links', 'modula-gallery' ),
 						"type"        => "select",
-						"description" => esc_html__( 'Define here what happens when user click on the images.', 'modula-gallery' ),
+						"description" => esc_html__( 'Choose what happens when a user clicks on the images.', 'modula-gallery' ),
 						"values"      => array(
-							"Link"       => array( 
+							"Link"       => array(
 								"|" . esc_html__( 'No link', 'modula-gallery' ),
 								"direct|" . esc_html__( 'Direct link to image', 'modula-gallery' ),
 								"|" . esc_html__( 'Attachment page', 'modula-gallery' )
@@ -218,7 +218,7 @@ if ( ! class_exists( "ModulaLite" ) ) {
 						"name"        => esc_html__( 'Shuffle images', 'modula-gallery' ),
 						"type"        => "toggle",
 						"default"     => "T",
-						"description" => esc_html__( 'Flag it if you want to shuffle the gallery at each page load', 'modula-gallery' ),
+						"description" => esc_html__( 'Select this option if you want to shuffle the image order after each page load', 'modula-gallery' ),
 						"excludeFrom" => array(),
 					),
 				),
