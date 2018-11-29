@@ -4,7 +4,7 @@ class Modula_Feedback {
 
 	private $plugin_file = '';
 	private $plugin_name = '';
-	
+
 	function __construct( $_plugin_file ) {
 
 		$this->plugin_file = $_plugin_file;
@@ -168,7 +168,7 @@ class Modula_Feedback {
 						formContainer.addClass( 'process-response' );
 						// Fade in spinner
 						formContainer.find(".deactivating-spinner").fadeIn();
-						
+
 						data['reason']   = formContainer.find( 'input[name="epsilon-deactivate-reason"]:checked' ).val();
 						data['details']  = formContainer.find('#epsilon-deactivate-details').val();
 						data['tracking'] = formContainer.find( '#allow-tracking:checked' ).length;
@@ -205,16 +205,16 @@ class Modula_Feedback {
 	 */
 	public function get_form_info() {
 		$form = array();
-		$form['heading'] = __( 'Sorry to see you go', 'modula-gallery' );
-		$form['body'] = __( 'Before you deactivate the plugin, would you quickly give us your reason for doing so?', 'modula-gallery' );
+		$form['heading'] = __( 'We are sorry to see you go :(), 'modula-gallery' );
+		$form['body'] = __( 'Help us improve the plugin in a few seconds - what made you deactivate?, 'modula-gallery' );
 		$form['options'] = array(
-			'setup'           => __( 'Set up is too difficult', 'modula-gallery' ),
+			'setup'           => __( 'It was difficult to set up', 'modula-gallery' ),
 			'documentation'   => __( 'Lack of documentation', 'modula-gallery' ),
-			'features'        => __( 'Not the features I wanted', 'modula-gallery' ),
-			'better-plugin'   => __( 'Found a better plugin', 'modula-gallery' ),
-			'incompatibility' => __( 'Incompatible with theme or plugin', 'modula-gallery' ),
+			'features'        => __( 'Did not include a feature', 'modula-gallery' ),
+			'better-plugin'   => __( 'Found an alternative', 'modula-gallery' ),
+			'incompatibility' => __( 'Incompatiblility with another plugin or theme, 'modula-gallery' ),
 		);
-		$form['details'] = __( 'How could we improve ?', 'modula-gallery' );
+		$form['details'] = __( 'How can we improve?', 'modula-gallery' );
 		return $form;
 	}
 
@@ -227,7 +227,7 @@ class Modula_Feedback {
 			if ( ! class_exists( 'Epsilon_Plugin_Request' ) ) {
 				require_once MODULA_PATH . 'includes/libraries/class-epsilon-plugin-request.php';
 			}
-			
+
 			$args = array(
 				'reason' => $_POST['reason'],
 				'details' => $_POST['details'],
@@ -248,7 +248,7 @@ class Modula_Feedback {
 				'status' => 'ok',
 			) );
 		}
-		
+
 		die();
 
 	}
