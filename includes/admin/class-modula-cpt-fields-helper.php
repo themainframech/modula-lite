@@ -90,7 +90,7 @@ class Modula_CPT_Fields_Helper {
 
 	public static function generate_more_help_links() {
 
-		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="https://wp-modula.com/contact-us/" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Contact our support team', 'modula-gallery' ) . '</a></p>';
+		$output = '<p>' . esc_html__( 'Still stuck ?', 'modula-gallery' ) . ' <a class="modula-tab-link" href="#" target="_blank"><span class="dashicons dashicons-sos"></span>' . esc_html__( 'Explore our documentation', 'modula-gallery' ) . '</a> or <a href="https://wp-modula.com/contact-us/" class="modula-tab-link" target="_blank><span class="dashicons dashicons-email-alt"></span>' . esc_html__( 'Need help? Get in touch.', 'modula-gallery' ) . '</a></p>';
 
 		return $output;
 
@@ -208,7 +208,7 @@ class Modula_CPT_Fields_Helper {
 				"captionColor"     => array(
 					"name"        => esc_html__( 'Caption color', 'modula-gallery' ),
 					"type"        => "color",
-					"description" => esc_html__( 'Color of the caption.', 'modula-gallery' ),
+					"description" => esc_html__( 'Set the color of captions.', 'modula-gallery' ),
 					"default"     => "#ffffff",
 					'priority'    => 10,
 				),
@@ -327,7 +327,7 @@ class Modula_CPT_Fields_Helper {
 				"borderSize"   => array(
 					"name"        => esc_html__( 'Border Size', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => "",
+					"description" => "Set the border size of images in your gallrey.",
 					"min"         => 0,
 					"max"         => 10,
 					"default"     => 0,
@@ -336,7 +336,7 @@ class Modula_CPT_Fields_Helper {
 				"borderRadius" => array(
 					"name"        => esc_html__( 'Border Radius', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => "",
+					"description" => "Set the radius of the image borders in this gallery.",
 					"min"         => 0,
 					"max"         => 100,
 					"default"     => 0,
@@ -345,14 +345,14 @@ class Modula_CPT_Fields_Helper {
 				"borderColor"  => array(
 					"name"        => esc_html__( 'Border Color', 'modula-gallery' ),
 					"type"        => "color",
-					"description" => "",
+					"description" => "Set the color of your image borders in this gallery.",
 					"default"     => "#ffffff",
 					'priority'    => 30,
 				),
 				"shadowSize"   => array(
 					"name"        => esc_html__( 'Shadow Size', 'modula-gallery' ),
 					"type"        => "ui-slider",
-					"description" => "",
+					"description" => "Set the size of image shadows in this gallery.",
 					"min"         => 0,
 					"max"         => 20,
 					"default"     => 0,
@@ -361,7 +361,7 @@ class Modula_CPT_Fields_Helper {
 				"shadowColor"  => array(
 					"name"        => esc_html__( 'Shadow Color', 'modula-gallery' ),
 					"type"        => "color",
-					"description" => "",
+					"description" => "Set the color of image shadows in this gallery",
 					"default"     => "#ffffff",
 					'priority'    => 50,
 				),
@@ -373,14 +373,14 @@ class Modula_CPT_Fields_Helper {
 					"syntax"      => 'js',
 					"description" => esc_html__( 'This script will be called after the gallery initialization and can be used to design custom lightboxes.', 'modula-gallery' ) . "
                         <br />
-                        <strong>Write just the code without using the &lt;script&gt;&lt;/script&gt; tags</strong>",
+                        <strong>Just write the code without using the &lt;script&gt;&lt;/script&gt; tags</strong>",
 					'priority' => 10,
 				),
 				"style"  => array(
 					"name"        => esc_html__( 'Custom css', 'modula-gallery' ),
 					"type"        => "custom_code",
 					"syntax"      => 'css',
-					"description" => '<strong>' . esc_html__( 'Write just the code without using the &lt;style&gt;&lt;/style&gt; tags', 'modula-gallery' ) . '</strong>',
+					"description" => '<strong>' . esc_html__( 'Just write the code without using the &lt;style&gt;&lt;/style&gt; tags', 'modula-gallery' ) . '</strong>',
 					'priority' => 20,
 				),
 			),
